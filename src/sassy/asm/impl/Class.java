@@ -1,14 +1,13 @@
 package sassy.asm.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import sassy.asm.api.IAssociation;
+
 import sassy.asm.api.IClass;
 import sassy.asm.api.IField;
 import sassy.asm.api.IMethod;
-import sassy.asm.api.IUse;
+
 
 public class Class implements IClass {
 	private String name;
@@ -58,17 +57,9 @@ public class Class implements IClass {
 	}
 
 	public void addUse(String use) {
-
 		if (!use.contains("java")) {
-			use = use.substring(use.lastIndexOf("/") + 1);
-
-			String superClass = getSuperClass();
-			if (superClass != "") {
-				use = superClass;
-			}
-			if (!this.uses.contains(use)) {
-				System.out.println(use);
-
+			use = use.substring(use.lastIndexOf("/")+1);
+			if (!this.uses.contains(use) && !use.equals(this.getName())) {
 				this.uses.add(use);
 			}
 		}

@@ -29,10 +29,12 @@ public class DesignParser {
 		IModel model = new Model();
 //		String[] getClasses = PackageInspector.getClasses(sourceDir, new File(sourceDir));
 		GraphvizParser parse = new GraphvizParser(model);
-		String path = "./files/Lab1-3Classes.txt";
+	//	String path = "./files/Lab1-3Classes.txt";
+	//	String path = "./files/AbstractFactoryPizzaStore.txt";
+		String path = "./files/SassyASM.txt";
 		ParseClass parser = new ParseClass(path);
 		ArrayList<String> result = parser.parse();
-//		classes = result.toArray(new String[result.size()]);
+		classes = result.toArray(new String[result.size()]);
 //		System.out.println(Arrays.toString(classes));
 		for (String className : classes) {
 			IClass c = new Class();

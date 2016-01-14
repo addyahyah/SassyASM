@@ -17,22 +17,23 @@ public class VariableMethodVisitor extends MethodVisitor {
 		this.c = c;
 	}
 
-	@Override
-	public void visitMethodInsn(int opcode, String owner, String name,
-			String desc, boolean itf) {
-		// desc -> params and return type
-		// boolean itf -> if the method's owner class is an interface.
-		if (!(name.contains("<init>") || name.contains("<clinit>"))) {
-				c.addUse(owner);
-		}
-	}
-
 //	@Override
-//	public void visitTypeInsn(int opcode, String type) {
-//		if (!type.contains("java")) {
-//			System.out.println(type);
-//			c.addUse(type);
+//	public void visitMethodInsn(int opcode, String owner, String name,
+//			String desc, boolean itf) {
+//		// desc -> params and return type
+//		// boolean itf -> if the method's owner class is an interface.
+//		if (!(name.contains("<init>") || name.contains("<clinit>"))) {
+//				c.addUse(owner);
 //		}
 //	}
+	
+	
+
+	@Override
+	public void visitTypeInsn(int opcode, String type) {
+		if (!type.contains("java")) {
+			c.addUse(type);
+		}
+	}
 
 }
