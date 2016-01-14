@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="11.3">
+  <zoom_level>7</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>21</x>
+      <y>217</y>
+      <w>483</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>ClassDeclarationVisitor
+--
+private IClass c;
+--
++void visit(int version, int access, String name, String signature, String superName, String[] interfaces);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>525</x>
+      <y>189</y>
+      <w>427</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>ClassFieldVisitor
+--
+- IClass c;
+--
++FieldVisitor visitField(int access, String name, String desc, String signature, Object value);
++void addAccessType(int access, IField field);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>469</x>
+      <y>42</y>
+      <w>483</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>ClassMethodVisitor
+--
+- IClass c;
+--
++MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions);
+void addAccessLevel(int access, IMethod method);
+void addReturnType(String desc, IMethod method);
+void addArguments(String desc, IMethod method);
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1288</x>
+      <y>14</y>
+      <w>133</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>DesignParser
+--
++String[] classes;
+--
++void main(String[] args);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1302</x>
+      <y>98</y>
+      <w>126</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>FirstASM
+--
++String myField;
+--
++void main(String[] args);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1246</x>
+      <y>406</y>
+      <w>224</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>GraphVizParser
+--
+- IModel model;
+- OutputStream output;
+--
++void parse();
+-void addClasses(StringBuilder sb);
+-void addImplementArrows(StringBuilder sb);
+-void addExtendsArrows(StringBuilder sb);
+-void addUsesArrows(StringBuilder sb);
+-void addAssociationArrows(StringBuilder sb);
+-void addMethods(IClass c, StringBuilder sb);
+-void addFields(IClass c, StringBuilder sb);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1218</x>
+      <y>280</y>
+      <w>238</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>VariableMethodVisitor
+--
+- IClass c;
+--
++void visitTypeInsn(int opcode, String type);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1302</x>
+      <y>189</y>
+      <w>147</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>ParseClass
+--
+- String path;
+- ArrayList&lt;String&gt; classes;
+--
++ArrayList&lt;String&gt; parse();</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>168</x>
+      <y>798</y>
+      <w>91</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>Association
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>56</x>
+      <y>371</y>
+      <w>224</w>
+      <h>266</h>
+    </coordinates>
+    <panel_attributes>
+Class
+--
+- String name;
+- ArrayList&lt;IMethod&gt; methods;
+- ArrayList&lt;IField&gt; fields;
+- String superClass;
+- List&lt;String&gt; interfaces;
+- List&lt;String&gt; associations;
+- List&lt;String&gt; uses;
+--
++List&lt;String&gt; getAssociations();
++addAssociation(String assoc);
++addAssocHelper(String assoc);
++List&lt;String&gt; getUses();
++void addUse(String use);
++String getSuperClass();
++void setSuperClass(String superClass);
++String getName();
++void setName(String name);
++ArrayList&lt;IMethod&gt; getMethods();
++addMethod(IMethod method);
++ArrayList&lt;IField&gt; getFields();
++addField(IField field) ;
++List&lt;String&gt; getInterfaces();
++void setInterfaces(List&lt;String&gt; interfaces);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>147</x>
+      <y>651</y>
+      <w>189</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>Field
+--
+- String fieldName;
+- String accessType;
+- String type;
+--
++getFieldName();
++setFieldName(String fieldName);
++getAccessType() ;
++setAccessType(String accessType);
++getType();
++setType(String type);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>945</x>
+      <y>623</y>
+      <w>217</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>Method
+--
+- String name;
+- String access;
+- String returnType;
+- ArrayList&lt;String&gt; args;
+--
++String getName();
++void setName(String name);
++String getAccess();
++void setAccess(String access);
++String getReturnType();
++void setReturnType(String returnType);
++void addArg(String a);
++ArrayList&lt;String&gt; getArgs();</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>917</x>
+      <y>826</y>
+      <w>175</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>Model
+--
+- ArrayList&lt;IClass&gt; classes;
+--
++void addClass(IClass c);
++ArrayList&lt;IClass&gt; getClasses();</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>182</x>
+      <y>854</y>
+      <w>91</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>Use
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>357</x>
+      <y>763</y>
+      <w>77</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+/IAssociation/
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>525</x>
+      <y>343</y>
+      <w>294</w>
+      <h>196</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+/IClass/
+--
++ String getName();
++ void setName(String name);
++ ArrayList&lt;IMethod&gt; getMethods();
++ void addMethod(IMethod method);
++ ArrayList&lt;IField&gt; getFields();
++ void addField(IField field);
++ void setSuperClass(String superClass);
++ List&lt;String&gt; getInterfaces();
++ void setInterfaces(List&lt;String&gt; interfaces);
++ String getSuperClass();
++ List&lt;String&gt; getAssociations();
++ void addAssociation(String assoc);
++ List&lt;String&gt; getUses();
++ void addUse(String use);
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>497</x>
+      <y>623</y>
+      <w>245</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+/IField/
+--
++ String getFieldName();
++ void setFieldName(String fieldName);
++ String getAccessType();
++ void setAccessType(String accessType);
++ String getType();
++ void setType(String type);
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1232</x>
+      <y>616</y>
+      <w>273</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+/IMethod/
+--
++ String getName();
++ void setName(String name);
++ String getAccess();
++ void setAccess(String access);
++ String getReturnType();
++ void setReturnType(String returnType);
++ void addArg(String a);
++ ArrayList&lt;String&gt; getArgs();
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>504</x>
+      <y>805</y>
+      <w>203</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+/IModel/
+--
++ void addClass(IClass c);
++ ArrayList&lt;IClass&gt; getClasses();
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>350</x>
+      <y>847</y>
+      <w>77</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+/IUse/
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>56</x>
+      <y>28</y>
+      <w>315</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>/ClassVisitor/
+--
+void visit(int version, int access, String name, String signature,
+			String superName, String[] interfaces);
+FieldVisitor visitField(int access, String name, String desc,
+			String signature, Object value);
+MethodVisitor visitMethod(int access, String name, String desc,
+			String signature, String[] exceptions);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>63</x>
+      <y>105</y>
+      <w>41</w>
+      <h>125</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>21;21;28;112</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>175</x>
+      <y>105</y>
+      <w>419</w>
+      <h>97</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>21;21;406;84</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>350</x>
+      <y>42</y>
+      <w>132</w>
+      <h>41</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>21;28;119;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>238</x>
+      <y>763</y>
+      <w>132</w>
+      <h>69</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>119;21;21;56</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>259</x>
+      <y>343</y>
+      <w>279</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>266;21;21;42</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>315</x>
+      <y>616</y>
+      <w>195</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>182;21;21;42</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1141</x>
+      <y>637</y>
+      <w>104</w>
+      <h>34</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>91;21;21;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>686</x>
+      <y>833</y>
+      <w>244</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>231;35;21;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>252</x>
+      <y>840</y>
+      <w>111</w>
+      <h>41</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>98;21;21;28</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>931</x>
+      <y>77</y>
+      <w>104</w>
+      <h>559</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>91;546;21;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>273</x>
+      <y>245</y>
+      <w>412</w>
+      <h>419</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>21;406;399;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>259</x>
+      <y>567</y>
+      <w>699</w>
+      <h>83</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>686;70;21;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>49</x>
+      <y>616</y>
+      <w>111</w>
+      <h>139</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>98;126;21;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>252</x>
+      <y>518</y>
+      <w>1007</w>
+      <h>76</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>21;63;994;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>259</x>
+      <y>112</y>
+      <w>237</w>
+      <h>321</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>21;308;224;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>259</x>
+      <y>245</y>
+      <w>321</w>
+      <h>293</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>21;280;308;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>168</x>
+      <y>252</y>
+      <w>97</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>21;119;84;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>259</x>
+      <y>609</y>
+      <w>678</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>21;21;665;217</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1064</x>
+      <y>448</y>
+      <w>195</w>
+      <h>391</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>21;378;182;21</additional_attributes>
+  </element>
+</diagram>
