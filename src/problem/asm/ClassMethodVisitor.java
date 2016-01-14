@@ -7,18 +7,21 @@ import org.objectweb.asm.Type;
 
 import sassy.asm.api.IClass;
 import sassy.asm.api.IMethod;
+import sassy.asm.api.IModel;
 import sassy.asm.impl.Method;
 
 public class ClassMethodVisitor extends ClassVisitor {
 	private IClass c;
+	private IModel model;
 
 	public ClassMethodVisitor(int api) {
 		super(api);
 	}
 
-	public ClassMethodVisitor(int api, ClassVisitor decorated, IClass c) {
+	public ClassMethodVisitor(int api, ClassVisitor decorated, IClass c, IModel model) {
 		super(api, decorated);
 		this.c = c;
+		this.model =model;
 	}
 
 	@Override
@@ -26,7 +29,7 @@ public class ClassMethodVisitor extends ClassVisitor {
 			String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc,
 				signature, exceptions);
-		VariableMethodVisitor vv = new VariableMethodVisitor(Opcodes.ASM5, toDecorate, c);
+		VariableMethodVisitor vv = new VariableMethodVisitor(Opcodes.ASM5, toDecorate, c, this.model);
 
 		if (!(name.contains("<init>") || name.contains("<clinit>"))) {
 			IMethod method = new Method();

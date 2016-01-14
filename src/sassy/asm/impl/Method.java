@@ -9,7 +9,7 @@ public class Method implements IMethod {
 	private String access;
 	private String returnType;
 	private ArrayList<String> args;
-
+	
 	public Method() {
 		this.name = "";
 		this.access = "";

@@ -59,7 +59,8 @@ public class Class implements IClass {
 	public void addUse(String use) {
 		if (!use.contains("java")) {
 			use = use.substring(use.lastIndexOf("/")+1);
-			if (!this.uses.contains(use) && !use.equals(this.getName())) {
+			if (!this.uses.contains(use) && !use.equals(this.getName()) && use.length()!=0) {
+				System.out.println("This: " + this.getName() + " Use: "+use);
 				this.uses.add(use);
 			}
 		}
