@@ -1,0 +1,2 @@
+digraph sassy_uml{node [shape = "record"] ExecutableFileRunner[label = "{ExecutableFileRunner||+ execute(Path) : void\l}"]edge [arrowhead = "empty"] edge [style = "solid"]ExecutableFileRunner -> ProcessRunner
+edge [arrowhead = "empty"] edge [style = "dashed"]edge [arrowhead = "vee"] edge [style = "solid"]edge [arrowhead = "vee"] edge [style = "dashed"]}
