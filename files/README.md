@@ -7,6 +7,10 @@ Who did what:
 We drew out the UML diagram on paper together first. Addison then implemented the UML diagram for the design on UMLet. We pair programmed the milestone. Lexi was the driver for the first half for structuring the basics by coding SassyField, SassyMethod, and SassyClass, as well as the visitors and the DesignParser. Once these were set up, Addison became the driver for the UMLDrawer class and the testing. 
 
 
+![Alt text](https://github.com/addyahyah/SassyASM/blob/master/files/milestone1umlmanual.png
+ "UML OF OUR DESIGN")
+
+
 Description of Design: 
 ClassDeclarationVisitor is the visitor class for visiting classes when they are declared. It sets the class name and superclass if applicable, as well as any interfaces it implements. 
 ClassFieldVisitor is the visitor class for visiting fields. It sets the field’s name, privacy, and type, and adds it to the SassyClass’s field ArrayList (the SassyClass that was passed into the ClassFieldVisitor constructor).
