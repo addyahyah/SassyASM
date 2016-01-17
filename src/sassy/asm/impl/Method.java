@@ -3,8 +3,10 @@ package sassy.asm.impl;
 import java.util.ArrayList;
 
 import sassy.asm.api.IMethod;
+import sassy.asm.visitor.ITraverser;
+import sassy.asm.visitor.IVisitor;
 
-public class Method implements IMethod {
+public class Method implements IMethod, ITraverser {
 	private String name;
 	private String access;
 	private String returnType;
@@ -47,5 +49,10 @@ public class Method implements IMethod {
 
 	public ArrayList<String> getArgs() {
 		return this.args;
+	}
+
+	@Override
+	public void accept(IVisitor v) {
+		v.visit(this);
 	}
 }

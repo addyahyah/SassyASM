@@ -1,77 +1,27 @@
 package sassy.asm.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-
 
 import sassy.asm.api.IClass;
 import sassy.asm.api.IField;
 import sassy.asm.api.IMethod;
+import sassy.asm.api.IModelPart;
+import sassy.asm.visitor.ITraverser;
+import sassy.asm.visitor.IVisitor;
 
-
-public class Class implements IClass {
+public class Class implements IClass, ITraverser {
 	private String name;
 	private ArrayList<IMethod> methods;
 	private ArrayList<IField> fields;
-	private String superClass;
-	private List<String> interfaces;
-	private List<String> associations;
-	private List<String> uses;
 
 	public Class() {
 		this.methods = new ArrayList<IMethod>();
 		this.fields = new ArrayList<IField>();
 		this.name = "";
-		this.superClass = "";
-		this.interfaces = new ArrayList<>();
-		this.associations = new ArrayList<>();
-		this.uses = new ArrayList<>();
-	}
 
-	public List<String> getAssociations() {
-		return associations;
-	}
-
-	public void addAssociation(String assoc) {
-		if (assoc.contains(";")) {
-			String[] map = assoc.split(";");
-			for (String s : map) {
-				addAssocHelper(s);
-			}
-		} else {
-			addAssocHelper(assoc);
-		}
-	}
-
-	public void addAssocHelper(String assoc) {
-		if (!assoc.contains("java")) {
-			assoc = assoc.substring(assoc.lastIndexOf("/") + 1);
-			if (!this.associations.contains(assoc)) {
-				this.associations.add(assoc);
-			}
-		}
-	}
-
-	public List<String> getUses() {
-		return uses;
-	}
-
-	public void addUse(String use) {
-		if (!use.contains("java")) {
-			use = use.substring(use.lastIndexOf("/")+1);
-			if (!this.uses.contains(use) && !use.equals(this.getName()) && use.length()!=0) {
-				System.out.println("This: " + this.getName() + " Use: "+use);
-				this.uses.add(use);
-			}
-		}
-	}
-
-	public String getSuperClass() {
-		return superClass;
-	}
-
-	public void setSuperClass(String superClass) {
-		this.superClass = superClass.substring(superClass.lastIndexOf("/") + 1);
 	}
 
 	public String getName() {
@@ -98,16 +48,18 @@ public class Class implements IClass {
 		this.fields.add(field);
 	}
 
-	public List<String> getInterfaces() {
-		return interfaces;
-	}
-
-	public void setInterfaces(List<String> interfaces) {
-		List<String> newList = new ArrayList<>();
-		for (int i = 0; i < interfaces.size(); i++) {
-			newList.add(interfaces.get(i).substring(
-					interfaces.get(i).lastIndexOf("/") + 1));
+	@Override
+	public void accept(IVisitor v) {
+		v.preVisit(this);
+		for(IField f : this.getFields()){
+			ITraverser t = (ITraverser) f;
+			t.accept(v);
 		}
-		this.interfaces = newList;
+		v.visit(this);
+		for(IMethod m : this.getMethods()){
+			ITraverser t = (ITraverser) m;
+			t.accept(v);
+		}
+		v.postVisit(this);
 	}
 }

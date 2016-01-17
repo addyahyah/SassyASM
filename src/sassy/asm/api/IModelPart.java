@@ -1,5 +1,7 @@
 package sassy.asm.api;
 
-public interface IModelPart {
+import sassy.asm.visitor.ITraverser;
+
+public interface IModelPart extends ITraverser{
 
 }

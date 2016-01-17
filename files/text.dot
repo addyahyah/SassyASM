@@ -1,39 +1,47 @@
-digraph sassy_uml{node [shape = "record"] ClassDeclarationVisitor[label = "{ClassDeclarationVisitor|- c : IClass\l- model : IModel\l|+ visit(int, int, String, String, String, String[]) : void\l}"]ClassFieldVisitor[label = "{ClassFieldVisitor|- c : IClass\l|+ visitField(int, String, String, String, Object) : FieldVisitor\l+ addAccessType(int, IField) : void\l}"]ClassMethodVisitor[label = "{ClassMethodVisitor|- c : IClass\l- model : IModel\l|+ visitMethod(int, String, String, String, String[]) : MethodVisitor\l addAccessLevel(int, IMethod) : void\l addReturnType(String, IMethod) : void\l addArguments(String, IMethod) : void\l}"]DesignParser[label = "{DesignParser|+ classes : String[]\l|+ main(String[]) : void\l}"]GraphvizParser[label = "{GraphvizParser|- model : IModel\l- output : OutputStream\l|+ parse() : void\l+ visitClasses(StringBuilder) : void\l+ visitImplementsArrows(StringBuilder) : void\l+ visitExtendsArrows(StringBuilder) : void\l+ visitUsesArrows(StringBuilder) : void\l+ visitAssociationArrows(StringBuilder) : void\l+ visitMethods(IClass, StringBuilder) : void\l+ visitFields(IClass, StringBuilder) : void\l}"]ParseClass[label = "{ParseClass|- path : String\l- classes : ArrayList\l|+ parse() : ArrayList\l}"]VariableMethodVisitor[label = "{VariableMethodVisitor|- c : IClass\l- model : IModel\l|+ visitTypeInsn(int, String) : void\l}"]FirstASM[label = "{FirstASM|+ myField : String\l|+ main(String[]) : void\l}"]IClass[label = "{IClass||+ getName() : String\l+ setName(String) : void\l+ getMethods() : ArrayList\l+ addMethod(IMethod) : void\l+ getFields() : ArrayList\l+ addField(IField) : void\l+ setSuperClass(String) : void\l+ getInterfaces() : List\l+ setInterfaces(List) : void\l+ getSuperClass() : String\l+ getAssociations() : List\l+ addAssociation(String) : void\l+ getUses() : List\l+ addUse(String) : void\l}"]IField[label = "{IField||+ getFieldName() : String\l+ setFieldName(String) : void\l+ getAccessType() : String\l+ setAccessType(String) : void\l+ getType() : String\l+ setType(String) : void\l}"]IMethod[label = "{IMethod||+ getName() : String\l+ setName(String) : void\l+ getAccess() : String\l+ setAccess(String) : void\l+ getReturnType() : String\l+ setReturnType(String) : void\l+ addArg(String) : void\l+ getArgs() : ArrayList\l}"]IModel[label = "{IModel||+ addClass(IClass) : void\l+ getClasses() : ArrayList\l}"]Class[label = "{Class|- name : String\l- methods : ArrayList\l- fields : ArrayList\l- superClass : String\l- interfaces : List\l- associations : List\l- uses : List\l|+ getAssociations() : List\l+ addAssociation(String) : void\l+ addAssocHelper(String) : void\l+ getUses() : List\l+ addUse(String) : void\l+ getSuperClass() : String\l+ setSuperClass(String) : void\l+ getName() : String\l+ setName(String) : void\l+ getMethods() : ArrayList\l+ addMethod(IMethod) : void\l+ getFields() : ArrayList\l+ addField(IField) : void\l+ getInterfaces() : List\l+ setInterfaces(List) : void\l}"]Field[label = "{Field|- fieldName : String\l- accessType : String\l- type : String\l|+ getFieldName() : String\l+ setFieldName(String) : void\l+ getAccessType() : String\l+ setAccessType(String) : void\l+ getType() : String\l+ setType(String) : void\l}"]Method[label = "{Method|- name : String\l- access : String\l- returnType : String\l- args : ArrayList\l|+ getName() : String\l+ setName(String) : void\l+ getAccess() : String\l+ setAccess(String) : void\l+ getReturnType() : String\l+ setReturnType(String) : void\l+ addArg(String) : void\l+ getArgs() : ArrayList\l}"]Model[label = "{Model|- classes : ArrayList\l|+ addClass(IClass) : void\l+ getClasses() : ArrayList\l}"]edge [arrowhead = "empty"] edge [style = "solid"]ClassDeclarationVisitor -> ClassVisitor
-ClassFieldVisitor -> ClassVisitor
-ClassMethodVisitor -> ClassVisitor
-GraphvizParser -> VisitorAdapter
-VariableMethodVisitor -> MethodVisitor
-edge [arrowhead = "empty"] edge [style = "dashed"]IField -> IModelPart
-IMethod -> IModelPart
-IModel -> IModelPart
-Class -> IClass
-Field -> IField
-Method -> IMethod
-Model -> IModel
-edge [arrowhead = "vee"] edge [style = "solid"]Class -> IMethod
-Class -> IField
-Model -> IClass
-edge [arrowhead = "vee"] edge [style = "dashed"]ClassFieldVisitor -> FieldVisitor
-ClassFieldVisitor -> Field
-ClassFieldVisitor -> IField
-ClassMethodVisitor -> MethodVisitor
-ClassMethodVisitor -> VariableMethodVisitor
-ClassMethodVisitor -> Method
-ClassMethodVisitor -> IMethod
-DesignParser -> Model
-DesignParser -> GraphvizParser
-DesignParser -> ParseClass
-DesignParser -> Class
-DesignParser -> ClassReader
-DesignParser -> ClassDeclarationVisitor
-DesignParser -> ClassFieldVisitor
-DesignParser -> ClassMethodVisitor
-GraphvizParser -> IClass
-GraphvizParser -> IMethod
-GraphvizParser -> IField
-FirstASM -> ClassReader
-FirstASM -> TraceClassVisitor
-IClass -> IMethod
-IClass -> IField
-IModel -> IClass
+digraph sassy_uml{node [shape = "record"] BlackOlives[label = "{BlackOlives||+ toString() : String\l}"]Cheese[label = "{Cheese||+ toString() : String\l}"]CheesePizza[label = "{CheesePizza| ingredientFactory : PizzaIngredientFactory\l| prepare() : void\l}"]ChicagoPizzaIngredientFactory[label = "{ChicagoPizzaIngredientFactory||+ createDough() : Dough\l+ createSauce() : Sauce\l+ createCheese() : Cheese\l+ createVeggies() : Veggies[]\l+ createPepperoni() : Pepperoni\l+ createClam() : Clams\l}"]ChicagoPizzaStore[label = "{ChicagoPizzaStore||# createPizza(String) : Pizza\l}"]ClamPizza[label = "{ClamPizza| ingredientFactory : PizzaIngredientFactory\l| prepare() : void\l}"]Clams[label = "{Clams||+ toString() : String\l}"]Dough[label = "{Dough||+ toString() : String\l}"]Eggplant[label = "{Eggplant||+ toString() : String\l}"]FreshClams[label = "{FreshClams||+ toString() : String\l}"]FrozenClams[label = "{FrozenClams||+ toString() : String\l}"]Garlic[label = "{Garlic||+ toString() : String\l}"]MarinaraSauce[label = "{MarinaraSauce||+ toString() : String\l}"]MozzarellaCheese[label = "{MozzarellaCheese||+ toString() : String\l}"]Mushroom[label = "{Mushroom||+ toString() : String\l}"]NYPizzaIngredientFactory[label = "{NYPizzaIngredientFactory||+ createDough() : Dough\l+ createSauce() : Sauce\l+ createCheese() : Cheese\l+ createVeggies() : Veggies[]\l+ createPepperoni() : Pepperoni\l+ createClam() : Clams\l}"]NYPizzaStore[label = "{NYPizzaStore||# createPizza(String) : Pizza\l}"]Onion[label = "{Onion||+ toString() : String\l}"]ParmesanCheese[label = "{ParmesanCheese||+ toString() : String\l}"]Pepperoni[label = "{Pepperoni||+ toString() : String\l}"]PepperoniPizza[label = "{PepperoniPizza| ingredientFactory : PizzaIngredientFactory\l| prepare() : void\l}"]Pizza[label = "{Pizza| name : String\l dough : Dough\l sauce : Sauce\l veggies : Veggies[]\l cheese : Cheese\l pepperoni : Pepperoni\l clam : Clams\l| prepare() : void\l bake() : void\l cut() : void\l box() : void\l setName(String) : void\l getName() : String\l+ toString() : String\l}"]PizzaIngredientFactory[label = "{PizzaIngredientFactory||+ createDough() : Dough\l+ createSauce() : Sauce\l+ createCheese() : Cheese\l+ createVeggies() : Veggies[]\l+ createPepperoni() : Pepperoni\l+ createClam() : Clams\l}"]PizzaStore[label = "{PizzaStore||# createPizza(String) : Pizza\l+ orderPizza(String) : Pizza\l}"]PizzaTestDrive[label = "{PizzaTestDrive||+ main(String[]) : void\l}"]PlumTomatoSauce[label = "{PlumTomatoSauce||+ toString() : String\l}"]RedPepper[label = "{RedPepper||+ toString() : String\l}"]ReggianoCheese[label = "{ReggianoCheese||+ toString() : String\l}"]Sauce[label = "{Sauce||+ toString() : String\l}"]SlicedPepperoni[label = "{SlicedPepperoni||+ toString() : String\l}"]Spinach[label = "{Spinach||+ toString() : String\l}"]ThickCrustDough[label = "{ThickCrustDough||+ toString() : String\l}"]ThinCrustDough[label = "{ThinCrustDough||+ toString() : String\l}"]VeggiePizza[label = "{VeggiePizza| ingredientFactory : PizzaIngredientFactory\l| prepare() : void\l}"]Veggies[label = "{Veggies||+ toString() : String\l}"]edge [arrowhead = "empty"] [style = "dashed"] PlumTomatoSauce->Sauce
+edge [arrowhead = "empty"] [style = "solid"] CheesePizza->Pizza
+edge [arrowhead = "vee"] [style = "dashed"] NYPizzaIngredientFactory->Pepperoni
+edge [arrowhead = "vee"] [style = "dashed"] NYPizzaStore->Pizza
+edge [arrowhead = "empty"] [style = "dashed"] RedPepper->Veggies
+edge [arrowhead = "empty"] [style = "solid"] VeggiePizza->Pizza
+edge [arrowhead = "vee"] [style = "dashed"] ChicagoPizzaIngredientFactory->Dough
+edge [arrowhead = "vee"] [style = "dashed"] ChicagoPizzaIngredientFactory->Sauce
+edge [arrowhead = "empty"] [style = "dashed"] MozzarellaCheese->Cheese
+edge [arrowhead = "empty"] [style = "dashed"] FreshClams->Clams
+edge [arrowhead = "empty"] [style = "dashed"] ReggianoCheese->Cheese
+edge [arrowhead = "vee"] [style = "dashed"] PizzaIngredientFactory->Sauce
+edge [arrowhead = "vee"] [style = "dashed"] ChicagoPizzaIngredientFactory->Pepperoni
+edge [arrowhead = "empty"] [style = "dashed"] Spinach->Veggies
+edge [arrowhead = "empty"] [style = "dashed"] ChicagoPizzaIngredientFactory->PizzaIngredientFactory
+edge [arrowhead = "vee"] [style = "dashed"] NYPizzaIngredientFactory->Clams
+edge [arrowhead = "vee"] [style = "dashed"] ChicagoPizzaIngredientFactory->Cheese
+edge [arrowhead = "empty"] [style = "dashed"] Eggplant->Veggies
+edge [arrowhead = "vee"] [style = "dashed"] NYPizzaIngredientFactory->Dough
+edge [arrowhead = "empty"] [style = "dashed"] Onion->Veggies
+edge [arrowhead = "empty"] [style = "dashed"] MarinaraSauce->Sauce
+edge [arrowhead = "vee"] [style = "dashed"] PizzaIngredientFactory->Veggies
+edge [arrowhead = "empty"] [style = "dashed"] Garlic->Veggies
+edge [arrowhead = "vee"] [style = "dashed"] ChicagoPizzaStore->Pizza
+edge [arrowhead = "vee"] [style = "dashed"] PizzaStore->Pizza
+edge [arrowhead = "empty"] [style = "dashed"] NYPizzaIngredientFactory->PizzaIngredientFactory
+edge [arrowhead = "empty"] [style = "dashed"] ThinCrustDough->Dough
+edge [arrowhead = "empty"] [style = "dashed"] BlackOlives->Veggies
+edge [arrowhead = "empty"] [style = "dashed"] ThickCrustDough->Dough
+edge [arrowhead = "vee"] [style = "dashed"] NYPizzaIngredientFactory->Cheese
+edge [arrowhead = "vee"] [style = "dashed"] NYPizzaIngredientFactory->Veggies
+edge [arrowhead = "empty"] [style = "solid"] PepperoniPizza->Pizza
+edge [arrowhead = "vee"] [style = "dashed"] ChicagoPizzaIngredientFactory->Clams
+edge [arrowhead = "empty"] [style = "solid"] ChicagoPizzaStore->PizzaStore
+edge [arrowhead = "empty"] [style = "dashed"] ParmesanCheese->Cheese
+edge [arrowhead = "vee"] [style = "dashed"] PizzaIngredientFactory->Dough
+edge [arrowhead = "vee"] [style = "dashed"] PizzaIngredientFactory->Cheese
+edge [arrowhead = "empty"] [style = "solid"] NYPizzaStore->PizzaStore
+edge [arrowhead = "vee"] [style = "dashed"] PizzaIngredientFactory->Pepperoni
+edge [arrowhead = "empty"] [style = "dashed"] SlicedPepperoni->Pepperoni
+edge [arrowhead = "vee"] [style = "dashed"] NYPizzaIngredientFactory->Sauce
+edge [arrowhead = "vee"] [style = "dashed"] PizzaIngredientFactory->Clams
+edge [arrowhead = "empty"] [style = "solid"] ClamPizza->Pizza
+edge [arrowhead = "empty"] [style = "dashed"] FrozenClams->Clams
+edge [arrowhead = "empty"] [style = "dashed"] Mushroom->Veggies
+edge [arrowhead = "vee"] [style = "dashed"] ChicagoPizzaIngredientFactory->Veggies
 }

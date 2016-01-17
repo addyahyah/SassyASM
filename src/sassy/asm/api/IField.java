@@ -1,6 +1,6 @@
 package sassy.asm.api;
 
-public interface IField {
+public interface IField extends IModelPart {
 	public String getFieldName();
 
 	public void setFieldName(String fieldName);

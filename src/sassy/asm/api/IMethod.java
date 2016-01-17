@@ -2,7 +2,7 @@ package sassy.asm.api;
 
 import java.util.ArrayList;
 
-public interface IMethod {
+public interface IMethod extends IModelPart{
 	public String getName();
 
 	public void setName(String name);
