@@ -18,10 +18,12 @@ public class ClassMethodVisitor extends ClassVisitor {
 		super(api);
 	}
 
-	public ClassMethodVisitor(int api, ClassVisitor decorated, IClass c, IModel model) {
+	public ClassMethodVisitor(int api, ClassVisitor decorated, IClass c,
+			IModel model) {
 		super(api, decorated);
 		this.c = c;
-		this.model =model;
+		this.model = model;
+
 	}
 
 	@Override
@@ -29,16 +31,17 @@ public class ClassMethodVisitor extends ClassVisitor {
 			String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc,
 				signature, exceptions);
-		VariableMethodVisitor vv = new VariableMethodVisitor(Opcodes.ASM5, toDecorate, c, this.model);
+		IMethod method = new Method();
 
-		if (!(name.contains("<init>") || name.contains("<clinit>"))) {
-			IMethod method = new Method();
-			method.setName(name);
-			addAccessLevel(access, method);
-			addReturnType(desc, method);
-			addArguments(desc, method);
-			c.addMethod(method);
-		}
+		method.setName(name);
+		addAccessLevel(access, method);
+		addReturnType(desc, method);
+		addArguments(desc, method);
+		c.addMethod(method);
+
+		VariableMethodVisitor vv = new VariableMethodVisitor(Opcodes.ASM5,
+				toDecorate, c, this.model, method);
+
 		return vv;
 
 	}
@@ -62,10 +65,11 @@ public class ClassMethodVisitor extends ClassVisitor {
 		String returnType = type.getClassName();
 		method.setReturnType(returnType);
 		String typeString = type.toString();
-		//V -> void, Z -> boolean
-		if(!typeString.equals("V") && !typeString.equals("Z")){
-			String s = type.toString().substring(0, type.toString().length()-1);
-//			System.out.println(s);
+		// V -> void, Z -> boolean
+		if (!typeString.equals("V") && !typeString.equals("Z")) {
+			String s = type.toString().substring(0,
+					type.toString().length() - 1);
+			// System.out.println(s);
 			this.model.addRelation(c.getName(), s, "use");
 		}
 	}
@@ -73,8 +77,9 @@ public class ClassMethodVisitor extends ClassVisitor {
 	void addArguments(String desc, IMethod method) {
 		Type[] args = Type.getArgumentTypes(desc);
 		for (int i = 0; i < args.length; i++) {
-			String s = args[i].toString().substring(0, args[i].toString().length()-1);
-			this.model.addRelation(c.getName(),s, "use");
+			String s = args[i].toString().substring(0,
+					args[i].toString().length() - 1);
+			this.model.addRelation(c.getName(), s, "use");
 			String arg = args[i].getClassName();
 			method.addArg(arg);
 		}

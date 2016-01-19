@@ -3,6 +3,7 @@ package sassy.asm.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import sassy.asm.api.IClass;
@@ -14,11 +15,11 @@ import sassy.asm.visitor.IVisitor;
 
 public class Class implements IClass, ITraverser {
 	private String name;
-	private ArrayList<IMethod> methods;
+	private HashMap<String, IMethod> methods;
 	private ArrayList<IField> fields;
 
 	public Class() {
-		this.methods = new ArrayList<IMethod>();
+		this.methods = new HashMap<String,IMethod>();
 		this.fields = new ArrayList<IField>();
 		this.name = "";
 
@@ -32,12 +33,16 @@ public class Class implements IClass, ITraverser {
 		this.name = name.substring(name.lastIndexOf("/") + 1);
 	}
 
-	public ArrayList<IMethod> getMethods() {
-		return methods;
+	public Collection<IMethod> getMethods() {
+		return this.methods.values();
+	}
+	
+	public HashMap<String, IMethod> getMethodsMap(){
+		return this.methods;
 	}
 
 	public void addMethod(IMethod method) {
-		this.methods.add(method);
+		this.methods.put(method.getName(), method);
 	}
 
 	public ArrayList<IField> getFields() {

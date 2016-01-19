@@ -2,6 +2,7 @@ package sassy.asm.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 public interface IClass extends IModelPart {
@@ -9,7 +10,8 @@ public interface IClass extends IModelPart {
 
 	public void setName(String name);
 
-	public ArrayList<IMethod> getMethods();
+	public Collection<IMethod> getMethods();
+	public HashMap<String, IMethod> getMethodsMap();
 
 	public void addMethod(IMethod method);
 

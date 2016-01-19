@@ -8,9 +8,15 @@ import sassy.asm.api.IModel;
 public abstract class VisitorAdapter implements IVisitor {
 
 	@Override
-	public void preVisit(IClass c) {
-		// TODO Auto-generated method stub
-		
+	public void preVisit(IMethod m) {		
+	}
+
+	@Override
+	public void postVisit(IMethod m) {		
+	}
+
+	@Override
+	public void preVisit(IClass c) {		
 	}
 
 	@Override

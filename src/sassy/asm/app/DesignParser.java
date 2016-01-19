@@ -13,12 +13,16 @@ import sassy.asm.visitor.ClassMethodVisitor;
 import sassy.asm.visitor.ITraverser;
 import sassy.asm.visitor.IVisitor;
 import sassy.asm.api.IClass;
+import sassy.asm.api.IMethod;
 import sassy.asm.api.IModel;
 import sassy.asm.impl.Model;
 import sassy.asm.impl.Class;
 
 public class DesignParser {
 	public static String[] classes = { "problem.asm.GraphvizParser" };
+	public static final String packageName = "java";
+	public static final String className = "java/util/Collections";
+	public static final String methodName = "shuffle";
 
 	/**
 	 * Reads in a list of Java Classes and reverse engineers their design.
@@ -32,14 +36,15 @@ public class DesignParser {
 	public static void main(String[] args) throws IOException {
 		IModel model = new Model();
 		IVisitor parse = new GraphvizParser(model);
-		//String path = "./files/Lab1-3Classes.txt";
 
-		String path = "./files/AbstractFactoryPizzaStore.txt";
-		// String path = "./files/SassyASM.txt";
-		ParseClass parser = new ParseClass(path);
-		ArrayList<String> result = parser.parse();
-		classes = result.toArray(new String[result.size()]);
-		for (String className : classes) {
+		// String path = "./files/Lab1-3Classes.txt";
+
+		// String path = "./files/AbstractFactoryPizzaStore.txt";
+		//String path = "./files/SassyASM.txt";
+		//ParseClass parser = new ParseClass(path);
+		//ArrayList<String> result = parser.parse();
+		//classes = result.toArray(new String[result.size()]);
+//		for (String className : classes) {
 			IClass c = new Class();
 
 			// ASM's ClassReader does the heavy lifting of parsing the compiled
@@ -61,27 +66,44 @@ public class DesignParser {
 			// visit the class
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
 			model.addClass(c);
-		}
-		ITraverser t = (ITraverser)model;
+//		}
+
+		ITraverser t = (ITraverser) model;
 		t.accept(parse);
-		
-		//parse.write(new StringBuilder());
+		int depth = 5;
+		outer: for (IClass cl : model.getClasses()) {
+			
+			if (cl.getName().equals(className.substring(className.lastIndexOf("/")+1))) {
+				for (IMethod m : cl.getMethods()) {
+					
+					if (m.getName().equals(methodName)) {
+
+						IVisitor sd = new SDEditor(model, depth);
+						ITraverser tr = (ITraverser) m;
+						tr.accept(sd);
+						break outer;
+					}
+				}
+			}
+		}
+
+		// parse.write(new StringBuilder());
 	}
 
-//	public static void main(String[] args) throws IOException {
-//		IModel model = new Model();
-//		SDEditor sd = new SDEditor(model);
-//		IClass c = new Class();
-//		ClassReader reader = new ClassReader("java.util.Collections");
-//		ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, c,
-//				model);
-//		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5,
-//				decVisitor, c, model);
-//		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5,
-//				fieldVisitor, c, model);
-//		// TODO: ... More visitors / decorators
-//		reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
-//
-//		sd.parse();
-//	}
+	// public static void main(String[] args) throws IOException {
+	// IModel model = new Model();
+	// SDEditor sd = new SDEditor(model);
+	// IClass c = new Class();
+	// ClassReader reader = new ClassReader("java.util.Collections");
+	// ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, c,
+	// model);
+	// ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5,
+	// decVisitor, c, model);
+	// ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5,
+	// fieldVisitor, c, model);
+	// // TODO: ... More visitors / decorators
+	// reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
+	//
+	// sd.parse();
+	// }
 }

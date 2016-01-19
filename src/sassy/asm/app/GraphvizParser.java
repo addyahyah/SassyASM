@@ -32,7 +32,7 @@ public class GraphvizParser extends VisitorAdapter {
 
 	void write(StringBuilder sb) {
 		try {
-			System.out.println(sb);
+//			System.out.println(sb);
 			this.output.write(sb.toString().getBytes());
 		} catch (IOException e) {
 			new RuntimeException();

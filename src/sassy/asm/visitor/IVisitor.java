@@ -15,8 +15,12 @@ public interface IVisitor {
 	void postVisit(IModel m);
 
 	void postVisit(IClass c);
+	
+	void preVisit(IMethod m);
 
 	void visit(IMethod m);
+	
+	void postVisit(IMethod m);
 
 	void visit(IField f);
 }

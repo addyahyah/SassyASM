@@ -1,0 +1,4 @@
+collections:Collections[a]
+
+collections:void=collections.swap(Object[], int, int)
+collections:void=collections.swap(Object[], int, int)
