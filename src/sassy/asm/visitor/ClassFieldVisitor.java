@@ -19,10 +19,11 @@ public class ClassFieldVisitor extends ClassVisitor {
 		super(api);
 	}
 
-	public ClassFieldVisitor(int api, ClassVisitor decorated, IClass c, IModel model) {
+	public ClassFieldVisitor(int api, ClassVisitor decorated, IClass c,
+			IModel model) {
 		super(api, decorated);
 		this.c = c;
-		this.model=model;
+		this.model = model;
 	}
 
 	public FieldVisitor visitField(int access, String name, String desc,
@@ -37,8 +38,15 @@ public class ClassFieldVisitor extends ClassVisitor {
 		field.setType(type);
 		c.addField(field);
 		if (signature != null) {
-			String bracket = signature.substring(signature.lastIndexOf("<")+1, signature.lastIndexOf(">")-1);
-			this.model.addRelation(c.getName(), bracket, "assoc");
+			if (signature.contains("<") || signature.contains(">")) {
+				String bracket = signature.substring(
+						signature.lastIndexOf("<") + 1,
+						signature.lastIndexOf(">") - 1);
+				this.model.addRelation(c.getName(), bracket, "assoc");
+			}else{
+				String bracket = signature.substring(0, signature.length() - 1);
+				this.model.addRelation(c.getName(), bracket, "assoc");
+			}
 		}
 		return toDecorate;
 	};

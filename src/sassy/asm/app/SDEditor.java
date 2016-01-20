@@ -88,12 +88,13 @@ public class SDEditor extends VisitorAdapter {
 			return;
 		}
 		Queue<List<String>> stack = m.getStack();
+//		System.out.println(stack.size());
 		for (List<String> list : stack) {
 			String className = list.get(1);
+//			System.out.println("Class name:  " + className);
 			for (IClass c : this.model.getClasses()) {
-				System.out.println(c.getName());
+//				System.out.println("C name : " + c.getName() +  " Class Name: " + className);
 				if (c.getName().equals(className)) {
-					//System.out.println(className);
 					if (list.get(2).contains("<init>")
 							&& !this.classes.contains(className)) {
 						if (this.classes.contains("/" + className)) {
@@ -103,7 +104,7 @@ public class SDEditor extends VisitorAdapter {
 					} else if (!this.classes.contains("/" + className)) {
 						this.classes.add(className);
 					}
-					System.out.println(list.get(2));
+//					System.out.println("Method name : " +list.get(2));
 					IMethod method = c.getMethodsMap().get(list.get(2));
 					String params = "[]";
 
@@ -124,6 +125,7 @@ public class SDEditor extends VisitorAdapter {
 				}
 			}
 		}
+//		System.out.println(Arrays.toString(this.classes.toArray()));
 	}
 
 	@Override
