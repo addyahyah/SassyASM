@@ -1,0 +1,32 @@
+/graphvizparser:GraphvizParser[a]
+imodel:IModel[a]
+/sdeditor:SDEditor[a]
+designparser:DesignParser[a]
+/visitoradapter:VisitorAdapter[a]
+/classdeclarationvisitor:ClassDeclarationVisitor[a]
+/parseclass:ParseClass[a]
+iclass:IClass[a]
+imethod:IMethod[a]
+/classfieldvisitor:ClassFieldVisitor[a]
+/classmethodvisitor:ClassMethodVisitor[a]
+/model:Model[a]
+/class:Class[a]
+itraverser:ITraverser[a]
+
+designparser:void=model.new()
+designparser:void=graphvizparser.new(IModel)
+graphvizparser:void=visitoradapter.new()
+designparser:void=parseclass.new(String)
+designparser:ArrayList=parseclass.parse()
+designparser:void=class.new()
+designparser:void=classdeclarationvisitor.new(int, IClass, IModel)
+designparser:void=classfieldvisitor.new(int, ClassVisitor, IClass, IModel)
+designparser:void=classmethodvisitor.new(int, ClassVisitor, IClass, IModel)
+designparser:void=imodel.addClass(IClass)
+designparser:void=itraverser.accept(IVisitor)
+designparser:ArrayList=imodel.getClasses()
+designparser:String=iclass.getName()
+designparser:Collection=iclass.getMethods()
+designparser:String=imethod.getName()
+designparser:void=sdeditor.new(IModel, int)
+designparser:void=itraverser.accept(IVisitor)

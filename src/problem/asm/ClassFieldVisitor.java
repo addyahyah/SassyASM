@@ -8,6 +8,7 @@ import org.objectweb.asm.Type;
 import sassy.asm.api.IClass;
 import sassy.asm.api.IField;
 import sassy.asm.api.IMethod;
+import sassy.asm.api.IModel;
 import sassy.asm.impl.Field;
 
 public class ClassFieldVisitor extends ClassVisitor {
@@ -17,7 +18,7 @@ public class ClassFieldVisitor extends ClassVisitor {
 		super(api);
 	}
 
-	public ClassFieldVisitor(int api, ClassVisitor decorated, IClass c) {
+	public ClassFieldVisitor(int api, ClassVisitor decorated, IClass c, IModel model) {
 		super(api, decorated);
 		this.c = c;
 	}

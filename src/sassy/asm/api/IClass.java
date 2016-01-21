@@ -1,14 +1,17 @@
 package sassy.asm.api;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
-public interface IClass {
+public interface IClass extends IModelPart {
 	public String getName();
 
 	public void setName(String name);
 
-	public ArrayList<IMethod> getMethods();
+	public Collection<IMethod> getMethods();
+	public HashMap<String, IMethod> getMethodsMap();
 
 	public void addMethod(IMethod method);
 
@@ -16,20 +19,20 @@ public interface IClass {
 
 	public void addField(IField field);
 
-	public void setSuperClass(String superClass);
-
-	public List<String> getInterfaces();
-
-	public void setInterfaces(List<String> interfaces);
-
-	public String getSuperClass();
-	
-	public List<String> getAssociations();
-
-	public void addAssociation(String assoc);
-
-	public List<String> getUses();
-
-	public void addUse(String use);
+	// public void setSuperClass(String superClass);
+	//
+	// public List<String> getInterfaces();
+	//
+	// public void setInterfaces(List<String> interfaces);
+	//
+	// public String getSuperClass();
+	//
+	// public List<String> getAssociations();
+	//
+	// public void addAssociation(String assoc);
+	//
+	// public List<String> getUses();
+	//
+	// public void addUse(String use);
 
 }
