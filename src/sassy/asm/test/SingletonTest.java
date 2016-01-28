@@ -1,4 +1,4 @@
-package sassy.asm.app;
+package test;
 
 public class SingletonTest {
 	private static SingletonTest instance;
