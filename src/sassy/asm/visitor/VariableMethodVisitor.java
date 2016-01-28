@@ -31,7 +31,7 @@ public class VariableMethodVisitor extends MethodVisitor {
 		// desc -> params and return type
 		// boolean itf -> if the method's owner class is an interface.
 		// name -> name of the method that is invoked
-		if(name.contains("<init>")){
+		if(name.contains("<init>") || name.contains("<clinit>")){
 			this.model.addRelation(owner, name, "use");
 		}
 		if(owner.startsWith(DesignParser.packageName)) {

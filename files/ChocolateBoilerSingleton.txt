@@ -1,0 +1,2 @@
+headfirst.singleton.chocolate.ChocolateBoiler
+headfirst.singleton.chocolate.ChocolateController

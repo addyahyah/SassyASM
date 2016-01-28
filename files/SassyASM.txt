@@ -19,3 +19,4 @@ sassy.asm.impl.Class
 sassy.asm.impl.Field
 sassy.asm.impl.Method
 sassy.asm.impl.Model
+sassy.asm.app.SingletonTest

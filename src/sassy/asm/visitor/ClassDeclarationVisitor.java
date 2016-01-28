@@ -1,6 +1,7 @@
 package sassy.asm.visitor;
 
 import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.Opcodes;
 
 import sassy.asm.api.IClass;
 import sassy.asm.api.IModel;
@@ -23,6 +24,10 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 			model.addRelation(c.getName(), superName, "superClass");
 		for (String s : interfaces) {
 			model.addRelation(c.getName(), s, "interface");
+		}
+		
+		if((access & Opcodes.ACC_INTERFACE) !=0){
+			c.setInterface(true);
 		}
 		super.visit(version, access, name, signature, superName, interfaces);
 	}

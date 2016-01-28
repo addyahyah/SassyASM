@@ -19,20 +19,11 @@ public interface IClass extends IModelPart {
 
 	public void addField(IField field);
 
-	// public void setSuperClass(String superClass);
-	//
-	// public List<String> getInterfaces();
-	//
-	// public void setInterfaces(List<String> interfaces);
-	//
-	// public String getSuperClass();
-	//
-	// public List<String> getAssociations();
-	//
-	// public void addAssociation(String assoc);
-	//
-	// public List<String> getUses();
-	//
-	// public void addUse(String use);
+	public boolean isSingleton();
 
+	public void setSingleton(boolean isSingleton);
+
+	public boolean isInterface();
+
+	public void setInterface(boolean isInterface);
 }

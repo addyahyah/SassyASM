@@ -17,10 +17,11 @@ import sassy.asm.api.IMethod;
 import sassy.asm.api.IModel;
 import sassy.asm.impl.Model;
 import sassy.asm.impl.Class;
+import sassy.asm.impl.SingletonDetection;
 
 public class DesignParser {
-	public static String[] classes = { "rt.jar/java/util", "java/util/Random",
-			"java/util/List", "java/util/ListIterator",
+	public static String[] classes = { "java/util/Collections",
+			"java/util/Random", "java/util/List", "java/util/ListIterator",
 			"java/util/concurrent/atomic/AtomicLong" };
 	public static final String packageName = "sassy";
 	public static final String className = "DesignParser";
@@ -40,52 +41,55 @@ public class DesignParser {
 		IModel model = new Model();
 		IVisitor parse = new GraphvizParser(model);
 
-		 String classAndMethodName = args[0];
-		 depth = Integer.parseInt(args[1]);
-		 String methodName =  classAndMethodName.substring(classAndMethodName.lastIndexOf(".")+1);
-		 String classy = classAndMethodName.substring(0, classAndMethodName.lastIndexOf(".")).replace(".", "/");
-		 System.out.println(classy);
+		String classAndMethodName = args[0];
+		depth = Integer.parseInt(args[1]);
+		String methodName = classAndMethodName.substring(classAndMethodName
+				.lastIndexOf(".") + 1);
+		String classy = classAndMethodName.substring(0,
+				classAndMethodName.lastIndexOf(".")).replace(".", "/");
+		System.out.println(classy);
 
 		// String path = "./files/Lab1-3Classes.txt";
-		//String path = "./files/javaClasses.txt";
-
+		// String path = "./files/javaClasses.txt";
+		
 		// String path = "./files/AbstractFactoryPizzaStore.txt";
-		// String path = "./files/SassyASM.txt";
-		//ParseClass parser = new ParseClass(path);
-		//ArrayList<String> result = parser.parse();
-		//classes = result.toArray(new String[result.size()]);
+		//String path = "./files/SassyASM.txt";
+		String path = "./files/ChocolateBoilerSingleton.txt";
+		ParseClass parser = new ParseClass(path);
+		ArrayList<String> result = parser.parse();
+		classes = result.toArray(new String[result.size()]);
 		for (String className : classes) {
-			//if (className.contains("java/util/")) {
-				System.out.println(className);
+			// if (className.contains("java/util/")) {
+			System.out.println(className);
 
-				IClass c = new Class();
+			IClass c = new Class();
 
-				// ASM's ClassReader does the heavy lifting of parsing the
-				// compiled
-				// Java class
-				ClassReader reader = new ClassReader(className);
-				// make class declaration visitor to get superclass and
-				// interfaces
-				ClassVisitor decVisitor = new ClassDeclarationVisitor(
-						Opcodes.ASM5, c, model);
-				// DECORATE declaration visitor with field visitor
-				ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5,
-						decVisitor, c, model);
-				// DECORATE field visitor with method visitor
-				ClassVisitor methodVisitor = new ClassMethodVisitor(
-						Opcodes.ASM5, fieldVisitor, c, model);
+			// ASM's ClassReader does the heavy lifting of parsing the
+			// compiled
+			// Java class
+			ClassReader reader = new ClassReader(className);
+			// make class declaration visitor to get superclass and
+			// interfaces
+			ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5,
+					c, model);
+			// DECORATE declaration visitor with field visitor
+			ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5,
+					decVisitor, c, model);
+			// DECORATE field visitor with method visitor
+			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5,
+					fieldVisitor, c, model);
 
-				// TODO: add more DECORATORS here in later milestones to
-				// accomplish
-				// specific tasks
-				// Tell the Reader to use our (heavily decorated) ClassVisitor
-				// to
-				// visit the class
-				reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
-				model.addClass(c);
-			//}
+			// TODO: add more DECORATORS here in later milestones to
+			// accomplish
+			// specific tasks
+			// Tell the Reader to use our (heavily decorated) ClassVisitor
+			// to
+			// visit the class
+			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
+			model.addClass(c);
+			// }
 		}
-
+		SingletonDetection singleton = new SingletonDetection(model);
 		ITraverser t = (ITraverser) model;
 		t.accept(parse);
 		outer: for (IClass cl : model.getClasses()) {
@@ -104,24 +108,5 @@ public class DesignParser {
 				}
 			}
 		}
-
-		// parse.write(new StringBuilder());
 	}
-
-	// public static void main(String[] args) throws IOException {
-	// IModel model = new Model();
-	// SDEditor sd = new SDEditor(model);
-	// IClass c = new Class();
-	// ClassReader reader = new ClassReader("java.util.Collections");
-	// ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, c,
-	// model);
-	// ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5,
-	// decVisitor, c, model);
-	// ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5,
-	// fieldVisitor, c, model);
-	// // TODO: ... More visitors / decorators
-	// reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
-	//
-	// sd.parse();
-	// }
 }

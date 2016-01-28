@@ -17,12 +17,31 @@ public class Class implements IClass, ITraverser {
 	private String name;
 	private HashMap<String, IMethod> methods;
 	private ArrayList<IField> fields;
+	private boolean isSingleton;
+	private boolean isInterface;
 
 	public Class() {
 		this.methods = new HashMap<String,IMethod>();
 		this.fields = new ArrayList<IField>();
 		this.name = "";
+		this.isSingleton=false;
+		this.isInterface=false;
+	}
 
+	public boolean isInterface() {
+		return isInterface;
+	}
+
+	public void setInterface(boolean isInterface) {
+		this.isInterface = isInterface;
+	}
+
+	public boolean isSingleton() {
+		return isSingleton;
+	}
+
+	public void setSingleton(boolean isSingleton) {
+		this.isSingleton = isSingleton;
 	}
 
 	public String getName() {
