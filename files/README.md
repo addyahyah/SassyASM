@@ -65,3 +65,14 @@ Helped with the parsing logic for uses, association, and inheritance.
 Derrick:
 Created the UML and Sequence Diagram for the project
 
+MILESTONE 4 DESIGN
+![Alt text](https://github.com/addyahyah/SassyASM/blob/master/files/SassyASM_M4_manual.png
+ "UML OF OUR DESIGN")
+
+Addison: Added SingletonDetection class to detect singleton pattern
+
+Lexi: Wrote test cases for Singleton 
+
+Derrick: Manual UML diagram cleanup
+
+
