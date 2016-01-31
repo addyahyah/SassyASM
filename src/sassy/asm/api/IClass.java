@@ -19,10 +19,6 @@ public interface IClass extends IModelPart {
 
 	public void addField(IField field);
 
-	public boolean isSingleton();
-
-	public void setSingleton(boolean isSingleton);
-
 	public boolean isInterface();
 
 	public void setInterface(boolean isInterface);

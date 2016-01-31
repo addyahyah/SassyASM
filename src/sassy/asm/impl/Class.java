@@ -36,14 +36,6 @@ public class Class implements IClass, ITraverser {
 		this.isInterface = isInterface;
 	}
 
-	public boolean isSingleton() {
-		return isSingleton;
-	}
-
-	public void setSingleton(boolean isSingleton) {
-		this.isSingleton = isSingleton;
-	}
-
 	public String getName() {
 		return this.name;
 	}

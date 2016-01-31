@@ -15,9 +15,9 @@ import sassy.asm.visitor.IVisitor;
 import sassy.asm.api.IClass;
 import sassy.asm.api.IMethod;
 import sassy.asm.api.IModel;
+import sassy.asm.detector.PatternDetector;
 import sassy.asm.impl.Model;
 import sassy.asm.impl.Class;
-import sassy.asm.impl.SingletonDetection;
 
 public class DesignParser {
 	public static String[] classes = { "java/util/Collections",
@@ -39,8 +39,6 @@ public class DesignParser {
 	 */
 	public static void main(String[] args) throws IOException {
 		IModel model = new Model();
-		IVisitor parse = new GraphvizParser(model);
-
 		String classAndMethodName = args[0];
 		depth = Integer.parseInt(args[1]);
 		String methodName = classAndMethodName.substring(classAndMethodName
@@ -51,10 +49,10 @@ public class DesignParser {
 
 		// String path = "./files/Lab1-3Classes.txt";
 		// String path = "./files/javaClasses.txt";
-		
+
 		// String path = "./files/AbstractFactoryPizzaStore.txt";
-		//String path = "./files/SassyASM.txt";
-		String path = "./files/ChocolateBoilerSingleton.txt";
+		String path = "./files/SassyASM.txt";
+		//String path = "./files/ChocolateBoilerSingleton.txt";
 		ParseClass parser = new ParseClass(path);
 		ArrayList<String> result = parser.parse();
 		classes = result.toArray(new String[result.size()]);
@@ -89,9 +87,11 @@ public class DesignParser {
 			model.addClass(c);
 			// }
 		}
-		SingletonDetection singleton = new SingletonDetection(model);
-		ITraverser t = (ITraverser) model;
-		t.accept(parse);
+		// SingletonDetection singleton = new SingletonDetection(model);
+		PatternDetector pd = new PatternDetector(model);
+		pd.detectPatterns();
+		GraphvizParser parse = new GraphvizParser(model);
+
 		outer: for (IClass cl : model.getClasses()) {
 
 			if (cl.getName().equals(
@@ -100,9 +100,8 @@ public class DesignParser {
 
 					if (m.getName().equals(methodName)) {
 
-						IVisitor sd = new SDEditor(model, depth);
-						ITraverser tr = (ITraverser) m;
-						tr.accept(sd);
+						SDEditor sd = new SDEditor(model, depth);
+
 						break outer;
 					}
 				}

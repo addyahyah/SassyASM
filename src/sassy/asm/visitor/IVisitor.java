@@ -1,26 +1,10 @@
 package sassy.asm.visitor;
 
-import sassy.asm.api.IClass;
-import sassy.asm.api.IField;
-import sassy.asm.api.IMethod;
-import sassy.asm.api.IModel;
-
 public interface IVisitor {
-	void preVisit(IModel m);
-
-	void preVisit(IClass c);
-
-	void visit(IClass c);
-
-	void postVisit(IModel m);
-
-	void postVisit(IClass c);
+	public void preVisit(ITraverser c);
+	public void visit(ITraverser c);
+	public void postVisit(ITraverser c);
 	
-	void preVisit(IMethod m);
-
-	void visit(IMethod m);
-	
-	void postVisit(IMethod m);
-
-	void visit(IField f);
+	public void addVisit(VisitType visitType, Class<?> clazz, IVisitMethod m);
+	public void removeVisit(VisitType visitType, Class<?> clazz);
 }

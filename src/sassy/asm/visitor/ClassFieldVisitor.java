@@ -37,22 +37,18 @@ public class ClassFieldVisitor extends ClassVisitor {
 		field.setFieldName(name);
 		field.setType(type);
 		c.addField(field);
-		
-		
+
 		if (signature != null) {
 			if (signature.contains("<") || signature.contains(">")) {
 				String bracket = signature.substring(
 						signature.lastIndexOf("<") + 1,
 						signature.lastIndexOf(">") - 1);
-				this.model.addRelation(c.getName(), bracket, "assoc");
-				// System.out.println("ASSOC :  " + c.getName() + " : " +
-				// bracket);
-
+				if (!bracket.equals("")) {
+					this.model.addRelation(c.getName(), bracket, "assoc");
+				}
 			} else {
 				String bracket = signature.substring(0, signature.length() - 1);
 				this.model.addRelation(c.getName(), bracket, "assoc");
-				// System.out.println("ASSOC : " + c.getName() + " : " +
-				// bracket);
 
 			}
 		} else {

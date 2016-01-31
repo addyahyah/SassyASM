@@ -1,6 +1,7 @@
 package sassy.asm.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import problem.car.api.ICarPart;
 import sassy.asm.api.IClass;
 import sassy.asm.api.IModel;
 import sassy.asm.api.IModelPart;
+import sassy.asm.detector.IDetector;
 import sassy.asm.visitor.ITraverser;
 import sassy.asm.visitor.IVisitor;
 
@@ -17,10 +19,13 @@ public class Model implements IModel, ITraverser {
 	private ArrayList<IClass> classes;
 
 	private HashMap<ArrayList<String>, String> relations;
+	
+	private HashMap<ArrayList<IClass>, IDetector> patterns;
 
 	public Model() {
 		this.classes = new ArrayList<>();
 		this.relations = new HashMap<ArrayList<String>, String>();
+		this.patterns = new HashMap<>();
 	}
 
 	public void addClass(IClass c) {
@@ -31,7 +36,14 @@ public class Model implements IModel, ITraverser {
 		return this.classes;
 	}
 	
-	
+
+	public HashMap<ArrayList<IClass>, IDetector> getPatterns() {
+		return patterns;
+	}
+
+	public void addPattern(ArrayList<IClass> c, IDetector pattern) {
+		this.patterns.put(c,  pattern);
+	}
 
 	@Override
 	public void addRelation(String name, String s, String relation) {
@@ -95,7 +107,8 @@ public class Model implements IModel, ITraverser {
 				this.relations.put(a, "assoc");
 
 			} else {
-
+				System.out.println(Arrays.toString(a.toArray()));
+				System.out.println(this.relations.get(a));
 				if (this.relations.get(a).equals("use")) {
 					this.relations.remove(a);
 					this.relations.put(a, "assoc");
@@ -121,5 +134,6 @@ public class Model implements IModel, ITraverser {
 		}
 		v.postVisit(this);
 	}
+
 
 }
