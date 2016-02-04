@@ -1,2 +1,10 @@
-digraph sassy_uml{node [shape = "record"] ChocolateBoiler[label = "{ChocolateBoiler\n\<\<Singleton\>\>|- empty : boolean\l- boiled : boolean\l- uniqueInstance : ChocolateBoiler\l|+ isEmpty() : boolean\l+ getInstance() : ChocolateBoiler\l+ fill() : void\l+ isBoiled() : boolean\l+ drain() : void\l+ boil() : void\l}",color=blue]ChocolateController[label = "{ChocolateController||+ main(String[]) : void\l}"]edge [arrowhead = "vee"] [style = "solid"] ChocolateBoiler->ChocolateBoiler
+digraph sassy_uml{node [shape = "record"] App[label = "{App||+ main(String[]) : void\l
+}"]
+IteratorToEnumerationAdapter[label = "{IteratorToEnumerationAdapter|- itr : Iterator\l
+|+ hasMoreElements() : boolean\l
++ nextElement() : Object\l
+}"]
+LinearTransformer[label = "{LinearTransformer|- enumTion : Enumeration\l
+|+ transform(OutputStream) : void\l
+}"]
 }

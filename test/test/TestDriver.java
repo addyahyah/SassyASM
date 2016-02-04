@@ -14,7 +14,7 @@ import problem.asm.ClassMethodVisitor;
 
 import sassy.asm.api.IClass;
 import sassy.asm.api.IModel;
-import sassy.asm.impl.Class;
+import sassy.asm.impl.Classy;
 import sassy.asm.impl.Model;
 
 public class TestDriver {

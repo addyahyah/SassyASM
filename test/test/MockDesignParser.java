@@ -13,7 +13,7 @@ import sassy.asm.app.DesignParser;
 import sassy.asm.app.GraphvizParser;
 import sassy.asm.app.ParseClass;
 import sassy.asm.app.SDEditor;
-import sassy.asm.impl.Class;
+import sassy.asm.impl.Classy;
 import sassy.asm.impl.Model;
 import sassy.asm.impl.SingletonDetection;
 import sassy.asm.visitor.ClassDeclarationVisitor;
@@ -32,7 +32,7 @@ public class MockDesignParser {
 			// if (className.contains("java/util/")) {
 			System.out.println(className);
 
-			IClass c = new Class();
+			IClass c = new Classy();
 
 			// ASM's ClassReader does the heavy lifting of parsing the
 			// compiled

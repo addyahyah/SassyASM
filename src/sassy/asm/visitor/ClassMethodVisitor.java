@@ -8,7 +8,7 @@ import org.objectweb.asm.Type;
 import sassy.asm.api.IClass;
 import sassy.asm.api.IMethod;
 import sassy.asm.api.IModel;
-import sassy.asm.impl.Method;
+import sassy.asm.impl.Methody;
 
 public class ClassMethodVisitor extends ClassVisitor {
 	private IClass c;
@@ -31,13 +31,15 @@ public class ClassMethodVisitor extends ClassVisitor {
 			String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc,
 				signature, exceptions);
-		IMethod method = new Method();
+		IMethod method = new Methody();
 
 		method.setName(name);
 		addAccessLevel(access, method);
 		addReturnType(desc, method);
 		addArguments(desc, method);
-		c.addMethod(method);
+		if (!method.getName().contains("$")) {
+			c.addMethod(method);
+		}
 
 		VariableMethodVisitor vv = new VariableMethodVisitor(Opcodes.ASM5,
 				toDecorate, c, this.model, method);
@@ -63,7 +65,7 @@ public class ClassMethodVisitor extends ClassVisitor {
 	void addReturnType(String desc, IMethod method) {
 		Type type = Type.getReturnType(desc);
 		String returnType = type.getClassName();
-		method.setReturnType(returnType);
+		method.setReturnType(returnType.replace("$", ""));
 		String typeString = type.toString();
 		// V -> void, Z -> boolean
 		if (!typeString.equals("V") && !typeString.equals("Z")) {
@@ -81,7 +83,9 @@ public class ClassMethodVisitor extends ClassVisitor {
 					args[i].toString().length() - 1);
 			this.model.addRelation(c.getName(), s, "use");
 			String arg = args[i].getClassName();
-			method.addArg(arg);
+			if (!arg.contains("$")) {
+				method.addArg(arg);
+			}
 		}
 	}
 } // end class

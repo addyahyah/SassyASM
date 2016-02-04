@@ -22,4 +22,7 @@ public interface IClass extends IModelPart {
 	public boolean isInterface();
 
 	public void setInterface(boolean isInterface);
+	public boolean isDrawable();
+
+	public void setDrawable(boolean isDrawable);
 }

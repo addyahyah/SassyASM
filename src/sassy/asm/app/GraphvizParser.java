@@ -7,17 +7,17 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
-import problem.car.api.ICar;
 import sassy.asm.api.IClass;
 import sassy.asm.api.IField;
 import sassy.asm.api.IMethod;
 import sassy.asm.api.IModel;
 import sassy.asm.detector.IDetector;
+import sassy.asm.pattern.IPattern;
+import sassy.asm.pattern.IPatterns;
 import sassy.asm.visitor.ITraverser;
 import sassy.asm.visitor.VisitType;
 import sassy.asm.visitor.Visitor;
@@ -30,6 +30,7 @@ public class GraphvizParser {
 
 	public GraphvizParser(IModel model) throws FileNotFoundException {
 		this.model = model;
+
 		this.output = new FileOutputStream("./files/text.dot");
 		this.visitor = new Visitor();
 
@@ -40,15 +41,14 @@ public class GraphvizParser {
 		this.setUpVisitMethod();
 		this.setUpPostvisitClass();
 		this.setUpPostvisitModel();
+
 		ITraverser t = (ITraverser) model;
 		t.accept(this.visitor);
 
 	}
 
 	void write(String s) {
-
 		try {
-			// System.out.println(sb);
 			this.output.write(s.getBytes());
 		} catch (IOException e) {
 			new RuntimeException();
@@ -78,29 +78,33 @@ public class GraphvizParser {
 					IField f = (IField) t;
 					String line = String.format("%s %s : %s\\l",
 							f.getAccessType(), f.getFieldName(), f.getType());
-					this.write(line);
+					this.write(line + "\n");
 				});
 	}
 
 	public void setUpPrevisitClass() {
-		this.visitor
-				.addVisit(
-						VisitType.PreVisit,
-						IClass.class,
-						(ITraverser t) -> {
-							IClass c = (IClass) t;
-							String interfaceString = "\\<\\<interface\\>\\>\\n";
-							String patterns = "";
-							for (IDetector detector : this.model.getPatterns()
-									.values()) {
-								patterns += detector.getPattern();
+		this.visitor.addVisit(
+				VisitType.PreVisit,
+				IClass.class,
+				(ITraverser t) -> {
+					IClass c = (IClass) t;
+					String interfaceString = "\\<\\<interface\\>\\>\\n";
+					String patterns = "";
+					for (IPatterns p : this.model.getPatternDetected()) {
+						HashMap<IClass, IPattern> pList = p.getPatternList();
+						for (IClass c2 : p.getPatternList().keySet()) {
+							if (c2.equals(c)) {
+								IPattern pattern = pList.get(c2);
+								patterns += pattern.getPattern();
+								break;
 							}
-							String line = String.format(
-									"%s[label = \"{%s%s%s|", c.getName(),
-									(c.isInterface()) ? interfaceString : "",
-									c.getName(), patterns);
-							this.write(line);
-						});
+						}
+					}
+					String line = String.format("%s[label = \"{%s%s%s|", c
+							.getName(), (c.isInterface()) ? interfaceString
+							: "", c.getName(), patterns.toString());
+					this.write(line);
+				});
 	}
 
 	public void setUpVisitMethod() {
@@ -116,7 +120,7 @@ public class GraphvizParser {
 								m.getAccess(), m.getName(),
 								args.substring(1, args.length() - 1),
 								m.getReturnType());
-						this.write(line);
+						this.write(line + "\n");
 					}
 				});
 	}
@@ -124,14 +128,20 @@ public class GraphvizParser {
 	public void setUpPostvisitClass() {
 		this.visitor.addVisit(VisitType.PostVisit, IClass.class,
 				(ITraverser t) -> {
-					IClass c = (IClass) t;		
-				String patterns = "";
-				for (IDetector detector : this.model.getPatterns().values()) {
-					patterns += detector.getColor();
-				}
-				String line = String.format("}\"%s]", patterns);
-				this.write(line);
-			});
+					IClass c = (IClass) t;
+					String patterns = "";
+					for (IPatterns p : this.model.getPatternDetected()) {
+						HashMap<IClass, IPattern> pList = p.getPatternList();
+						for (IClass c2 : p.getPatternList().keySet()) {
+							if (c2.equals(c)) {
+								IPattern pattern = pList.get(c2);
+								patterns = pattern.getColor();
+							}
+						}
+					}
+					String line = String.format("}\"%s]", patterns.toString());
+					this.write(line + "\n");
+				});
 	}
 
 	public void setUpPostvisitModel() {
@@ -145,39 +155,54 @@ public class GraphvizParser {
 							String rel = "";
 							String relType = "";
 							if (m.getRelations() != null) {
-								HashMap<ArrayList<String>, String> relations = m
+								HashSet<ArrayList<String>> relations = m
 										.getRelations();
 
-								Set<ArrayList<String>> keySet = relations
-										.keySet();
+								for (ArrayList<String> keys : relations) {
+									String owner = keys.get(0);
+									String target = keys.get(1);
+									rel = owner + "->" + target;
+									relType = keys.get(2);
+									for (IClass c : m.getClasses()) {
+										if (c.getName().equals(owner)) {
+											if (c.isDrawable()) {
+												for (IClass c2 : m.getClasses()) {
+													if (c2.getName().equals(
+															target)) {
+														if (c2.isDrawable()) {
+															if (relType
+																	.equals("use")) {
+																sb.append("edge [arrowhead = \"vee\"] [style = \"dashed\"] ");
+																sb.append(rel);
+																sb.append("\n");
+															} else if (relType
+																	.equals("interface")) {
+																sb.append("edge [arrowhead = \"empty\"] [style = \"dashed\"] ");
+																sb.append(rel);
+																sb.append("\n");
+															} else if (relType
+																	.equals("superClass")) {
+																sb.append("edge [arrowhead = \"empty\"] [style = \"solid\"] ");
+																sb.append(rel);
+																sb.append("\n");
+															} else if (relType
+																	.equals("assoc")) {
+																sb.append("edge [arrowhead = \"vee\"] [style = \"solid\"] ");
+																sb.append(rel);
+																sb.append("\n");
+															}
 
-								for (ArrayList<String> keys : keySet) {
-									rel = keys.get(0) + "->" + keys.get(1);
-									relType = relations.get(keys);
-
-									if (relType.equals("use")) {
-										sb.append("edge [arrowhead = \"vee\"] [style = \"dashed\"] ");
-										sb.append(rel);
-										sb.append("\n");
-									} else if (relType.equals("interface")) {
-										sb.append("edge [arrowhead = \"empty\"] [style = \"dashed\"] ");
-										sb.append(rel);
-										sb.append("\n");
-									} else if (relType.equals("superClass")) {
-										sb.append("edge [arrowhead = \"empty\"] [style = \"solid\"] ");
-										sb.append(rel);
-										sb.append("\n");
-									} else if (relType.equals("assoc")) {
-										sb.append("edge [arrowhead = \"vee\"] [style = \"solid\"] ");
-										sb.append(rel);
-										sb.append("\n");
+														}
+													}
+												}
+											}
+										}
 									}
 								}
-
+								sb.append("}");
+								this.write(sb.toString());
 							}
-							// }
-							sb.append("}");
-							this.write(sb.toString());
+
 						});
 	}
 

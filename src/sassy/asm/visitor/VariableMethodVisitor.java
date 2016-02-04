@@ -31,28 +31,34 @@ public class VariableMethodVisitor extends MethodVisitor {
 		// desc -> params and return type
 		// boolean itf -> if the method's owner class is an interface.
 		// name -> name of the method that is invoked
-		if(name.contains("<init>") || name.contains("<clinit>")){
-			this.model.addRelation(owner, name, "use");
+
+		if (owner.contains("$")) {
+			return;
+		} else {
+			if (name.contains("<init>") || name.contains("<clinit>")) {
+				this.model.addRelation(owner, name, "use");
+			}
+			if (owner.startsWith(DesignParser.packageName)) {
+				owner = owner.substring(owner.lastIndexOf("/") + 1);
+
+				this.method.addToStack(this.c.getName(), owner, name);
+				// System.out.println("method name: " + this.method.getName() +
+				// "++++++++++class name: " + this.c.getName());
+				// System.out.println("_____________method owner class: " +
+				// owner + " name " + name);
+			}
 		}
-		if(owner.startsWith(DesignParser.packageName)) {
-			owner = owner.substring(owner.lastIndexOf("/")+1);
-			
-			this.method.addToStack(this.c.getName(), owner, name);
-//			System.out.println("method name: " + this.method.getName() + "++++++++++class name: " + this.c.getName());
-//			System.out.println("_____________method owner class: " + owner + " name " + name);
-		}
-		
-//		if (owner.contains("util") && !owner.contains("$")) {
-//			String invokedMethodOwnerClass = owner.replaceAll("/", ".");
-//			String invokedMethodName = name;
-//		}
+		// if (owner.contains("util") && !owner.contains("$")) {
+		// String invokedMethodOwnerClass = owner.replaceAll("/", ".");
+		// String invokedMethodName = name;
+		// }
 	}
 
-//	@Override
-//	public void visitTypeInsn(int opcode, String type) {
-//		if (!type.contains("java")) {
-//			this.model.addRelation(this, type, "use");
-//		}
-//	}
+	// @Override
+	// public void visitTypeInsn(int opcode, String type) {
+	// if (!type.contains("java")) {
+	// this.model.addRelation(this, type, "use");
+	// }
+	// }
 
 }

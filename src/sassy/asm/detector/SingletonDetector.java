@@ -1,11 +1,13 @@
 package sassy.asm.detector;
 
-import java.util.ArrayList;
 
 import sassy.asm.api.IClass;
 import sassy.asm.api.IField;
 import sassy.asm.api.IMethod;
 import sassy.asm.api.IModel;
+import sassy.asm.pattern.IPatterns;
+import sassy.asm.pattern.Pattern;
+import sassy.asm.pattern.SingletonPattern;
 
 public class SingletonDetector implements IDetector{
 	private IModel model;
@@ -41,28 +43,15 @@ public class SingletonDetector implements IDetector{
 	}
 
 	private void checkHasGetInstance(IClass c) {
+		
+		IPatterns p = new Pattern();
 		for (IMethod m : c.getMethods()) {
 			if (m.getAccess().equals("+")
 					&& m.getReturnType().equals(c.getName())) {
-				ArrayList<IClass> cs = new ArrayList<>();
-				cs.add(c);
-				this.model.addPattern(cs, this);
+				p.addClass(c, new SingletonPattern());
 			}
 		}
+		this.model.addPatternDetected(p);
 	}
-
-
-	@Override
-	public String getColor() {
-		return ",color=blue";
-	}
-
-
-	@Override
-	public String getPattern() {
-		// TODO Auto-generated method stub
-		return "\\n\\<\\<Singleton\\>\\>";
-	}
-
 
 }
