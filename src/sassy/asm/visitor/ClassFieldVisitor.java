@@ -51,13 +51,38 @@ public class ClassFieldVisitor extends ClassVisitor {
 		IField field = new Fieldy();
 		addAccessType(access, field);
 		field.setFieldName(name);
+		// parse the field types that has <>
+		if (signature != null) {
+			if (signature.contains("<") || signature.contains(">")) {
+				String inside = signature.substring(signature.indexOf("<") + 1,
+						signature.indexOf(">"));
+				if (inside.contains("TT") || inside.contains("TE")) {
+					field.setType(type);
+				} else {
+					String[] insideArr = inside.split(";");
+					String bracket = type + "\\<";
+					for (String str : insideArr) {
+						String stri = str.substring(str.lastIndexOf("/") + 1);
+//						System.out.println(stri);
+						// if (!stri.equals("TT") && !stri.equals("TE")) {
+						bracket = bracket + stri + ",";
+						// }
 
-		field.setType(type);
+					}
+					bracket = bracket.substring(0, bracket.length() - 1);
+					bracket += "\\>";
+					field.setType(bracket);
+				}
+			}
+		} else {
+			field.setType(type);
+		}
+
 		if (!field.getType().contains("$")
 				|| !field.getFieldName().contains("$")) {
 			c.addField(field);
 			try {
-				if (primitives.contains(type)) {
+				if (!primitives.contains(type) && !type.startsWith(DesignParser.packageName)) {
 					DesignParser.readClasses(model, type, false);
 				}
 			} catch (IOException e) {
@@ -68,16 +93,22 @@ public class ClassFieldVisitor extends ClassVisitor {
 			if (signature.contains("<") || signature.contains(">")) {
 				String bracket = signature.substring(
 						signature.lastIndexOf("/") + 1).replace(";", "");
-
+				if(bracket.contains("Iterator") || bracket.contains("Enumeration")){
+					bracket = bracket.substring(0, bracket.indexOf("<"));
+				}
 				this.model.addRelation(c.getName(), bracket, "assoc");
 			} else {
 				String bracket = signature.substring(0, signature.length() - 1);
 				this.model.addRelation(c.getName(), bracket, "assoc");
+
 			}
 		} else {
-			if (desc.contains("/") && !desc.contains("java")) {
+			// && !desc.contains("java")
+			if (desc.contains("/")) {
+//				System.out.println("desc " + desc);
 				String bracket = desc.substring(desc.lastIndexOf("/"),
 						desc.length() - 1);
+
 				this.model.addRelation(c.getName(), bracket, "assoc");
 			}
 		}

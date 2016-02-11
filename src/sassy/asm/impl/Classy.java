@@ -45,7 +45,7 @@ public class Classy implements IClass, ITraverser {
 	}
 
 	public void setName(String name) {
-		this.name = name.substring(name.lastIndexOf("/") + 1);
+		this.name = name.substring(name.lastIndexOf("/")+1);
 	}
 
 	public Collection<IMethod> getMethods() {

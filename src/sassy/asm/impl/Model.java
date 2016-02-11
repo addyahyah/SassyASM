@@ -1,40 +1,29 @@
 package sassy.asm.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-
-import problem.car.api.ICarPart;
 import sassy.asm.api.IClass;
 import sassy.asm.api.IModel;
-import sassy.asm.api.IModelPart;
-import sassy.asm.detector.IDetector;
-import sassy.asm.pattern.AdapterPattern;
-import sassy.asm.pattern.IPattern;
-import sassy.asm.pattern.IPatterns;
+import sassy.asm.pattern.IPatternsFactory;
+import sassy.asm.patterndetector.IPatternDetector;
 import sassy.asm.visitor.ITraverser;
 import sassy.asm.visitor.IVisitor;
 
 public class Model implements IModel, ITraverser {
 	private ArrayList<IClass> classes;
 
-	// private HashMap<ArrayList<String>, String> relations;
-
 	private HashSet<ArrayList<String>> relations;
 
-	private HashMap<ArrayList<IClass>, IDetector> patterns;
-	private ArrayList<IPatterns> patternDetected;
-	private HashMap<String, ArrayList<IPatterns>> patternList;
+	private HashMap<ArrayList<IClass>, IPatternDetector> patterns;
+	private ArrayList<IPatternsFactory> patternDetected;
+	private HashMap<String, ArrayList<IPatternsFactory>> patternList;
 
 	public Model() {
 		this.classes = new ArrayList<>();
 		this.relations = new HashSet<ArrayList<String>>();
 		this.patterns = new HashMap<>();
-		this.patternDetected = new ArrayList<IPatterns>();
+		this.patternDetected = new ArrayList<IPatternsFactory>();
 		this.initializePatternList();
 	}
 
@@ -52,19 +41,19 @@ public class Model implements IModel, ITraverser {
 		return this.classes;
 	}
 
-	public ArrayList<IPatterns> getPatternDetected() {
+	public ArrayList<IPatternsFactory> getPatternDetected() {
 		return this.patternDetected;
 	}
 
-	public void addPatternDetected(IPatterns p) {
+	public void addPatternDetected(IPatternsFactory p) {
 		this.patternDetected.add(p);
 	}
 
-	public HashMap<ArrayList<IClass>, IDetector> getPatterns() {
+	public HashMap<ArrayList<IClass>, IPatternDetector> getPatterns() {
 		return patterns;
 	}
 
-	public void addPattern(ArrayList<IClass> c, IDetector pattern) {
+	public void addPattern(ArrayList<IClass> c, IPatternDetector pattern) {
 		this.patterns.put(c, pattern);
 	}
 
@@ -74,14 +63,15 @@ public class Model implements IModel, ITraverser {
 		if (target.contains("[")) {
 			return;
 		}
+		if(owner.contains("Object") || target.contains("Object")){
+			return;
+		}
 		owner = owner.substring(owner.lastIndexOf("/") + 1);
 		target = target.substring(target.lastIndexOf("/") + 1);
-		triple.add(owner);
-		triple.add(target);
-		triple.add(relation);
 
 		boolean add = true;
 		if (relation.equals("use") && !target.contains("<init>")) {
+
 			for (ArrayList<String> list : this.relations) {
 				if (list.get(0).equals(owner) && list.get(1).equals(target)) {
 					if (list.get(2).equals("assoc")) {
@@ -90,59 +80,43 @@ public class Model implements IModel, ITraverser {
 					}
 				}
 			}
-			if(add) { 
-				//Add here
+			if (add) {
+				// Add here
+				triple.add(owner);
+				triple.add(target);
+				triple.add(relation);
 				this.relations.add(triple);
 			}
 		} else if (relation.equals("assoc")) {
+
+//			if(target.contains(">")){
+//				target = target.substring(0,target.indexOf(">"));				
+//			}
+//			System.out.println(owner + " @@ "  +target +  " @@ " + relation);
+			
 			for (ArrayList<String> list : this.relations) {
 				if (list.get(0).equals(owner) && list.get(1).equals(target)) {
 					if (list.get(2).equals("use")) {
 						this.relations.remove(list);
 						break;
-					} 
+					}
 				}
 			}
+			triple.add(owner);
+			triple.add(target);
+			triple.add(relation);
+//			System.out.println(owner + " ## "  +target +  " ## " + relation);
 			this.relations.add(triple);
 		} else {
-//			if (!this.relations.contains(triple)) {
-				this.relations.add(triple);
-//			}
+//			System.out.println(owner + " && "  +target +  " && " + relation);
+
+			triple.add(owner);
+			triple.add(target);
+			triple.add(relation);
+
+			this.relations.add(triple);
 		}
 	}
-
-	// public void addAssocHelper(String owner, String target) {
-	// if (target.contains("<") || target.contains(">")) {
-	// String inside = target.substring(target.lastIndexOf("<") + 1,
-	// target.lastIndexOf(">"));
-	// for (IClass c : this.getClasses()) {
-	// if (c.getName().equals(inside)) {
-	// target = inside;
-	// } else {
-	// if (target.contains("<")) {
-	// target = target.substring(0, target.indexOf("<"));
-	// } else if (target.contains(">")) {
-	// target = target.substring(0, target.indexOf(">") - 1);
-	// }
-	// break;
-	// }
-	//
-	// }
-	// }
-	// ArrayList<String> couple = new ArrayList<String>();
-	// couple.add(owner);
-	// couple.add(target);
-	// if (!this.relations.containsKey(couple)) {
-	// this.relations.put(couple, "assoc");
-	// } else {
-	// if (this.relations.get(couple).equals("use")) {
-	// this.relations.remove(couple);
-	// this.relations.put(couple, "assoc");
-	// } else {
-	// this.relations.put(couple, "assoc");
-	// }
-	// }
-	// }
 
 	@Override
 	public HashSet<ArrayList<String>> getRelations() {

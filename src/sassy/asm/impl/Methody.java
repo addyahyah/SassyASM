@@ -30,6 +30,9 @@ public class Methody implements IMethod, ITraverser {
 	}
 
 	public void addToStack(String originalOwner, String className, String methodName) {
+		if(originalOwner.contains("Object") || className.contains("Object")){
+			return;
+		}
 		ArrayList<String> methodList = new ArrayList<>();
 		methodList.add(originalOwner);
 		methodList.add(className);
