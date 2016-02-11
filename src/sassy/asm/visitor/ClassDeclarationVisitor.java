@@ -1,6 +1,7 @@
 package sassy.asm.visitor;
 
 import java.io.IOException;
+
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -22,13 +23,11 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 	public void visit(int version, int access, String name, String signature,
 			String superName, String[] interfaces) {
 		c.setName(name);
+		
 		if(superName==null){
 			return;
 		}
-		System.out.println();
-		System.out.println(c.getName());
-		System.out.println(superName);
-		System.out.println();
+
 		model.addRelation(c.getName(), superName, "superClass");
 		if (!superName.equals("java/lang/Object") && !superName.startsWith(DesignParser.packageName)) {
 			try {
@@ -39,6 +38,7 @@ public class ClassDeclarationVisitor extends ClassVisitor {
 		}
 		
 		for (String s : interfaces) {
+
 			model.addRelation(c.getName(), s, "interface");
 			if (!s.equals("java/lang/Object") && !s.startsWith(DesignParser.packageName)) {
 				try {

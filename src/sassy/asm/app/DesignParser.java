@@ -8,6 +8,7 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
+import sassy.asm.patterndetector.PatternDetector;
 import sassy.asm.visitor.ClassDeclarationVisitor;
 import sassy.asm.visitor.ClassFieldVisitor;
 import sassy.asm.visitor.ClassMethodVisitor;
@@ -16,7 +17,6 @@ import sassy.asm.visitor.IVisitor;
 import sassy.asm.api.IClass;
 import sassy.asm.api.IMethod;
 import sassy.asm.api.IModel;
-import sassy.asm.detector.PatternDetector;
 import sassy.asm.impl.Model;
 import sassy.asm.impl.Classy;
 
@@ -25,7 +25,9 @@ public class DesignParser {
 			"java/util/Random", "java/util/List", "java/util/ListIterator",
 			"java/util/concurrent/atomic/AtomicLong" };
 	public static List<String> classRead = new ArrayList<>();
-	public static final String packageName = "sassy";
+	public static final String packageName = "problem";
+//	public static final String packageName = "sassy";
+
 	public static final String className = "DesignParser";
 	public static final String methodName = "main";
 	public static int depth = 5;
@@ -48,37 +50,32 @@ public class DesignParser {
 		String classy = classAndMethodName.substring(0,
 				classAndMethodName.lastIndexOf(".")).replace(".", "/");
 
-		// String path = "./files/Lab1-3Classes.txt";
+//		 String path = "./files/Lab1-3Classes.txt";
 		// String path = "./files/javaClasses.txt";
 
-		// String path = "./files/AbstractFactoryPizzaStore.txt";
+//		 String path = "./files/AbstractFactoryPizzaStore.txt";
 //		String path = "./files/SassyASM.txt";
-		 String path = "./files/AdapterTestLab5-1.txt";
-		// String path = "./files/ChocolateBoilerSingleton.txt";
-//		String path="./files/DecoratorTestLab2-1.txt";
+//		 String path = "./files/AdapterTestLab5-1.txt";
+//		 String path = "./files/ChocolateBoilerSingleton.txt";
+		String path="./files/DecoratorTestLab2-1.txt";
 		ParseClass parser = new ParseClass(path);
 		ArrayList<String> result = parser.parse();
 		classes = result.toArray(new String[result.size()]);
 		for (String className : classes) {
 			readClasses(model, className, true);
 		}
-		for(ArrayList<String> s : model.getRelations()){
-			System.out.println(s);
-		}
+		
 		PatternDetector pd = new PatternDetector(model);
 		pd.detectPatterns();
+		
+		
 		GraphvizParser parse = new GraphvizParser(model);
-
 		outer: for (IClass cl : model.getClasses()) {
-
 			if (cl.getName().equals(
 					className.substring(className.lastIndexOf("/") + 1))) {
 				for (IMethod m : cl.getMethods()) {
-
 					if (m.getName().equals(methodName)) {
-
 						SDEditor sd = new SDEditor(model, depth);
-
 						break outer;
 					}
 				}
@@ -88,7 +85,6 @@ public class DesignParser {
 
 	public static void readClasses(IModel model, String className, boolean drawable)
 			throws IOException {
-		
 		className = className.replace(".", "/").replace("$", "");
 		if(className.startsWith("java/lang")){
 			return;
@@ -98,7 +94,7 @@ public class DesignParser {
 		} else {
 			return;
 		}
-		System.out.println(className);
+//		System.out.println(className + "!!!!!!!!!!!!!!!!!"+ drawable);
 		IClass c = new Classy();
 		// ASM's ClassReader does the heavy lifting of parsing the
 		// compiled

@@ -75,4 +75,17 @@ Lexi: Wrote test cases for Singleton
 
 Derrick: Manual UML diagram cleanup
 
+Milestone 5 REFACTORED DESIGN
+![Alt text](https://github.com/addyahyah/SassyASM/blob/PatternDetector/files/SassyASM_M5_manual.png
+ "UML OF OUR DESIGN")
+
+
+Addison:
+Refactor Old Design, Attempt to implement adapter/decorator logic 
+
+Lexi:
+Refactor old test cases that fail with new design
+
+Derrick:
+Created the UML 
 

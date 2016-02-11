@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import sassy.asm.api.IClass;
 import sassy.asm.impl.Model;
+import sassy.asm.pattern.IPattern;
+import sassy.asm.pattern.IPatterns;
 
 public class TestM4 {
 	
@@ -24,22 +26,47 @@ public class TestM4 {
 		expectedValues.put("FilterInputStream", false);
 	}
 	
+//	@Test
+//	public void testLazySingletonDetection() throws IOException{
+//		String[] classes = {"test/LazySingletonTestClass", "test/NotASingleton"};
+//		Model model = new Model();
+//		MockDesignParser mdp = new MockDesignParser();
+//		mdp.visit(model, classes);
+//		
+//		for(IClass c : model.getClasses()){
+//			if(c.getName().equals("LazySingletonTestClass")){
+//				System.out.println("class is: "+ c.getName());
+//				assertTrue(c.isSingleton());
+//			}
+//			else{
+//				assertFalse(c.isSingleton());
+//			}
+//		}
+//	}
+	
 	@Test
 	public void testLazySingletonDetection() throws IOException{
-		String[] classes = {"test/LazySingletonTestClass", "test/NotASingleton"};
+		String[] classes = {"test/LazySingletonTestClass", "test/NotaSingleton"};
 		Model model = new Model();
 		MockDesignParser mdp = new MockDesignParser();
 		mdp.visit(model, classes);
 		
-		for(IClass c : model.getClasses()){
-			if(c.getName().equals("LazySingletonTestClass")){
-				System.out.println("class is: "+ c.getName());
-				assertTrue(c.isSingleton());
+		for (IPatterns p : model.getPatternDetected()) {
+			HashMap<IClass, IPattern> pList = p.getPatternList();
+			
+			for(IClass c: model.getClasses()){
+				if(c.getName().equals("LazySingletonTestClass")){
+					assertTrue(pList.get(c).getPattern().equals("Singleton"));
+				}
+				else{
+					assertFalse(pList.get(c).getPattern().equals("Singleton"));
+				}
 			}
-			else{
-				assertFalse(c.isSingleton());
-			}
+
 		}
+		
+		
+
 	}
 	
 	@Test
@@ -49,14 +76,29 @@ public class TestM4 {
 		MockDesignParser mdp = new MockDesignParser();
 		mdp.visit(model, classes);
 		
-		for(IClass c : model.getClasses()){
-			if(c.getName().equals("EagerSingletonTestClass")){
-				assertTrue(c.isSingleton());
+		
+		for (IPatterns p : model.getPatternDetected()) {
+			HashMap<IClass, IPattern> pList = p.getPatternList();
+			
+			for(IClass c: model.getClasses()){
+				if(c.getName().equals("EagerSingletonTestClass")){
+					assertTrue(pList.get(c).getPattern().equals("Singleton"));
+				}
+				else{
+					assertFalse(pList.get(c).getPattern().equals("Singleton"));
+				}
 			}
-			else{
-				assertFalse(c.isSingleton());
-			}
+
 		}
+		
+//		for(IClass c : model.getClasses()){
+//			if(c.getName().equals("EagerSingletonTestClass")){
+//				assertTrue(c.isSingleton());
+//			}
+//			else{
+//				assertFalse(c.isSingleton());
+//			}
+//		}
 	}
 	
 	@Test
@@ -65,10 +107,19 @@ public class TestM4 {
 		Model model = new Model();
 		MockDesignParser mdp = new MockDesignParser();
 		mdp.visit(model, classes);
-		for(IClass c: model.getClasses()){
-			System.out.println("Class is: " + c.getName());
-			assertEquals(expectedValues.get(c.getName()), c.isSingleton());
+		
+		for (IPatterns p : model.getPatternDetected()) {
+			HashMap<IClass, IPattern> pList = p.getPatternList();
+			
+			for(IClass c: model.getClasses()){
+				assertEquals(expectedValues.get(c.getName()), pList.get(c).getPattern().equals("Singleton"));
+			}
+
 		}
+//		for(IClass c: model.getClasses()){
+//			System.out.println("Class is: " + c.getName());
+//			assertEquals(expectedValues.get(c.getName()), c.isSingleton());
+//		}
 		
 	}
 	
@@ -78,14 +129,28 @@ public class TestM4 {
 		Model model = new Model();
 		MockDesignParser mdp = new MockDesignParser();
 		mdp.visit(model, classes);
-		for(IClass c: model.getClasses()) {
-			if(c.getName().equals("EdgeCaseNotSingleton")){
-				assertFalse(c.isSingleton());
+		
+		for (IPatterns p : model.getPatternDetected()) {
+			HashMap<IClass, IPattern> pList = p.getPatternList();
+			
+			for(IClass c: model.getClasses()){
+				if(c.getName().equals("EdgeCaseNotSingleton")){
+					assertTrue(pList.get(c).getPattern().equals("Singleton"));
+				}
+				else{
+					assertFalse(pList.get(c).getPattern().equals("Singleton"));
+				}
 			}
-			else{
-				assertTrue(c.isSingleton());
-			}
+
 		}
+//		for(IClass c: model.getClasses()) {
+//			if(c.getName().equals("EdgeCaseNotSingleton")){
+//				assertFalse(c.isSingleton());
+//			}
+//			else{
+//				assertTrue(c.isSingleton());
+//			}
+//		}
 	}
 
 }

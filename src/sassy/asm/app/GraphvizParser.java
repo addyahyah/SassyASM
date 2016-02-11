@@ -15,9 +15,13 @@ import sassy.asm.api.IClass;
 import sassy.asm.api.IField;
 import sassy.asm.api.IMethod;
 import sassy.asm.api.IModel;
-import sassy.asm.detector.IDetector;
+import sassy.asm.pattern.AdapteePattern;
+import sassy.asm.pattern.AdapterPattern;
+import sassy.asm.pattern.ComponentPattern;
+import sassy.asm.pattern.DecoratorPattern;
 import sassy.asm.pattern.IPattern;
-import sassy.asm.pattern.IPatterns;
+import sassy.asm.pattern.IPatternsFactory;
+import sassy.asm.patterndetector.IPatternDetector;
 import sassy.asm.visitor.ITraverser;
 import sassy.asm.visitor.VisitType;
 import sassy.asm.visitor.Visitor;
@@ -90,12 +94,12 @@ public class GraphvizParser {
 					IClass c = (IClass) t;
 					String interfaceString = "\\<\\<interface\\>\\>\\n";
 					String patterns = "";
-					for (IPatterns p : this.model.getPatternDetected()) {
+					for (IPatternsFactory p : this.model.getPatternDetected()) {
 						HashMap<IClass, IPattern> pList = p.getPatternList();
 						for (IClass c2 : p.getPatternList().keySet()) {
 							if (c2.equals(c)) {
 								IPattern pattern = pList.get(c2);
-								patterns += pattern.getPattern();
+								patterns = pattern.getPattern();
 								break;
 							}
 						}
@@ -130,7 +134,7 @@ public class GraphvizParser {
 				(ITraverser t) -> {
 					IClass c = (IClass) t;
 					String patterns = "";
-					for (IPatterns p : this.model.getPatternDetected()) {
+					for (IPatternsFactory p : this.model.getPatternDetected()) {
 						HashMap<IClass, IPattern> pList = p.getPatternList();
 						for (IClass c2 : p.getPatternList().keySet()) {
 							if (c2.equals(c)) {
@@ -163,13 +167,17 @@ public class GraphvizParser {
 									String target = keys.get(1);
 									rel = owner + "->" + target;
 									relType = keys.get(2);
+
 									for (IClass c : m.getClasses()) {
 										if (c.getName().equals(owner)) {
 											if (c.isDrawable()) {
+
 												for (IClass c2 : m.getClasses()) {
 													if (c2.getName().equals(
 															target)) {
+
 														if (c2.isDrawable()) {
+
 															if (relType
 																	.equals("use")) {
 																sb.append("edge [arrowhead = \"vee\"] [style = \"dashed\"] ");
@@ -189,9 +197,42 @@ public class GraphvizParser {
 																	.equals("assoc")) {
 																sb.append("edge [arrowhead = \"vee\"] [style = \"solid\"] ");
 																sb.append(rel);
+																for (IPatternsFactory p : this.model
+																		.getPatternDetected()) {
+																	HashMap<IClass, IPattern> pList = p
+																			.getPatternList();
+																	if (pList
+																			.containsKey(c)
+																			&& pList.get(
+																					c)
+																					.getClass()
+																					.equals(AdapterPattern.class)) {
+																		if (pList
+																				.containsKey(c2)
+																				&& pList.get(
+																						c2)
+																						.getClass()
+																						.equals(AdapteePattern.class)) {
+																			String adapterArrow = " [label = \"\\<\\<adapts\\>\\>\"] ";
+																			sb.append(adapterArrow);
+																			break;
+																		}
+																	}
+																	
+																	
+																	if(pList.containsKey(c) && pList.get(c).getClass().equals(DecoratorPattern.class)){
+																		
+																		if(pList.containsKey(c2)&&pList.get(c2).getClass().equals(ComponentPattern.class)){
+							
+																			String decoratorArrow = " [label = \"\\<\\<decorates\\>\\>\"] ";
+																			
+																			sb.append(decoratorArrow);
+																			break;
+																		}
+																	}
+																}
 																sb.append("\n");
 															}
-
 														}
 													}
 												}

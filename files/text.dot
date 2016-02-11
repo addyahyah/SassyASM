@@ -1,10 +1,57 @@
-digraph sassy_uml{node [shape = "record"] App[label = "{App||+ main(String[]) : void\l
+digraph sassy_uml{node [shape = "record"] InputStream[label = "{InputStream\n\<\<component\>\>|- MAX_SKIP_BUFFER_SIZE : int\l
+|+ read(byte[], int, int) : int\l
++ markSupported() : boolean\l
++ available() : int\l
++ reset() : void\l
++ skip(long) : long\l
++ close() : void\l
++ mark(int) : void\l
+}",style=filled,fillcolor=green]
+FilterInputStream[label = "{FilterInputStream\n\<\<decorator\>\>|# in : InputStream\l
+|+ read(byte[], int, int) : int\l
++ markSupported() : boolean\l
++ available() : int\l
++ reset() : void\l
++ skip(long) : long\l
++ close() : void\l
++ mark(int) : void\l
+}",style=filled,fillcolor=green]
+DecryptionInputStream[label = "{DecryptionInputStream\n\<\<decorator\>\>|- decryptor : IDecryption\l
+|+ read(byte[], int, int) : int\l
+}",style=filled,fillcolor=green]
+OutputStream[label = "{OutputStream\n\<\<component\>\>||+ flush() : void\l
++ write(byte[], int, int) : void\l
++ close() : void\l
+}",style=filled,fillcolor=green]
+FilterOutputStream[label = "{FilterOutputStream\n\<\<decorator\>\>|# out : OutputStream\l
+|+ flush() : void\l
++ write(byte[], int, int) : void\l
++ close() : void\l
+}",style=filled,fillcolor=green]
+EncryptionOutputStream[label = "{EncryptionOutputStream\n\<\<decorator\>\>|- encryptor : IEncryption\l
+|+ write(int) : void\l
+}",style=filled,fillcolor=green]
+IDecryption[label = "{\<\<interface\>\>\nIDecryption||+ decrypt(char) : char\l
 }"]
-IteratorToEnumerationAdapter[label = "{IteratorToEnumerationAdapter|- itr : Iterator\l
-|+ hasMoreElements() : boolean\l
-+ nextElement() : Object\l
+IEncryption[label = "{\<\<interface\>\>\nIEncryption||+ encrypt(char) : char\l
 }"]
-LinearTransformer[label = "{LinearTransformer|- enumTion : Enumeration\l
-|+ transform(OutputStream) : void\l
+SubstitutionCipher[label = "{SubstitutionCipher|- encryptionKey : char[]\l
+- decryptionKey : char[]\l
+|+ encrypt(char) : char\l
++ decrypt(char) : char\l
 }"]
+TextEditorApp[label = "{TextEditorApp||+ main(String[]) : void\l
+}"]
+edge [arrowhead = "vee"] [style = "solid"] DecryptionInputStream->IDecryption
+edge [arrowhead = "empty"] [style = "dashed"] SubstitutionCipher->IEncryption
+edge [arrowhead = "vee"] [style = "dashed"] DecryptionInputStream->InputStream
+edge [arrowhead = "empty"] [style = "dashed"] SubstitutionCipher->IDecryption
+edge [arrowhead = "vee"] [style = "dashed"] EncryptionOutputStream->OutputStream
+edge [arrowhead = "empty"] [style = "solid"] FilterInputStream->InputStream
+edge [arrowhead = "empty"] [style = "solid"] DecryptionInputStream->FilterInputStream
+edge [arrowhead = "empty"] [style = "solid"] FilterOutputStream->OutputStream
+edge [arrowhead = "vee"] [style = "solid"] FilterOutputStream->OutputStream [label = "\<\<decorates\>\>"] 
+edge [arrowhead = "vee"] [style = "solid"] EncryptionOutputStream->IEncryption
+edge [arrowhead = "vee"] [style = "solid"] FilterInputStream->InputStream [label = "\<\<decorates\>\>"] 
+edge [arrowhead = "empty"] [style = "solid"] EncryptionOutputStream->FilterOutputStream
 }

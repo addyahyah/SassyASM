@@ -71,7 +71,7 @@ public class ClassMethodVisitor extends ClassVisitor {
 		if (!typeString.equals("V") && !typeString.equals("Z")) {
 			String s = type.toString().substring(0,
 					type.toString().length() - 1);
-			// System.out.println(s);
+
 			this.model.addRelation(c.getName(), s, "use");
 		}
 	}
@@ -81,6 +81,8 @@ public class ClassMethodVisitor extends ClassVisitor {
 		for (int i = 0; i < args.length; i++) {
 			String s = args[i].toString().substring(0,
 					args[i].toString().length() - 1);
+//			System.out.println(s);
+
 			this.model.addRelation(c.getName(), s, "use");
 			String arg = args[i].getClassName();
 			if (!arg.contains("$")) {

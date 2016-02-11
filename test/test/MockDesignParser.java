@@ -15,7 +15,6 @@ import sassy.asm.app.ParseClass;
 import sassy.asm.app.SDEditor;
 import sassy.asm.impl.Classy;
 import sassy.asm.impl.Model;
-import sassy.asm.impl.SingletonDetection;
 import sassy.asm.visitor.ClassDeclarationVisitor;
 import sassy.asm.visitor.ClassFieldVisitor;
 import sassy.asm.visitor.ClassMethodVisitor;
@@ -25,7 +24,7 @@ import sassy.asm.visitor.IVisitor;
 public class MockDesignParser {
 	
 	public void visit(Model model, String[] classes) throws IOException{
-		IVisitor parse = new GraphvizParser(model);
+		GraphvizParser parse = new GraphvizParser(model);
 
 	
 		for (String className : classes) {
@@ -59,25 +58,14 @@ public class MockDesignParser {
 			model.addClass(c);
 			// }
 		}
-		SingletonDetection singleton = new SingletonDetection(model);
-		ITraverser t = (ITraverser) model;
-		t.accept(parse);
-//		outer: for (IClass cl : model.getClasses()) {
+		
+		//old design
+//		SingletonDetection singleton = new SingletonDetection(model);
+//		ITraverser t = (ITraverser) model;
+//		t.accept(parse);
+//		
+		
 
-//			if (cl.getName().equals(
-//					className.substring(className.lastIndexOf("/") + 1))) {
-//				for (IMethod m : cl.getMethods()) {
-//
-//					if (m.getName().equals(methodName)) {
-//
-//						IVisitor sd = new SDEditor(model, depth);
-//						ITraverser tr = (ITraverser) m;
-//						tr.accept(sd);
-//						break outer;
-//					}
-//				}
-//			}
-//		}
 	}
 
 }
