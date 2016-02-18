@@ -1,57 +1,87 @@
-digraph sassy_uml{node [shape = "record"] InputStream[label = "{InputStream\n\<\<component\>\>|- MAX_SKIP_BUFFER_SIZE : int\l
-|+ read(byte[], int, int) : int\l
-+ markSupported() : boolean\l
-+ available() : int\l
+digraph sassy_uml{node [shape = "record"] AnimatorApp[label = "{AnimatorApp||+ main(String[]) : void\l
+}"]
+AnimationPanel[label = "{AnimationPanel|- serialVersionUID : long\l
+- sprites : List\<ISprite\>\l
+- animating : boolean\l
+- sleepTime : long\l
+|+ add(ISprite) : void\l
++ getSize() : Dimension\l
+# paintComponent(Graphics) : void\l
 + reset() : void\l
-+ skip(long) : long\l
-+ close() : void\l
-+ mark(int) : void\l
-}",style=filled,fillcolor=green]
-FilterInputStream[label = "{FilterInputStream\n\<\<decorator\>\>|# in : InputStream\l
-|+ read(byte[], int, int) : int\l
-+ markSupported() : boolean\l
-+ available() : int\l
-+ reset() : void\l
-+ skip(long) : long\l
-+ close() : void\l
-+ mark(int) : void\l
-}",style=filled,fillcolor=green]
-DecryptionInputStream[label = "{DecryptionInputStream\n\<\<decorator\>\>|- decryptor : IDecryption\l
-|+ read(byte[], int, int) : int\l
-}",style=filled,fillcolor=green]
-OutputStream[label = "{OutputStream\n\<\<component\>\>||+ flush() : void\l
-+ write(byte[], int, int) : void\l
-+ close() : void\l
-}",style=filled,fillcolor=green]
-FilterOutputStream[label = "{FilterOutputStream\n\<\<decorator\>\>|# out : OutputStream\l
-|+ flush() : void\l
-+ write(byte[], int, int) : void\l
-+ close() : void\l
-}",style=filled,fillcolor=green]
-EncryptionOutputStream[label = "{EncryptionOutputStream\n\<\<decorator\>\>|- encryptor : IEncryption\l
-|+ write(int) : void\l
-}",style=filled,fillcolor=green]
-IDecryption[label = "{\<\<interface\>\>\nIDecryption||+ decrypt(char) : char\l
++ animate() : void\l
 }"]
-IEncryption[label = "{\<\<interface\>\>\nIEncryption||+ encrypt(char) : char\l
+MainWindow[label = "{MainWindow|- frame : JFrame\l
+- actionPanel : JPanel\l
+- animationPanel : AnimationPanel\l
+- moveButton : JButton\l
+- createButton : JButton\l
+- resetButton : JButton\l
+|- createWidgets(String, long) : void\l
++ show() : void\l
+- assignActions() : void\l
 }"]
-SubstitutionCipher[label = "{SubstitutionCipher|- encryptionKey : char[]\l
-- decryptionKey : char[]\l
-|+ encrypt(char) : char\l
-+ decrypt(char) : char\l
+AbstractSprite[label = "{AbstractSprite\n\<\<Component\>\>|# dx : double\l
+# dy : double\l
+# shape : Shape\l
+|+ add(ISprite) : void\l
++ iterator() : Iterator\l
++ move(Dimension) : void\l
+# computeNewBoundsAfterMoving(Dimension) : Rectangle2D\l
++ getChild(int) : ISprite\l
++ getShape() : Shape\l
++ remove(ISprite) : void\l
+}",style=filled,fillcolor=yellow]
+CircleSprite[label = "{CircleSprite\n\<\<Leaf\>\>||+ move(Dimension) : void\l
+}",style=filled,fillcolor=yellow]
+CompositeSprite[label = "{CompositeSprite\n\<\<Composite\>\>| children : List\<ISprite\>\l
+|+ add(ISprite) : void\l
++ iterator() : Iterator\l
++ move(Dimension) : void\l
++ getChild(int) : ISprite\l
++ remove(ISprite) : void\l
+}",style=filled,fillcolor=yellow]
+CompositeSpriteIterator[label = "{CompositeSpriteIterator|- stack : Stack\<ISprite\>\l
+|+ next() : Object\l
++ hasNext() : boolean\l
++ remove() : void\l
 }"]
-TextEditorApp[label = "{TextEditorApp||+ main(String[]) : void\l
+CrystalBall[label = "{CrystalBall\n\<\<Leaf\>\>||}",style=filled,fillcolor=yellow]
+ISprite[label = "{\<\<interface\>\>\nISprite||+ add(ISprite) : void\l
++ move(Dimension) : void\l
++ getChild(int) : ISprite\l
++ getShape() : Shape\l
++ remove(ISprite) : void\l
 }"]
-edge [arrowhead = "vee"] [style = "solid"] DecryptionInputStream->IDecryption
-edge [arrowhead = "empty"] [style = "dashed"] SubstitutionCipher->IEncryption
-edge [arrowhead = "vee"] [style = "dashed"] DecryptionInputStream->InputStream
-edge [arrowhead = "empty"] [style = "dashed"] SubstitutionCipher->IDecryption
-edge [arrowhead = "vee"] [style = "dashed"] EncryptionOutputStream->OutputStream
-edge [arrowhead = "empty"] [style = "solid"] FilterInputStream->InputStream
-edge [arrowhead = "empty"] [style = "solid"] DecryptionInputStream->FilterInputStream
-edge [arrowhead = "empty"] [style = "solid"] FilterOutputStream->OutputStream
-edge [arrowhead = "vee"] [style = "solid"] FilterOutputStream->OutputStream [label = "\<\<decorates\>\>"] 
-edge [arrowhead = "vee"] [style = "solid"] EncryptionOutputStream->IEncryption
-edge [arrowhead = "vee"] [style = "solid"] FilterInputStream->InputStream [label = "\<\<decorates\>\>"] 
-edge [arrowhead = "empty"] [style = "solid"] EncryptionOutputStream->FilterOutputStream
+NullSpriteIterator[label = "{NullSpriteIterator||+ next() : Object\l
++ hasNext() : boolean\l
++ remove() : void\l
+}"]
+RectangleSprite[label = "{RectangleSprite\n\<\<Leaf\>\>||+ move(Dimension) : void\l
+}",style=filled,fillcolor=yellow]
+RectangleTower[label = "{RectangleTower\n\<\<Leaf\>\>||}",style=filled,fillcolor=yellow]
+SpriteFactory[label = "{SpriteFactory|+ DX : double\l
++ DY : double\l
++ WIDTH : double\l
++ HEIGHT : double\l
+- random : Random\l
+- sprites : List\<ISprite\>\l
+|+ createRandomSprite(Dimension) : ISprite\l
++ computeRandomLocation(Dimension) : Point2D\l
+}"]
+edge [arrowhead = "empty"] [style = "solid"] RectangleTower->CompositeSprite
+edge [arrowhead = "vee"] [style = "solid"] CompositeSpriteIterator->ISprite
+edge [arrowhead = "empty"] [style = "dashed"] AbstractSprite->ISprite
+edge [arrowhead = "empty"] [style = "solid"] CircleSprite->AbstractSprite
+edge [arrowhead = "vee"] [style = "dashed"] ISprite->ISprite
+edge [arrowhead = "vee"] [style = "dashed"] NullSpriteIterator->ISprite
+edge [arrowhead = "vee"] [style = "solid"] AnimationPanel->ISprite
+edge [arrowhead = "empty"] [style = "solid"] CrystalBall->CompositeSprite
+edge [arrowhead = "vee"] [style = "dashed"] AnimationPanel->AnimationPanel
+edge [arrowhead = "empty"] [style = "solid"] RectangleSprite->AbstractSprite
+edge [arrowhead = "vee"] [style = "solid"] SpriteFactory->ISprite
+edge [arrowhead = "vee"] [style = "solid"] CompositeSprite->ISprite
+edge [arrowhead = "vee"] [style = "solid"] MainWindow->AnimationPanel
+edge [arrowhead = "vee"] [style = "dashed"] MainWindow->MainWindow
+edge [arrowhead = "empty"] [style = "solid"] CompositeSprite->AbstractSprite
+edge [arrowhead = "vee"] [style = "dashed"] AbstractSprite->ISprite
 }

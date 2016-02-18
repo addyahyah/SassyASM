@@ -89,9 +89,9 @@ public class Model implements IModel, ITraverser {
 			}
 		} else if (relation.equals("assoc")) {
 
-//			if(target.contains(">")){
-//				target = target.substring(0,target.indexOf(">"));				
-//			}
+			if(target.contains(">")){
+				target = target.substring(0,target.indexOf(">"));				
+			}
 //			System.out.println(owner + " @@ "  +target +  " @@ " + relation);
 			
 			for (ArrayList<String> list : this.relations) {

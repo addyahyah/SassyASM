@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 import sassy.asm.api.IClass;
 import sassy.asm.api.IModel;
-import sassy.asm.pattern.ComponentPattern;
+import sassy.asm.pattern.DecoratorComponentPattern;
 import sassy.asm.pattern.DecoratorPattern;
 import sassy.asm.pattern.PatternsFactory;
 
@@ -74,7 +74,7 @@ public class DecoratorDetector implements IPatternDetector {
 			for (IClass c : this.model.getClasses()) {
 				if (component.equals(c.getName())) {
 
-					decorator.addClass(c, new ComponentPattern());
+					decorator.addClass(c, new DecoratorComponentPattern());
 					c.setDrawable(true);
 				}
 				for (String s : decorators) {

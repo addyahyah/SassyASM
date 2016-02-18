@@ -17,7 +17,7 @@ import sassy.asm.api.IMethod;
 import sassy.asm.api.IModel;
 import sassy.asm.pattern.AdapteePattern;
 import sassy.asm.pattern.AdapterPattern;
-import sassy.asm.pattern.ComponentPattern;
+import sassy.asm.pattern.DecoratorComponentPattern;
 import sassy.asm.pattern.DecoratorPattern;
 import sassy.asm.pattern.IPattern;
 import sassy.asm.pattern.IPatternsFactory;
@@ -222,7 +222,7 @@ public class GraphvizParser {
 																	
 																	if(pList.containsKey(c) && pList.get(c).getClass().equals(DecoratorPattern.class)){
 																		
-																		if(pList.containsKey(c2)&&pList.get(c2).getClass().equals(ComponentPattern.class)){
+																		if(pList.containsKey(c2)&&pList.get(c2).getClass().equals(DecoratorComponentPattern.class)){
 							
 																			String decoratorArrow = " [label = \"\\<\\<decorates\\>\\>\"] ";
 																			

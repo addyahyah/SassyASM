@@ -9,7 +9,6 @@ public class AdapteePattern implements IPattern{
 
 	@Override
 	public String getPattern() {
-		// TODO Auto-generated method stub
 		return "\\n\\<\\<adaptee\\>\\>";
 	}
 

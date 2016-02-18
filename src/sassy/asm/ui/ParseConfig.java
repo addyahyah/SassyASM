@@ -40,8 +40,12 @@ public class ParseConfig {
 		String[] args = this.properties.toArray(new String[this.properties
 				.size()]);
 
-		DesignParser parser = new DesignParser(args);
-		
+//		DesignParser parser = new DesignParser(args);
+		try {
+			DesignParser.main(args);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return args;
 	}
 }

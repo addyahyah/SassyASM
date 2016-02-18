@@ -14,6 +14,7 @@ public class ParseClass {
 		this.classes = new ArrayList<String>();
 	}
 
+	@SuppressWarnings("resource")
 	public ArrayList<String> parse() throws IOException {
 		FileReader input = new FileReader(this.path);
 		BufferedReader buffer = new BufferedReader(input);

@@ -1,0 +1,13 @@
+problem.client.AnimatorApp
+problem.graphics.AnimationPanel
+problem.graphics.MainWindow
+problem.sprites.AbstractSprite
+problem.sprites.CircleSprite
+problem.sprites.CompositeSprite
+problem.sprites.CompositeSpriteIterator
+problem.sprites.CrystalBall
+problem.sprites.ISprite
+problem.sprites.NullSpriteIterator
+problem.sprites.RectangleSprite
+problem.sprites.RectangleTower
+problem.sprites.SpriteFactory

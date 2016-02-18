@@ -14,9 +14,10 @@ public class PatternDetector{
 	}
 	
 	private void initializeDetectors(){
-		this.detectors.add(new DecoratorDetector(model));
-		this.detectors.add(new AdapterDetector(model));
-		this.detectors.add(new SingletonDetector(model));
+//		this.detectors.add(new DecoratorDetector(model));
+//		this.detectors.add(new AdapterDetector(model));
+//		this.detectors.add(new SingletonDetector(model));
+		this.detectors.add(new CompositeDetector(model));
 
 	}
 

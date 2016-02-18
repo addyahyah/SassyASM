@@ -21,7 +21,7 @@ import javax.swing.JTree;
 import sassy.asm.api.IClass;
 import sassy.asm.api.IModel;
 import sassy.asm.app.DesignParser;
-import sassy.asm.pattern.ComponentPattern;
+import sassy.asm.pattern.DecoratorComponentPattern;
 import sassy.asm.pattern.DecoratorPattern;
 import sassy.asm.pattern.IPattern;
 import sassy.asm.pattern.IPatternsFactory;
@@ -86,7 +86,7 @@ public class ResultScreen {
 			HashMap<IClass, IPattern> pList = p.getPatternList();
 			for (IClass c : pList.keySet()) {
 				if (pList.get(c) instanceof DecoratorPattern
-						|| pList.get(c) instanceof ComponentPattern) {
+						|| pList.get(c) instanceof DecoratorComponentPattern) {
 					if (!classesDecorator.contains(c.getName())) {
 						classesDecorator.add(c.getName());
 					}
@@ -104,6 +104,11 @@ public class ResultScreen {
 		for (int i = 0; i < decoratorOptions.length; i++) {
 			decoratorOptions[i] = new CheckBoxNode(classesDecorator.get(i),
 					false);
+			
+			if(decoratorOptions[i].isSelected()){
+				String className = decoratorOptions[i].getText();
+				
+			}
 		}
 
 		for (int i = 0; i < singletonOptions.length; i++) {
