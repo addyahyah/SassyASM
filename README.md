@@ -89,3 +89,10 @@ Refactor old test cases that fail with new design
 Derrick:
 Created the UML 
 
+Milestone 6
+
+No changes to the design. Added Adapter pattern detector and Decorator pattern detector.
+
+Milestone 7
+
+Attempt Composite pattern detector and the GUI. GUI is fully functional, but it is able to read a .properties file, grab all java classes from the input source directory, generate and display the UML diagram in the scroll panel, as well as show all the classes that are in different patterns.
