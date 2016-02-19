@@ -1,87 +1,3229 @@
-digraph sassy_uml{node [shape = "record"] AnimatorApp[label = "{AnimatorApp||+ main(String[]) : void\l
+digraph sassy_uml{node [shape = "record"] IClass[label = "{\<\<interface\>\>\nIClass||+ setName(String) : void\l
++ setInterface(boolean) : void\l
++ getName() : String\l
++ getFields() : ArrayList\l
++ getMethodsMap() : HashMap\l
++ addField(IField) : void\l
++ isDrawable() : boolean\l
++ getMethods() : Collection\l
++ isInterface() : boolean\l
++ addMethod(IMethod) : void\l
++ setDrawable(boolean) : void\l
 }"]
-AnimationPanel[label = "{AnimationPanel|- serialVersionUID : long\l
-- sprites : List\<ISprite\>\l
-- animating : boolean\l
-- sleepTime : long\l
-|+ add(ISprite) : void\l
+IField[label = "{\<\<interface\>\>\nIField||+ setAccessType(String) : void\l
++ setFieldName(String) : void\l
++ getType() : String\l
++ getAccessType() : String\l
++ getFieldName() : String\l
++ setType(String) : void\l
+}"]
+IMethod[label = "{\<\<interface\>\>\nIMethod||+ setName(String) : void\l
++ addArg(String) : void\l
++ setAccess(String) : void\l
++ getName() : String\l
++ getAccess() : String\l
++ getReturnType() : String\l
++ setReturnType(String) : void\l
++ getStack() : Queue\l
++ addToStack(String, String, String) : void\l
++ getArgs() : ArrayList\l
+}"]
+IModel[label = "{\<\<interface\>\>\nIModel||+ addPatternDetected(IPatternsFactory) : void\l
++ getPatterns() : HashMap\l
++ getRelations() : HashSet\l
++ addPattern(ArrayList, IPatternDetector) : void\l
++ addRelation(String, String, String) : void\l
++ getClasses() : ArrayList\l
++ addClass(IClass) : void\l
++ getPatternDetected() : ArrayList\l
+}"]
+DesignParser[label = "{DesignParser|+ classes : String[]\l
++ classRead : List\<String\>\l
++ packageName1 : String\l
++ packageName2 : String\l
++ className : String\l
++ methodName : String\l
++ depth : int\l
++ outputDir : String\l
+- model : IModel\l
+|+ getModel() : IModel\l
++ readClasses(IModel, String, boolean) : void\l
+}"]
+GraphvizParser[label = "{GraphvizParser|- model : IModel\l
+- output : OutputStream\l
+- visitor : Visitor\l
+|- setUpPrevisitModel() : void\l
++ setUpPostvisitModel() : void\l
++ setUpPrevisitClass() : void\l
++ setUpVisitMethod() : void\l
++ setUpVisitField() : void\l
++ setUpVisitClass() : void\l
++ setUpPostvisitClass() : void\l
+ write(String) : void\l
+}"]
+AbstractList[label = "{AbstractList\n\<\<decorator\>\>|# modCount : int\l
+|+ add(int, Object) : void\l
++ subList(int, int) : List\l
++ set(int, Object) : Object\l
++ clear() : void\l
+- outOfBoundsMsg(int) : String\l
++ remove(int) : Object\l
++ lastIndexOf(Object) : int\l
++ iterator() : Iterator\l
++ addAll(int, Collection) : boolean\l
+- rangeCheckForAdd(int) : void\l
++ hashCode() : int\l
++ get(int) : Object\l
++ equals(Object) : boolean\l
+# removeRange(int, int) : void\l
++ listIterator(int) : ListIterator\l
++ indexOf(Object) : int\l
+}",style=filled,fillcolor=green]
+ArrayList[label = "{ArrayList\n\<\<decorator\>\>|- serialVersionUID : long\l
+- DEFAULT_CAPACITY : int\l
+- EMPTY_ELEMENTDATA : Object[]\l
+- DEFAULTCAPACITY_EMPTY_ELEMENTDATA : Object[]\l
+ elementData : Object[]\l
+- size : int\l
+- MAX_ARRAY_SIZE : int\l
+|- hugeCapacity(int) : int\l
+- outOfBoundsMsg(int) : String\l
++ replaceAll(UnaryOperator) : void\l
++ remove(Object) : boolean\l
++ removeAll(Collection) : boolean\l
++ iterator() : Iterator\l
++ get(int) : Object\l
++ toArray(Object[]) : Object[]\l
+# removeRange(int, int) : void\l
+- fastRemove(int) : void\l
++ indexOf(Object) : int\l
++ add(int, Object) : void\l
++ subList(int, int) : List\l
++ trimToSize() : void\l
+- grow(int) : void\l
++ set(int, Object) : Object\l
+ subListRangeCheck(int, int, int) : void\l
+ elementData(int) : Object\l
++ spliterator() : Spliterator\l
+- writeObject(ObjectOutputStream) : void\l
++ forEach(Consumer) : void\l
++ isEmpty() : boolean\l
++ clear() : void\l
++ sort(Comparator) : void\l
+- ensureExplicitCapacity(int) : void\l
+- readObject(ObjectInputStream) : void\l
++ removeIf(Predicate) : boolean\l
+- batchRemove(Collection, boolean) : boolean\l
++ lastIndexOf(Object) : int\l
++ contains(Object) : boolean\l
+- ensureCapacityInternal(int) : void\l
++ size() : int\l
+- rangeCheck(int) : void\l
++ addAll(int, Collection) : boolean\l
+- rangeCheckForAdd(int) : void\l
++ clone() : Object\l
++ listIterator() : ListIterator\l
++ ensureCapacity(int) : void\l
++ retainAll(Collection) : boolean\l
+}",style=filled,fillcolor=green]
+ParseClass[label = "{ParseClass|- path : String\l
+- classes : ArrayList\<String\>\l
+|+ parse() : ArrayList\l
+}"]
+SDEditor[label = "{SDEditor|- model : IModel\l
+- output : OutputStream\l
+- depth : int\l
+- OriginalDepth : int\l
+- classes : Set\<String\>\l
+- methodStrings : List\<String\>\l
+- visitor : Visitor\l
+|+ setUpVisitMethod() : void\l
++ setUpPrevisitMethod() : void\l
++ setUpPostvisitMethod() : void\l
+ write(StringBuilder) : void\l
+}"]
+HashMap[label = "{HashMap\n\<\<decorator\>\>|- serialVersionUID : long\l
+ DEFAULT_INITIAL_CAPACITY : int\l
+ MAXIMUM_CAPACITY : int\l
+ DEFAULT_LOAD_FACTOR : float\l
+ TREEIFY_THRESHOLD : int\l
+ UNTREEIFY_THRESHOLD : int\l
+ MIN_TREEIFY_CAPACITY : int\l
+ table : HashMap$Node[]\<TK,TV\>\l
+ entrySet : Set\<Map$Entry<TK,TV\>\l
+ size : int\l
+ modCount : int\l
+ threshold : int\l
+ loadFactor : float\l
+| reinitialize() : void\l
+ internalWriteEntries(ObjectOutputStream) : void\l
++ getOrDefault(Object, Object) : Object\l
+ newTreeNode(int, Object, Object) : HashMapTreeNode\l
++ values() : Collection\l
++ computeIfAbsent(Object, Function) : Object\l
++ replace(Object, Object) : Object\l
+ putMapEntries(Map, boolean) : void\l
++ replaceAll(BiFunction) : void\l
++ put(Object, Object) : Object\l
++ remove(Object, Object) : boolean\l
++ containsValue(Object) : boolean\l
+ capacity() : int\l
+ replacementNode() : HashMapNode\l
++ compute(Object, BiFunction) : Object\l
++ get(Object) : Object\l
+ putVal(int, Object, Object, boolean, boolean) : Object\l
++ putAll(Map) : void\l
++ merge(Object, Object, BiFunction) : Object\l
++ keySet() : Set\l
+ removeNode(int, Object, Object, boolean, boolean) : HashMapNode\l
++ entrySet() : Set\l
++ containsKey(Object) : boolean\l
+ treeifyBin(int) : void\l
++ forEach(BiConsumer) : void\l
+- writeObject(ObjectOutputStream) : void\l
++ isEmpty() : boolean\l
++ clear() : void\l
+ tableSizeFor(int) : int\l
+ afterNodeRemoval() : void\l
+ comparableClassFor(Object) : Class\l
+- readObject(ObjectInputStream) : void\l
+ afterNodeAccess() : void\l
+ compareComparables(Class, Object, Object) : int\l
++ computeIfPresent(Object, BiFunction) : Object\l
++ size() : int\l
+ loadFactor() : float\l
++ clone() : Object\l
+ resize() : HashMapNode[]\l
+ newNode(int, Object, Object) : HashMapNode\l
+ replacementTreeNode() : HashMapTreeNode\l
+ getNode(int, Object) : HashMapNode\l
++ putIfAbsent(Object, Object) : Object\l
+ afterNodeInsertion(boolean) : void\l
+ hash(Object) : int\l
+}",style=filled,fillcolor=green]
+Classy[label = "{Classy|- name : String\l
+- methods : HashMap\<String,IMethod\>\l
+- fields : ArrayList\<IField\>\l
+- isInterface : boolean\l
+- isDrawable : boolean\l
+|+ setName(String) : void\l
++ setInterface(boolean) : void\l
++ getName() : String\l
++ addField(IField) : void\l
++ setDrawable(boolean) : void\l
++ accept(IVisitor) : void\l
++ getFields() : ArrayList\l
++ getMethodsMap() : HashMap\l
++ isDrawable() : boolean\l
++ isInterface() : boolean\l
++ getMethods() : Collection\l
++ addMethod(IMethod) : void\l
+}"]
+Fieldy[label = "{Fieldy|- fieldName : String\l
+- accessType : String\l
+- type : String\l
+|+ setAccessType(String) : void\l
++ setFieldName(String) : void\l
++ getType() : String\l
++ getAccessType() : String\l
++ getFieldName() : String\l
++ setType(String) : void\l
++ accept(IVisitor) : void\l
+}"]
+Methody[label = "{Methody|- name : String\l
+- access : String\l
+- returnType : String\l
+- args : ArrayList\<String\>\l
++ stack : Queue\<String\>\l
+|+ setName(String) : void\l
++ addArg(String) : void\l
++ setAccess(String) : void\l
++ getName() : String\l
++ getAccess() : String\l
++ getReturnType() : String\l
++ setReturnType(String) : void\l
++ getStack() : Queue\l
++ addToStack(String, String, String) : void\l
++ getArgs() : ArrayList\l
++ accept(IVisitor) : void\l
+}"]
+AbstractSet[label = "{AbstractSet\n\<\<decorator\>\>||+ removeAll(Collection) : boolean\l
++ hashCode() : int\l
++ equals(Object) : boolean\l
+}",style=filled,fillcolor=green]
+HashSet[label = "{HashSet\n\<\<decorator\>\>| serialVersionUID : long\l
+- map : HashMap\l
+- PRESENT : Object\l
+|+ add(Object) : boolean\l
++ spliterator() : Spliterator\l
+- writeObject(ObjectOutputStream) : void\l
++ isEmpty() : boolean\l
++ clear() : void\l
++ remove(Object) : boolean\l
+- readObject(ObjectInputStream) : void\l
++ iterator() : Iterator\l
++ contains(Object) : boolean\l
++ size() : int\l
++ clone() : Object\l
+}",style=filled,fillcolor=green]
+Model[label = "{Model|- classes : ArrayList\<IClass\>\l
+- relations : HashSet\<String\>\l
+- patterns : HashMap\<IClass\>\l
+- patternDetected : ArrayList\<IPatternsFactory\>\l
+- patternList : HashMap\<String,IPatternsFactory\>\l
+|+ addPatternDetected(IPatternsFactory) : void\l
+- initializePatternList() : void\l
++ getPatterns() : HashMap\l
++ addPattern(ArrayList, IPatternDetector) : void\l
++ getRelations() : HashSet\l
++ addRelation(String, String, String) : void\l
++ getClasses() : ArrayList\l
++ addClass(IClass) : void\l
++ getPatternDetected() : ArrayList\l
++ accept(IVisitor) : void\l
+}"]
+AdapteePattern[label = "{AdapteePattern||+ getColor() : String\l
++ getPattern() : String\l
+}"]
+AdapterPattern[label = "{AdapterPattern||+ getColor() : String\l
++ getPattern() : String\l
+}"]
+CompositeComponentPattern[label = "{CompositeComponentPattern||+ getColor() : String\l
++ getPattern() : String\l
+}"]
+CompositeCompositePattern[label = "{CompositeCompositePattern||+ getColor() : String\l
++ getPattern() : String\l
+}"]
+CompositeLeafPattern[label = "{CompositeLeafPattern||+ getColor() : String\l
++ getPattern() : String\l
+}"]
+DecoratorComponentPattern[label = "{DecoratorComponentPattern||+ getColor() : String\l
++ getPattern() : String\l
+}"]
+DecoratorPattern[label = "{DecoratorPattern||+ getColor() : String\l
++ getPattern() : String\l
+}"]
+IPatternsFactory[label = "{\<\<interface\>\>\nIPatternsFactory||+ getPatternList() : HashMap\l
++ addClass(IClass, IPattern) : void\l
+}"]
+PatternsFactory[label = "{PatternsFactory|- patternList : HashMap\<IClass,IPattern\>\l
+|+ getPatternList() : HashMap\l
++ addClass(IClass, IPattern) : void\l
+}"]
+SingletonPattern[label = "{SingletonPattern||+ getColor() : String\l
++ getPattern() : String\l
+}"]
+TargetPattern[label = "{TargetPattern||+ getColor() : String\l
++ getPattern() : String\l
+}"]
+AdapterDetector[label = "{AdapterDetector|- model : IModel\l
+- adapter : PatternsFactory\l
+|- addToCandidates(String, String, String) : void\l
++ detectPattern() : void\l
+}"]
+CompositeDetector[label = "{CompositeDetector|- model : IModel\l
+- factory : PatternsFactory\l
+|- addToCandidate(ArrayList, ArrayList, ArrayList) : void\l
++ detectPattern() : void\l
+}"]
+CopyOfCompositeDetector[label = "{CopyOfCompositeDetector|- model : IModel\l
+- factory : PatternsFactory\l
+|- addToCandidate(ArrayList, ArrayList, ArrayList) : void\l
++ detectPattern() : void\l
+}"]
+DecoratorDetector[label = "{DecoratorDetector|- model : IModel\l
+- adapter : PatternsFactory\l
+|+ addToCandidate(String, ArrayList) : void\l
++ detectPattern() : void\l
+}"]
+PatternDetector[label = "{PatternDetector|- model : IModel\l
+- detectors : ArrayList\<IPatternDetector\>\l
+|+ detectPatterns() : void\l
+- initializeDetectors() : void\l
+}"]
+SingletonDetector[label = "{SingletonDetector|- model : IModel\l
+|- checkHasGetInstance(IClass) : void\l
+- checkPrivateConstructor(IClass) : void\l
++ detectPattern() : void\l
+- checkTypeAndIsPrivate() : void\l
+}"]
+ConcurrentHashMap[label = "{ConcurrentHashMap\n\<\<decorator\>\>|- serialVersionUID : long\l
+- MAXIMUM_CAPACITY : int\l
+- DEFAULT_CAPACITY : int\l
+ MAX_ARRAY_SIZE : int\l
+- DEFAULT_CONCURRENCY_LEVEL : int\l
+- LOAD_FACTOR : float\l
+ TREEIFY_THRESHOLD : int\l
+ UNTREEIFY_THRESHOLD : int\l
+ MIN_TREEIFY_CAPACITY : int\l
+- MIN_TRANSFER_STRIDE : int\l
+- RESIZE_STAMP_BITS : int\l
+- MAX_RESIZERS : int\l
+- RESIZE_STAMP_SHIFT : int\l
+ MOVED : int\l
+ TREEBIN : int\l
+ RESERVED : int\l
+ HASH_BITS : int\l
+ NCPU : int\l
+- serialPersistentFields : ObjectStreamField[]\l
+ table : ConcurrentHashMap$Node[]\<TK,TV\>\l
+- nextTable : ConcurrentHashMap$Node[]\<TK,TV\>\l
+- baseCount : long\l
+- sizeCtl : int\l
+- transferIndex : int\l
+- cellsBusy : int\l
+- counterCells : ConcurrentHashMap$CounterCell[]\l
+- keySet : ConcurrentHashMap$KeySetView\<TK,TV\>\l
+- values : ConcurrentHashMap$ValuesView\<TK,TV\>\l
+- entrySet : ConcurrentHashMap$EntrySetView\<TK,TV\>\l
+- U : Unsafe\l
+- SIZECTL : long\l
+- TRANSFERINDEX : long\l
+- BASECOUNT : long\l
+- CELLSBUSY : long\l
+- CELLVALUE : long\l
+- ABASE : long\l
+- ASHIFT : int\l
+|+ getOrDefault(Object, Object) : Object\l
++ reduceToInt(long, ToIntBiFunction, int, IntBinaryOperator) : int\l
+- tryPresize(int) : void\l
+ casTabAt(int) : boolean\l
++ replace(Object, Object) : Object\l
++ containsValue(Object) : boolean\l
++ put(Object, Object) : Object\l
++ compute(Object, BiFunction) : Object\l
++ reduceEntriesToInt(long, ToIntFunction, int, IntBinaryOperator) : int\l
++ merge(Object, Object, BiFunction) : Object\l
+- initTable() : ConcurrentHashMapNode[]\l
++ searchKeys(long, Function) : Object\l
++ reduce(long, BiFunction, BiFunction) : Object\l
+- addCount(long, int) : void\l
++ entrySet() : Set\l
++ containsKey(Object) : boolean\l
+- writeObject(ObjectOutputStream) : void\l
++ reduceValues(long, Function, BiFunction) : Object\l
+ batchFor(long) : int\l
+ resizeStamp(int) : int\l
++ mappingCount() : long\l
+ comparableClassFor(Object) : Class\l
+- readObject(ObjectInputStream) : void\l
++ contains(Object) : boolean\l
+- transfer() : void\l
++ size() : int\l
++ reduceEntries(long, Function, BiFunction) : Object\l
++ reduceEntriesToLong(long, ToLongFunction, long, LongBinaryOperator) : long\l
+ tabAt(int) : ConcurrentHashMapNode\l
++ reduceValuesToDouble(long, ToDoubleFunction, double, DoubleBinaryOperator) : double\l
+ sumCount() : long\l
++ forEachEntry(long, Function, Consumer) : void\l
++ newKeySet(int) : ConcurrentHashMapKeySetView\l
++ keys() : Enumeration\l
++ values() : Collection\l
++ computeIfAbsent(Object, Function) : Object\l
+ untreeify() : ConcurrentHashMapNode\l
++ reduceKeysToDouble(long, ToDoubleFunction, double, DoubleBinaryOperator) : double\l
+ helpTransfer() : ConcurrentHashMapNode[]\l
++ replaceAll(BiFunction) : void\l
++ remove(Object, Object) : boolean\l
+- fullAddCount(long, boolean) : void\l
++ search(long, BiFunction) : Object\l
++ searchEntries(long, Function) : Object\l
++ reduceToLong(long, ToLongBiFunction, long, LongBinaryOperator) : long\l
++ hashCode() : int\l
++ searchValues(long, Function) : Object\l
++ get(Object) : Object\l
+ putVal(Object, Object, boolean) : Object\l
++ putAll(Map) : void\l
+ setTabAt(int) : void\l
++ keySet() : Set\l
++ reduceKeysToLong(long, ToLongFunction, long, LongBinaryOperator) : long\l
++ reduceKeysToInt(long, ToIntFunction, int, IntBinaryOperator) : int\l
++ forEach(long, BiFunction, Consumer) : void\l
+- treeifyBin(int) : void\l
++ reduceEntriesToDouble(long, ToDoubleFunction, double, DoubleBinaryOperator) : double\l
++ isEmpty() : boolean\l
++ clear() : void\l
+- tableSizeFor(int) : int\l
++ reduceToDouble(long, ToDoubleBiFunction, double, DoubleBinaryOperator) : double\l
+ spread(int) : int\l
++ reduceValuesToInt(long, ToIntFunction, int, IntBinaryOperator) : int\l
+ compareComparables(Class, Object, Object) : int\l
++ computeIfPresent(Object, BiFunction) : Object\l
++ forEachValue(long, Function, Consumer) : void\l
+ replaceNode(Object, Object, Object) : Object\l
++ equals(Object) : boolean\l
++ elements() : Enumeration\l
++ forEachKey(long, Function, Consumer) : void\l
++ reduceValuesToLong(long, ToLongFunction, long, LongBinaryOperator) : long\l
++ toString() : String\l
++ putIfAbsent(Object, Object) : Object\l
++ reduceKeys(long, Function, BiFunction) : Object\l
+}",style=filled,fillcolor=green]
+Properties[label = "{Properties\n\<\<decorator\>\>|- serialVersionUID : long\l
+# defaults : Properties\l
+- hexDigit : char[]\l
+|+ getProperty(String, String) : String\l
++ loadFromXML(InputStream) : void\l
++ stringPropertyNames() : Set\l
++ save(OutputStream, String) : void\l
+- loadConvert(char[], int, int, char[]) : String\l
++ store(OutputStream, String) : void\l
++ list(PrintWriter) : void\l
++ storeToXML(OutputStream, String, String) : void\l
+- load0() : void\l
++ load(InputStream) : void\l
+- saveConvert(String, boolean, boolean) : String\l
++ propertyNames() : Enumeration\l
+- enumerateStringProperties(Hashtable) : void\l
+- toHex(int) : char\l
++ setProperty(String, String) : Object\l
+- writeComments(BufferedWriter, String) : void\l
+- enumerate(Hashtable) : void\l
+- store0(BufferedWriter, String, boolean) : void\l
+}",style=filled,fillcolor=green]
+Vector[label = "{Vector\n\<\<decorator\>\>|# elementData : Object[]\l
+# elementCount : int\l
+# capacityIncrement : int\l
+- serialVersionUID : long\l
+- MAX_ARRAY_SIZE : int\l
+|+ firstElement() : Object\l
+- hugeCapacity(int) : int\l
++ removeAll(Collection) : boolean\l
++ iterator() : Iterator\l
++ toArray(Object[]) : Object[]\l
++ indexOf(Object, int) : int\l
++ removeAllElements() : void\l
++ add(int, Object) : void\l
+- grow(int) : void\l
+- ensureCapacityHelper(int) : void\l
++ spliterator() : Spliterator\l
+- writeObject(ObjectOutputStream) : void\l
++ copyInto(Object[]) : void\l
++ sort(Comparator) : void\l
++ removeIf(Predicate) : boolean\l
++ contains(Object) : boolean\l
++ size() : int\l
++ lastElement() : Object\l
++ listIterator() : ListIterator\l
++ ensureCapacity(int) : void\l
++ addElement(Object) : void\l
++ replaceAll(UnaryOperator) : void\l
++ remove(int) : Object\l
++ capacity() : int\l
++ setSize(int) : void\l
++ setElementAt(Object, int) : void\l
++ hashCode() : int\l
++ get(int) : Object\l
++ elementAt(int) : Object\l
++ removeElementAt(int) : void\l
+# removeRange(int, int) : void\l
++ subList(int, int) : List\l
++ trimToSize() : void\l
++ set(int, Object) : Object\l
+ elementData(int) : Object\l
++ forEach(Consumer) : void\l
++ containsAll(Collection) : boolean\l
++ isEmpty() : boolean\l
++ clear() : void\l
++ lastIndexOf(Object, int) : int\l
++ insertElementAt(Object, int) : void\l
++ addAll(int, Collection) : boolean\l
++ elements() : Enumeration\l
++ equals(Object) : boolean\l
++ clone() : Object\l
++ toString() : String\l
++ removeElement(Object) : boolean\l
++ retainAll(Collection) : boolean\l
+}",style=filled,fillcolor=green]
+Dimension[label = "{Dimension\n\<\<decorator\>\>|+ width : int\l
++ height : int\l
+- serialVersionUID : long\l
+|+ getHeight() : double\l
 + getSize() : Dimension\l
-# paintComponent(Graphics) : void\l
-+ reset() : void\l
-+ animate() : void\l
-}"]
-MainWindow[label = "{MainWindow|- frame : JFrame\l
-- actionPanel : JPanel\l
-- animationPanel : AnimationPanel\l
-- moveButton : JButton\l
-- createButton : JButton\l
-- resetButton : JButton\l
-|- createWidgets(String, long) : void\l
++ setSize(int, int) : void\l
++ hashCode() : int\l
++ equals(Object) : boolean\l
+- initIDs() : void\l
++ toString() : String\l
++ getWidth() : double\l
+}",style=filled,fillcolor=green]
+Accessible[label = "{\<\<interface\>\>\nAccessible\n\<\<target\>\>||+ getAccessibleContext() : AccessibleContext\l
+}",style=filled,fillcolor=red]
+Component[label = "{Component\n\<\<Component\>\>|- log : PlatformLogger\l
+- eventLog : PlatformLogger\l
+- focusLog : PlatformLogger\l
+- mixingLog : PlatformLogger\l
+ peer : ComponentPeer\l
+ parent : Container\l
+ appContext : AppContext\l
+ x : int\l
+ y : int\l
+ width : int\l
+ height : int\l
+ foreground : Color\l
+ background : Color\l
+ font : Font\l
+ peerFont : Font\l
+ cursor : Cursor\l
+ locale : Locale\l
+- graphicsConfig : GraphicsConfiguration\l
+ bufferStrategy : BufferStrategy\l
+ ignoreRepaint : boolean\l
+ visible : boolean\l
+ enabled : boolean\l
+- valid : boolean\l
+ dropTarget : DropTarget\l
+ popups : Vector\<PopupMenu\>\l
+- name : String\l
+- nameExplicitlySet : boolean\l
+- focusable : boolean\l
+- FOCUS_TRAVERSABLE_UNKNOWN : int\l
+- FOCUS_TRAVERSABLE_DEFAULT : int\l
+- FOCUS_TRAVERSABLE_SET : int\l
+- isFocusTraversableOverridden : int\l
+ focusTraversalKeys : Set[]\<AWTKeyStroke\>\l
+- focusTraversalKeyPropertyNames : String[]\l
+- focusTraversalKeysEnabled : boolean\l
+ LOCK : Object\l
+- acc : AccessControlContext\l
+ minSize : Dimension\l
+ minSizeSet : boolean\l
+ prefSize : Dimension\l
+ prefSizeSet : boolean\l
+ maxSize : Dimension\l
+ maxSizeSet : boolean\l
+ componentOrientation : ComponentOrientation\l
+ newEventsOnly : boolean\l
+ componentListener : ComponentListener\l
+ focusListener : FocusListener\l
+ hierarchyListener : HierarchyListener\l
+ hierarchyBoundsListener : HierarchyBoundsListener\l
+ keyListener : KeyListener\l
+ mouseListener : MouseListener\l
+ mouseMotionListener : MouseMotionListener\l
+ mouseWheelListener : MouseWheelListener\l
+ inputMethodListener : InputMethodListener\l
+ windowClosingException : RuntimeException\l
+ actionListenerK : String\l
+ adjustmentListenerK : String\l
+ componentListenerK : String\l
+ containerListenerK : String\l
+ focusListenerK : String\l
+ itemListenerK : String\l
+ keyListenerK : String\l
+ mouseListenerK : String\l
+ mouseMotionListenerK : String\l
+ mouseWheelListenerK : String\l
+ textListenerK : String\l
+ ownedWindowK : String\l
+ windowListenerK : String\l
+ inputMethodListenerK : String\l
+ hierarchyListenerK : String\l
+ hierarchyBoundsListenerK : String\l
+ windowStateListenerK : String\l
+ windowFocusListenerK : String\l
+ eventMask : long\l
+ isInc : boolean\l
+ incRate : int\l
++ TOP_ALIGNMENT : float\l
++ CENTER_ALIGNMENT : float\l
++ BOTTOM_ALIGNMENT : float\l
++ LEFT_ALIGNMENT : float\l
++ RIGHT_ALIGNMENT : float\l
+- serialVersionUID : long\l
+- changeSupport : PropertyChangeSupport\l
+- objectLock : Object\l
+ isPacked : boolean\l
+- boundsOp : int\l
+- compoundShape : Region\l
+- mixingCutoutRegion : Region\l
+- isAddNotifyComplete : boolean\l
+ backgroundEraseDisabled : boolean\l
+ eventCache : EventQueueItem[]\l
+- coalescingEnabled : boolean\l
+- coalesceMap : Map\<Class<*\>\l
+- coalesceEventsParams : Class[]\l
+- requestFocusController : RequestFocusController\l
+- autoFocusTransferOnDisposal : boolean\l
+- componentSerializedDataVersion : int\l
+# accessibleContext : AccessibleContext\l
+ $assertionsDisabled : boolean\l
+|- notifyNewBounds(boolean, boolean) : void\l
+ getFont_NoClientCode() : Font\l
++ getLocation(Point) : Point\l
+ requestFocusInWindow(boolean) : boolean\l
++ isOpaque() : boolean\l
+# processComponentEvent(ComponentEvent) : void\l
+# processEvent(AWTEvent) : void\l
+ isNonOpaqueForMixing() : boolean\l
++ paint(Graphics) : void\l
++ getInputMethodListeners() : InputMethodListener[]\l
++ mouseDown(Event, int, int) : boolean\l
++ getInputMethodRequests() : InputMethodRequests\l
+ mixOnValidating() : void\l
+# paramString() : String\l
++ addHierarchyBoundsListener(HierarchyBoundsListener) : void\l
++ getMinimumSize() : Dimension\l
++ getAlignmentY() : float\l
+# processMouseEvent(MouseEvent) : void\l
++ getAlignmentX() : float\l
+ getNextFocusCandidate() : Component\l
++ dispatchEvent(AWTEvent) : void\l
+ getBackBuffer() : Image\l
++ reshape(int, int, int, int) : void\l
+# disableEvents(long) : void\l
++ postEvent(Event) : boolean\l
+- readObject(ObjectInputStream) : void\l
+ createBufferStrategy(int, BufferCapabilities) : void\l
++ contains(Point) : boolean\l
++ size() : Dimension\l
+ getContainingWindow() : Window\l
++ enableInputMethods(boolean) : void\l
++ mouseUp(Event, int, int) : boolean\l
+# processMouseMotionEvent(MouseEvent) : void\l
+ getParent_NoClientCode() : Container\l
+ clearCurrentFocusCycleRootOnHide() : void\l
++ addComponentListener(ComponentListener) : void\l
+ getSiblingIndexAbove() : int\l
++ setName(String) : void\l
++ removeInputMethodListener(InputMethodListener) : void\l
++ removeHierarchyListener(HierarchyListener) : void\l
+ subtractAndApplyShapeBelowMe() : void\l
++ getFontMetrics(Font) : FontMetrics\l
+ createHierarchyEvents(int, Component, Container, long, boolean) : int\l
++ getHeight() : int\l
+ getNormalShape() : Region\l
++ getBaselineResizeBehavior() : ComponentBaselineResizeBehavior\l
++ getIgnoreRepaint() : boolean\l
++ removeMouseWheelListener(MouseWheelListener) : void\l
+ canBeFocusOwner() : boolean\l
++ getPeer() : ComponentPeer\l
+- isRequestFocusAccepted(boolean, boolean) : boolean\l
++ applyComponentOrientation(ComponentOrientation) : void\l
++ validate() : void\l
+ applyCurrentShape() : void\l
+ eventTypeEnabled(int) : boolean\l
++ getParent() : Container\l
++ isMinimumSizeSet() : boolean\l
+ applyCompoundShape(Region) : void\l
++ setComponentOrientation(ComponentOrientation) : void\l
+- getRecursivelyVisibleBounds() : Rectangle\l
+ autoProcessMouseWheel(MouseWheelEvent) : void\l
++ setBounds(Rectangle) : void\l
+ isRecursivelyVisible() : boolean\l
+ isMixingNeeded() : boolean\l
+ lightweightPaint(Graphics) : void\l
+- applyCurrentShapeBelowMe() : void\l
+ dispatchMouseWheelToAncestor(MouseWheelEvent) : boolean\l
+- getAppliedShape() : Region\l
++ addNotify() : void\l
++ addInputMethodListener(InputMethodListener) : void\l
++ getFocusCycleRootAncestor() : Container\l
++ toString() : String\l
+ invalidateParent() : void\l
++ getName() : String\l
+ getFocusTraversalKeys_NoIDCheck(int) : Set\l
+ areInputMethodsEnabled() : boolean\l
++ isFocusTraversable() : boolean\l
++ inside(int, int) : boolean\l
+# processKeyEvent(KeyEvent) : void\l
++ getInputContext() : InputContext\l
++ getFocusTraversalKeys(int) : Set\l
++ nextFocus() : void\l
++ isCursorSet() : boolean\l
++ getMouseWheelListeners() : MouseWheelListener[]\l
++ doLayout() : void\l
++ removeMouseMotionListener(MouseMotionListener) : void\l
++ setVisible(boolean) : void\l
++ add(PopupMenu) : void\l
+ constructComponentName() : String\l
+ clearMostRecentFocusOwnerOnHide() : void\l
++ removeKeyListener(KeyListener) : void\l
+# processInputMethodEvent(InputMethodEvent) : void\l
+ getAccessibleIndexInParent() : int\l
++ isVisible() : boolean\l
++ setDropTarget(DropTarget) : void\l
++ list(PrintWriter, int) : void\l
++ removePropertyChangeListener(String, PropertyChangeListener) : void\l
+- isCoalesceEventsOverriden(Class) : boolean\l
++ revalidate() : void\l
++ removeNotify() : void\l
+ setAutoFocusTransferOnDisposal(boolean) : void\l
+ relocateComponent() : void\l
+ updateZOrder() : void\l
++ gotFocus(Event, Object) : boolean\l
+ mixOnShowing() : void\l
++ handleEvent(Event) : boolean\l
++ isForegroundSet() : boolean\l
++ show(boolean) : void\l
++ update(Graphics) : void\l
+# processFocusEvent(FocusEvent) : void\l
++ setMaximumSize(Dimension) : void\l
+# coalesceEvents(AWTEvent, AWTEvent) : AWTEvent\l
++ remove(MenuComponent) : void\l
++ imageUpdate(Image, int, int, int, int, int) : boolean\l
++ addMouseWheelListener(MouseWheelListener) : void\l
+ printHeavyweightComponents(Graphics) : void\l
++ checkImage(Image, int, int, ImageObserver) : int\l
+ getObjectLock() : Object\l
++ addKeyListener(KeyListener) : void\l
++ getComponentListeners() : ComponentListener[]\l
++ isMaximumSizeSet() : boolean\l
++ addPropertyChangeListener(String, PropertyChangeListener) : void\l
+- location_NoClientCode() : Point\l
++ getCursor() : Cursor\l
+ adjustListeningChildrenOnParent(long, int) : void\l
++ createImage(int, int) : Image\l
++ mouseMove(Event, int, int) : boolean\l
++ areFocusTraversalKeysSet(int) : boolean\l
++ getKeyListeners() : KeyListener[]\l
+ checkWindowClosingException() : boolean\l
++ layout() : void\l
++ getBaseline(int, int) : int\l
++ print(Graphics) : void\l
++ getFocusListeners() : FocusListener[]\l
++ resize(Dimension) : void\l
++ createVolatileImage(int, int, ImageCapabilities) : VolatileImage\l
++ location() : Point\l
++ lostFocus(Event, Object) : boolean\l
++ getDropTarget() : DropTarget\l
++ keyDown(Event, int) : boolean\l
++ getLocale() : Locale\l
+ subtractAndApplyShape(Region) : void\l
++ getHierarchyBoundsListeners() : HierarchyBoundsListener[]\l
+ getOpaqueShape() : Region\l
+ setGraphicsConfiguration(GraphicsConfiguration) : void\l
++ getBounds(Rectangle) : Rectangle\l
++ setPreferredSize(Dimension) : void\l
++ enable(boolean) : void\l
+ getCursor_NoClientCode() : Cursor\l
++ getMousePosition() : Point\l
+ postsOldMouseEvents() : boolean\l
++ action(Event, Object) : boolean\l
+ countHierarchyMembers() : int\l
++ firePropertyChange(String, double, double) : void\l
+ getAccessControlContext() : AccessControlContext\l
+ getContainer() : Container\l
++ addMouseMotionListener(MouseMotionListener) : void\l
+ getBoundsOp() : int\l
++ setFocusable(boolean) : void\l
++ getComponentOrientation() : ComponentOrientation\l
++ getTreeLock() : Object\l
++ isBackgroundSet() : boolean\l
++ addHierarchyListener(HierarchyListener) : void\l
+- doSwingSerialization() : void\l
++ setEnabled(boolean) : void\l
+ revalidateSynchronously() : void\l
++ isLightweight() : boolean\l
++ isEnabled() : boolean\l
++ minimumSize() : Dimension\l
+ areBoundsValid() : boolean\l
++ bounds() : Rectangle\l
+ numListening(long) : int\l
+ isInstanceOf(Object, String) : boolean\l
+ containsFocus() : boolean\l
+ isSameOrAncestorOf(Component, boolean) : boolean\l
++ repaint(long, int, int, int, int) : void\l
++ getMouseMotionListeners() : MouseMotionListener[]\l
++ setMinimumSize(Dimension) : void\l
+ transferFocus(boolean) : boolean\l
++ getListeners(Class) : EventListener[]\l
+ getAccessibleStateSet() : AccessibleStateSet\l
+ updateGraphicsData(GraphicsConfiguration) : boolean\l
++ getMaximumSize() : Dimension\l
+ isVisible_NoClientCode() : boolean\l
++ getLocationOnScreen() : Point\l
++ keyUp(Event, int) : boolean\l
++ getWidth() : int\l
+ pointRelativeToComponent(Point) : Point\l
+- reshapeNativePeer(int, int, int, int, int) : void\l
++ paintAll(Graphics) : void\l
+ paintHeavyweightComponents(Graphics) : void\l
++ setFocusTraversalKeys(int, Set) : void\l
++ hasFocus() : boolean\l
++ isPreferredSizeSet() : boolean\l
++ isDoubleBuffered() : boolean\l
++ getColorModel() : ColorModel\l
+# processHierarchyEvent(HierarchyEvent) : void\l
++ getPropertyChangeListeners(String) : PropertyChangeListener[]\l
++ isValid() : boolean\l
+ mixOnZOrderChanging(int, int) : void\l
+ mixOnHiding(boolean) : void\l
++ getFocusTraversalKeysEnabled() : boolean\l
+ invalidateIfValid() : void\l
+ setFocusTraversalKeys_NoIDCheck(int, Set) : void\l
++ hide() : void\l
++ getPreferredSize() : Dimension\l
+ eventEnabled(AWTEvent) : boolean\l
++ disable() : void\l
+ isFocusTraversableOverridden() : boolean\l
++ prepareImage(Image, int, int, ImageObserver) : boolean\l
+ updateCursorImmediately() : void\l
++ isFocusable() : boolean\l
+ getLocationOnScreen_NoTreeLock() : Point\l
+ setBoundsOp(int) : void\l
+- initIDs() : void\l
+ isEnabledImpl() : boolean\l
++ mouseExit(Event, int, int) : boolean\l
++ getHierarchyListeners() : HierarchyListener[]\l
++ isShowing() : boolean\l
++ mouseEnter(Event, int, int) : boolean\l
+ getSiblingIndexBelow() : int\l
++ mouseDrag(Event, int, int) : boolean\l
++ preferredSize() : Dimension\l
+ checkTreeLock() : void\l
++ getMouseListeners() : MouseListener[]\l
+ getHWPeerAboveMe() : ComponentPeer\l
++ setFont(Font) : void\l
+- getInsets_NoClientCode() : Insets\l
+- writeObject(ObjectOutputStream) : void\l
+ getTraversalRoot() : Container\l
+ isAutoFocusTransferOnDisposal() : boolean\l
+ getLocationOnWindow() : Point\l
++ deliverEvent(Event) : void\l
+ getToolkitImpl() : Toolkit\l
++ getForeground() : Color\l
+ getNativeContainer() : Container\l
+ mixOnReshaping() : void\l
+ lightweightPrint(Graphics) : void\l
+ findUnderMouseInWindow(PointerInfo) : Component\l
++ getFont() : Font\l
++ setCursor(Cursor) : void\l
++ getGraphicsConfiguration() : GraphicsConfiguration\l
++ isDisplayable() : boolean\l
++ setLocale(Locale) : void\l
++ removeComponentListener(ComponentListener) : void\l
+- calculateCurrentShape() : Region\l
+ requestFocus(boolean) : boolean\l
++ locate(int, int) : Component\l
++ addFocusListener(FocusListener) : void\l
+ initializeFocusTraversalKeys() : void\l
++ getComponentAt(Point) : Component\l
+# processHierarchyBoundsEvent(HierarchyEvent) : void\l
+ setRequestFocusController(RequestFocusController) : void\l
++ isFocusCycleRoot(Container) : boolean\l
++ setFocusTraversalKeysEnabled(boolean) : void\l
++ setBackground(Color) : void\l
++ printAll(Graphics) : void\l
++ getToolkit() : Toolkit\l
++ transferFocusUpCycle() : void\l
++ isFontSet() : boolean\l
++ setSize(Dimension) : void\l
+- repaintParentIfNeeded(int, int, int, int) : void\l
++ setLocation(Point) : void\l
+ isCoalescingEnabled() : boolean\l
+ requestFocusHelper(boolean, boolean) : boolean\l
+ checkGD(String) : void\l
++ getGraphics() : Graphics\l
++ setIgnoreRepaint(boolean) : void\l
++ removeFocusListener(FocusListener) : void\l
+# enableEvents(long) : void\l
+ transferFocusBackward(boolean) : boolean\l
+ getGraphicsConfiguration_NoClientCode() : GraphicsConfiguration\l
++ move(int, int) : void\l
++ setForeground(Color) : void\l
++ invalidate() : void\l
+ getBufferStrategy() : BufferStrategy\l
++ getAccessibleContext() : AccessibleContext\l
+- checkCoalescing() : boolean\l
++ isFocusOwner() : boolean\l
++ getSize(Dimension) : Dimension\l
++ getX() : int\l
+ getGraphics_NoClientCode() : Graphics\l
++ getY() : int\l
++ removeHierarchyBoundsListener(HierarchyBoundsListener) : void\l
+# processMouseWheelEvent(MouseWheelEvent) : void\l
+ canBeFocusOwnerRecursively() : boolean\l
++ removeMouseListener(MouseListener) : void\l
++ getBackground() : Color\l
+ dispatchEventImpl(AWTEvent) : void\l
++ addMouseListener(MouseListener) : void\l
+}",style=filled,fillcolor=yellow]
+Container[label = "{Container\n\<\<Composite\>\>|- log : PlatformLogger\l
+- eventLog : PlatformLogger\l
+- EMPTY_ARRAY : Component[]\l
+- component : List\<Component\>\l
+ layoutMgr : LayoutManager\l
+- dispatcher : LightweightDispatcher\l
+- focusTraversalPolicy : FocusTraversalPolicy\l
+- focusCycleRoot : boolean\l
+- focusTraversalPolicyProvider : boolean\l
+- printingThreads : Set\<Thread\>\l
+- printing : boolean\l
+ containerListener : ContainerListener\l
+ listeningChildren : int\l
+ listeningBoundsChildren : int\l
+ descendantsCount : int\l
+ preserveBackgroundColor : Color\l
+- serialVersionUID : long\l
+ INCLUDE_SELF : boolean\l
+ SEARCH_HEAVYWEIGHTS : boolean\l
+- numOfHWComponents : int\l
+- numOfLWComponents : int\l
+- mixingLog : PlatformLogger\l
+- serialPersistentFields : ObjectStreamField[]\l
+- isJavaAwtSmartInvalidate : boolean\l
+- descendUnconditionallyWhenValidating : boolean\l
+ modalComp : Component\l
+ modalAppContext : AppContext\l
+- containerSerializedDataVersion : int\l
+| getOpaqueShape() : Region\l
+ postProcessKeyEvent(KeyEvent) : void\l
+# processEvent(AWTEvent) : void\l
++ paint(Graphics) : void\l
++ setLayout(LayoutManager) : void\l
+- addDelicately(Component, Container, int) : void\l
+ mixOnValidating() : void\l
+# paramString() : String\l
++ removeAll() : void\l
+- isRemoveNotifyNeeded(Component, Container, Container) : boolean\l
++ getMinimumSize() : Dimension\l
++ getMousePosition(boolean) : Point\l
+ postsOldMouseEvents() : boolean\l
++ getAlignmentY() : float\l
+ countHierarchyMembers() : int\l
++ addContainerListener(ContainerListener) : void\l
+- reparentChild(Component) : void\l
++ getAlignmentX() : float\l
+- getBottommostComponentIndex() : int\l
++ setComponentZOrder(Component, int) : void\l
+ decreaseComponentCount(Component) : void\l
++ findComponentAt(Point) : Component\l
+- readObject(ObjectInputStream) : void\l
+- getListenersCount(int, boolean) : int\l
++ minimumSize() : Dimension\l
+ numListening(long) : int\l
++ removeContainerListener(ContainerListener) : void\l
+ containsFocus() : boolean\l
+ isSameOrAncestorOf(Component, boolean) : boolean\l
+ clearCurrentFocusCycleRootOnHide() : void\l
++ printComponents(Graphics) : void\l
++ getListeners(Class) : EventListener[]\l
+ updateGraphicsData(GraphicsConfiguration) : boolean\l
++ getMaximumSize() : Dimension\l
+- startLWModal() : void\l
+ canContainFocusOwner(Component) : boolean\l
++ setFocusTraversalPolicy(FocusTraversalPolicy) : void\l
+ createHierarchyEvents(int, Component, Container, long, boolean) : int\l
+ findComponentAtImpl(int, int, boolean) : Component\l
+ paintHeavyweightComponents(Graphics) : void\l
++ setFocusTraversalKeys(int, Set) : void\l
+- checkAddToSelf(Component) : void\l
+ getDropTargetEventTarget(int, int, boolean) : Component\l
++ applyComponentOrientation(ComponentOrientation) : void\l
++ validate() : void\l
+ validateUnconditionally() : void\l
+ mixOnZOrderChanging(int, int) : void\l
+- recursiveShowHeavyweightChildren() : void\l
++ getInsets() : Insets\l
+ mixOnHiding(boolean) : void\l
+- getMouseEventTargetImpl(int, int, boolean, boolean, boolean) : Component\l
+- checkNotAWindow(Component) : void\l
+ lightweightPaint(Graphics) : void\l
+- getChildAt(Component, int, int, boolean) : Component\l
++ isValidateRoot() : boolean\l
++ getPreferredSize() : Dimension\l
+ eventEnabled(AWTEvent) : boolean\l
++ addNotify() : void\l
+- recursiveHideHeavyweightChildren() : void\l
++ setFocusTraversalPolicyProvider(boolean) : void\l
+ invalidateParent() : void\l
++ insets() : Insets\l
++ countComponents() : int\l
+- getMouseEventTarget(int, int, boolean, boolean) : Component\l
+ increaseComponentCount(Component) : void\l
+- initIDs() : void\l
+- recursiveRelocateHeavyweightChildren(Point) : void\l
+ getAccessibleAt(Point) : Accessible\l
+ adjustDecendantsOnParent(int) : void\l
++ getFocusTraversalKeys(int) : Set\l
+ getComponentsSync() : Component[]\l
+- reparentTraverse(ContainerPeer, Container) : void\l
++ preferredSize() : Dimension\l
++ getComponents() : Component[]\l
+ getHeavyweightContainer() : Container\l
++ setFont(Font) : void\l
++ doLayout() : void\l
++ add(Component, Object, int) : void\l
+ clearMostRecentFocusOwnerOnHide() : void\l
+# validateTree() : void\l
++ setFocusCycleRoot(boolean) : void\l
+- writeObject(ObjectOutputStream) : void\l
+ getTraversalRoot() : Container\l
+- isParentOf(Component) : boolean\l
+ adjustDescendants(int) : void\l
++ list(PrintWriter, int) : void\l
++ deliverEvent(Event) : void\l
+ hasHeavyweightDescendants() : boolean\l
++ getComponentCount() : int\l
++ isAncestorOf(Component) : boolean\l
+ proxyEnableEvents(long) : void\l
+- removeDelicately(Component, Container, int) : boolean\l
+- getTopmostComponentIndex() : int\l
+ getAccessibleChild(int) : Accessible\l
+ mixOnReshaping() : void\l
+ lightweightPrint(Graphics) : void\l
++ removeNotify() : void\l
+ isRecursivelyVisibleUpToHeavyweightContainer() : boolean\l
++ getComponent(int) : Component\l
+ getComponents_NoClientCode() : Component[]\l
++ locate(int, int) : Component\l
+ mixOnShowing() : void\l
+ initializeFocusTraversalKeys() : void\l
++ getComponentAt(Point) : Component\l
++ update(Graphics) : void\l
++ isFocusTraversalPolicySet() : boolean\l
++ isFocusCycleRoot() : boolean\l
++ getComponentZOrder(Component) : int\l
++ remove(Component) : void\l
+ invalidateTree() : void\l
+ printHeavyweightComponents(Graphics) : void\l
+ recursiveSubtractAndApplyShape(Region, int, int) : void\l
++ getLayout() : LayoutManager\l
+- stopLWModal() : void\l
++ getContainerListeners() : ContainerListener[]\l
+ recursiveApplyCurrentShape(int, int) : void\l
+# processContainerEvent(ContainerEvent) : void\l
++ isFocusTraversalPolicyProvider() : boolean\l
+ checkGD(String) : void\l
++ addPropertyChangeListener(String, PropertyChangeListener) : void\l
+ getAccessibleChildrenCount() : int\l
+- findTraversalRoot() : Container\l
++ transferFocusDownCycle() : void\l
+# addImpl(Component, Object, int) : void\l
++ areFocusTraversalKeysSet(int) : boolean\l
++ invalidate() : void\l
+ dispatchEventToSelf(AWTEvent) : void\l
++ layout() : void\l
+ adjustListeningChildren(long, int) : void\l
++ print(Graphics) : void\l
+ createChildHierarchyEvents(int, long, boolean) : void\l
++ paintComponents(Graphics) : void\l
+- checkAdding(Component, int) : void\l
++ getFocusTraversalPolicy() : FocusTraversalPolicy\l
+ preProcessKeyEvent(KeyEvent) : void\l
+ hasLightweightDescendants() : boolean\l
+ dispatchEventImpl(AWTEvent) : void\l
+}",style=filled,fillcolor=yellow]
+IdentityArrayList[label = "{IdentityArrayList\n\<\<decorator\>\>|- elementData : Object[]\l
+- size : int\l
+|+ add(int, Object) : void\l
++ trimToSize() : void\l
++ set(int, Object) : Object\l
++ isEmpty() : boolean\l
++ clear() : void\l
+- outOfBoundsMsg(int) : String\l
++ remove(Object) : boolean\l
++ lastIndexOf(Object) : int\l
++ contains(Object) : boolean\l
++ size() : int\l
+- rangeCheck(int) : void\l
++ addAll(int, Collection) : boolean\l
+- rangeCheckForAdd(int) : void\l
++ get(int) : Object\l
++ toArray(Object[]) : Object[]\l
+# removeRange(int, int) : void\l
++ ensureCapacity(int) : void\l
+- fastRemove(int) : void\l
++ indexOf(Object) : int\l
+}",style=filled,fillcolor=green]
+Dialog[label = "{Dialog\n\<\<Composite\>\>| resizable : boolean\l
+ undecorated : boolean\l
+- initialized : boolean\l
++ DEFAULT_MODALITY_TYPE : Dialog$ModalityType\l
+ modal : boolean\l
+ modalityType : Dialog$ModalityType\l
+ modalDialogs : IdentityArrayList\<Dialog\>\l
+ blockedWindows : IdentityArrayList\<Window\>\l
+ title : String\l
+- modalFilter : ModalEventFilter\l
+- secondaryLoop : SecondaryLoop\l
+ isInHide : boolean\l
+ isInDispose : boolean\l
+- base : String\l
+- nameCounter : int\l
+- serialVersionUID : long\l
+| modalHide() : void\l
 + show() : void\l
-- assignActions() : void\l
-}"]
-AbstractSprite[label = "{AbstractSprite\n\<\<Component\>\>|# dx : double\l
-# dy : double\l
-# shape : Shape\l
-|+ add(ISprite) : void\l
-+ iterator() : Iterator\l
-+ move(Dimension) : void\l
-# computeNewBoundsAfterMoving(Dimension) : Rectangle2D\l
-+ getChild(int) : ISprite\l
+- initIDs() : void\l
++ setBackground(Color) : void\l
+ unblockWindow(Window) : void\l
+# paramString() : String\l
++ getTitle() : String\l
+- checkModalityPermission() : void\l
+ checkShouldBeBlocked(Window) : void\l
+ modalityPopped() : void\l
+- hideAndDisposeHandler() : void\l
+ shouldBlock(Window) : boolean\l
+ interruptBlocking() : void\l
+ modalShow() : void\l
++ setVisible(boolean) : void\l
+ constructComponentName() : String\l
+ modalityPushed() : void\l
++ setResizable(boolean) : void\l
+ blockWindows(List) : void\l
+- conditionalShow(Component, AtomicLong) : boolean\l
++ setTitle(String) : void\l
+ blockWindow(Window) : void\l
++ setModalityType() : void\l
++ isResizable() : boolean\l
++ getAccessibleContext() : AccessibleContext\l
++ setShape(Shape) : void\l
+ doDispose() : void\l
++ toBack() : void\l
+- readObject(ObjectInputStream) : void\l
++ hide() : void\l
++ setModal(boolean) : void\l
++ addNotify() : void\l
+- hideAndDisposePreHandler() : void\l
++ setUndecorated(boolean) : void\l
++ isUndecorated() : boolean\l
+ isModal_NoClientCode() : boolean\l
++ isModal() : boolean\l
++ getModalityType() : DialogModalityType\l
++ setOpacity(float) : void\l
+}",style=filled,fillcolor=yellow]
+Window[label = "{Window\n\<\<Component\>\>| warningString : String\l
+ icons : List\<Image\>\l
+- temporaryLostComponent : Component\l
+ systemSyncLWRequests : boolean\l
+ syncLWRequests : boolean\l
+ beforeFirstShow : boolean\l
+- disposing : boolean\l
+ disposerRecord : Window$WindowDisposerRecord\l
+ OPENED : int\l
+ state : int\l
+- alwaysOnTop : boolean\l
+- allWindows : IdentityArrayList\<Window\>\l
+ ownedWindowList : Vector\<Window\>\l
+- weakThis : WeakReference\<Window\>\l
+ showWithParent : boolean\l
+ modalBlocker : Dialog\l
+ modalExclusionType : Dialog$ModalExclusionType\l
+ windowListener : WindowListener\l
+ windowStateListener : WindowStateListener\l
+ windowFocusListener : WindowFocusListener\l
+ inputContext : InputContext\l
+- inputContextLock : Object\l
+- focusMgr : FocusManager\l
+- focusableWindowState : boolean\l
+- autoRequestFocus : boolean\l
+ isInShow : boolean\l
+- opacity : float\l
+- shape : Shape\l
+- base : String\l
+- nameCounter : int\l
+- serialVersionUID : long\l
+- log : PlatformLogger\l
+- locationByPlatformProp : boolean\l
+ isTrayIconWindow : boolean\l
+- securityWarningWidth : int\l
+- securityWarningHeight : int\l
+- securityWarningPointX : double\l
+- securityWarningPointY : double\l
+- securityWarningAlignmentX : float\l
+- securityWarningAlignmentY : float\l
+ anchor : Object\l
+- beforeFirstWindowShown : AtomicBoolean\l
+- type : Window$Type\l
+- windowSerializedDataVersion : int\l
+- locationByPlatform : boolean\l
+| getAllWindows() : IdentityArrayList\l
++ isOpaque() : boolean\l
+ postProcessKeyEvent(KeyEvent) : void\l
+- initDeserializedWindow() : void\l
++ setModalExclusionType() : void\l
+# processEvent(AWTEvent) : void\l
+ setGraphicsConfiguration(GraphicsConfiguration) : void\l
+- setWarningString() : void\l
++ paint(Graphics) : void\l
++ removeWindowListener(WindowListener) : void\l
++ getOwner() : Window\l
+- ownedInit(Window) : void\l
++ setIconImages(List) : void\l
++ getWindowStateListeners() : WindowStateListener[]\l
+- init(GraphicsConfiguration) : void\l
+ isDisposing() : boolean\l
+ getContainer() : Container\l
++ setFocusableWindowState(boolean) : void\l
++ getMostRecentFocusOwner() : Component\l
++ reshape(int, int, int, int) : void\l
++ pack() : void\l
+- setOwnedWindowsAlwaysOnTop(boolean) : void\l
+ doDispose() : void\l
++ toBack() : void\l
++ postEvent(Event) : boolean\l
+- readObject(ObjectInputStream) : void\l
++ setLocationByPlatform(boolean) : void\l
+ getDocumentRoot() : Window\l
++ createBufferStrategy(int, BufferCapabilities) : void\l
+- updateWindow() : void\l
+ isModalBlocked() : boolean\l
++ getType() : WindowType\l
+- deserializeResources(ObjectInputStream) : void\l
++ setMinimumSize(Dimension) : void\l
++ getModalExclusionType() : DialogModalExclusionType\l
+ isModalExcluded() : boolean\l
++ getListeners(Class) : EventListener[]\l
+# processWindowEvent(WindowEvent) : void\l
+# processWindowStateEvent(WindowEvent) : void\l
+ removeOwnedWindow(WeakReference) : void\l
+ deliverMouseWheelToAncestor(MouseWheelEvent) : void\l
+ toBack_NoClientCode() : void\l
+ canContainFocusOwner(Component) : boolean\l
+ getModalBlocker() : Dialog\l
++ removeWindowFocusListener(WindowFocusListener) : void\l
++ addWindowListener(WindowListener) : void\l
++ isAlwaysOnTopSupported() : boolean\l
++ addWindowStateListener(WindowStateListener) : void\l
+ applyCurrentShape() : void\l
++ getIconImages() : List\l
++ getFocusableWindowState() : boolean\l
+- calculateSecurityWarningPosition(double, double, double, double) : Point2D\l
+ applyCompoundShape(Region) : void\l
+ updateChildrenBlocking() : void\l
++ getWindowFocusListeners() : WindowFocusListener[]\l
+ addOwnedWindow(WeakReference) : void\l
+ toFront_NoClientCode() : void\l
+ postWindowEvent(int) : void\l
++ setBounds(Rectangle) : void\l
+ isRecursivelyVisible() : boolean\l
++ getWindows() : Window[]\l
++ hide() : void\l
++ isValidateRoot() : boolean\l
+ dispatchMouseWheelToAncestor(MouseWheelEvent) : boolean\l
+ setClientSize(int, int) : void\l
++ addNotify() : void\l
+ eventEnabled(AWTEvent) : boolean\l
+ setTemporaryLostComponent(Component) : Component\l
++ isFocusableWindow() : boolean\l
++ getFocusCycleRootAncestor() : Container\l
++ addWindowFocusListener(WindowFocusListener) : void\l
++ setLocationRelativeTo(Component) : void\l
+- initGC(GraphicsConfiguration) : GraphicsConfiguration\l
+ getTemporaryLostComponent() : Component\l
++ setIconImage(Image) : void\l
+- initIDs() : void\l
++ isActive() : boolean\l
+ adjustDecendantsOnParent(int) : void\l
+- removeFromWindowList() : void\l
++ getInputContext() : InputContext\l
++ getFocusTraversalKeys(int) : Set\l
++ getOpacity() : float\l
++ isShowing() : boolean\l
+ setModalBlocked(Dialog, boolean, boolean) : void\l
+- limit(double, double, double) : double\l
++ isLocationByPlatform() : boolean\l
++ setAutoRequestFocus(boolean) : void\l
++ setVisible(boolean) : void\l
+ constructComponentName() : String\l
+ clearMostRecentFocusOwnerOnHide() : void\l
++ toFront() : void\l
+ disposeImpl() : void\l
++ setFocusCycleRoot(boolean) : void\l
+- writeObject(ObjectOutputStream) : void\l
+# processWindowFocusEvent(WindowEvent) : void\l
+ getLocationOnWindow() : Point\l
++ isFocused() : boolean\l
+ connectOwnedWindow(Window) : void\l
++ removeWindowStateListener(WindowStateListener) : void\l
+ mixOnReshaping() : void\l
++ removeNotify() : void\l
++ dispose() : void\l
++ setCursor(Cursor) : void\l
++ getWarningString() : String\l
++ getOwnerlessWindows() : Window[]\l
+ updateZOrder() : void\l
+ getAllUnblockedWindows() : IdentityArrayList\l
++ show() : void\l
++ isAlwaysOnTop() : boolean\l
 + getShape() : Shape\l
-+ remove(ISprite) : void\l
++ isFocusCycleRoot() : boolean\l
++ setBackground(Color) : void\l
++ getToolkit() : Toolkit\l
++ setSize(int, int) : void\l
+ getOwnedWindows_NoClientCode() : Window[]\l
++ setLocation(Point) : void\l
++ addPropertyChangeListener(String, PropertyChangeListener) : void\l
++ getWindowListeners() : WindowListener[]\l
++ getOwnedWindows() : Window[]\l
+ adjustListeningChildrenOnParent(long, int) : void\l
+- setLayersOpaque(Component, boolean) : void\l
++ applyResourceBundle(String) : void\l
+ getOwner_NoClientCode() : Window\l
++ setType() : void\l
++ getBufferStrategy() : BufferStrategy\l
++ getAccessibleContext() : AccessibleContext\l
++ setShape(Shape) : void\l
+ closeSplashScreen() : void\l
+- addToWindowList() : void\l
+ updateChildFocusableWindowState(Window) : void\l
++ setAlwaysOnTop(boolean) : void\l
++ isAutoRequestFocus() : boolean\l
+ preProcessKeyEvent(KeyEvent) : void\l
++ getFocusOwner() : Component\l
++ getLocale() : Locale\l
++ getBackground() : Color\l
+ dispatchEventImpl(AWTEvent) : void\l
++ setOpacity(float) : void\l
 }",style=filled,fillcolor=yellow]
-CircleSprite[label = "{CircleSprite\n\<\<Leaf\>\>||+ move(Dimension) : void\l
+Rectangle2D[label = "{Rectangle2D\n\<\<decorator\>\>|+ OUT_LEFT : int\l
++ OUT_TOP : int\l
++ OUT_RIGHT : int\l
++ OUT_BOTTOM : int\l
+|+ add(Rectangle2D) : void\l
++ intersect(Rectangle2D, Rectangle2D, Rectangle2D) : void\l
++ intersects(double, double, double, double) : boolean\l
++ setRect(Rectangle2D) : void\l
++ union(Rectangle2D, Rectangle2D, Rectangle2D) : void\l
++ intersectsLine(Line2D) : boolean\l
++ contains(double, double, double, double) : boolean\l
++ getPathIterator(AffineTransform, double) : PathIterator\l
++ setFrame(double, double, double, double) : void\l
++ createUnion(Rectangle2D) : Rectangle2D\l
++ hashCode() : int\l
++ outcode(Point2D) : int\l
++ equals(Object) : boolean\l
++ getBounds2D() : Rectangle2D\l
++ createIntersection(Rectangle2D) : Rectangle2D\l
+}",style=filled,fillcolor=green]
+Rectangle[label = "{Rectangle\n\<\<decorator\>\>|+ x : int\l
++ y : int\l
++ width : int\l
++ height : int\l
+- serialVersionUID : long\l
+|+ getLocation() : Point\l
++ intersects(Rectangle) : boolean\l
+- initIDs() : void\l
++ getWidth() : double\l
++ inside(int, int) : boolean\l
++ getBounds() : Rectangle\l
++ translate(int, int) : void\l
++ getHeight() : double\l
++ setSize(int, int) : void\l
++ setLocation(int, int) : void\l
++ intersection(Rectangle) : Rectangle\l
++ add(Rectangle) : void\l
++ move(int, int) : void\l
++ grow(int, int) : void\l
++ isEmpty() : boolean\l
++ setRect(double, double, double, double) : void\l
++ reshape(int, int, int, int) : void\l
++ union(Rectangle) : Rectangle\l
++ setBounds(int, int, int, int) : void\l
++ getX() : double\l
++ getSize() : Dimension\l
++ contains(int, int, int, int) : boolean\l
++ getY() : double\l
++ createUnion(Rectangle2D) : Rectangle2D\l
++ outcode(double, double) : int\l
++ equals(Object) : boolean\l
++ getBounds2D() : Rectangle2D\l
++ resize(int, int) : void\l
++ toString() : String\l
++ createIntersection(Rectangle2D) : Rectangle2D\l
+- clip(double, boolean) : int\l
+}",style=filled,fillcolor=green]
+MenuItem[label = "{MenuItem\n\<\<decorator\>\>| enabled : boolean\l
+ label : String\l
+ actionCommand : String\l
+ eventMask : long\l
+ actionListener : ActionListener\l
+- shortcut : MenuShortcut\l
+- base : String\l
+- nameCounter : int\l
+- serialVersionUID : long\l
+- menuItemSerializedDataVersion : int\l
+|+ getListeners(Class) : EventListener[]\l
+ doMenuEvent(long, int) : void\l
++ getLabel() : String\l
+# processEvent(AWTEvent) : void\l
+- initIDs() : void\l
+# processActionEvent(ActionEvent) : void\l
++ getShortcut() : MenuShortcut\l
+ getShortcutMenuItem(MenuShortcut) : MenuItem\l
++ paramString() : String\l
++ removeActionListener(ActionListener) : void\l
+- isItemEnabled() : boolean\l
++ enable(boolean) : void\l
+ handleShortcut(KeyEvent) : boolean\l
+# enableEvents(long) : void\l
++ setShortcut(MenuShortcut) : void\l
+ constructComponentName() : String\l
+ deleteShortcut(MenuShortcut) : void\l
+- writeObject(ObjectOutputStream) : void\l
++ addActionListener(ActionListener) : void\l
++ setActionCommand(String) : void\l
++ getAccessibleContext() : AccessibleContext\l
+# disableEvents(long) : void\l
+- readObject(ObjectInputStream) : void\l
++ setEnabled(boolean) : void\l
+ getActionCommandImpl() : String\l
++ addNotify() : void\l
+ eventEnabled(AWTEvent) : boolean\l
++ disable() : void\l
++ isEnabled() : boolean\l
++ getActionListeners() : ActionListener[]\l
++ setLabel(String) : void\l
++ getActionCommand() : String\l
+}",style=filled,fillcolor=green]
+Menu[label = "{Menu\n\<\<decorator\>\>| items : Vector\<MenuComponent\>\l
+ tearOff : boolean\l
+ isHelpMenu : boolean\l
+- base : String\l
+- nameCounter : int\l
+- serialVersionUID : long\l
+- menuSerializedDataVersion : int\l
+|+ getItemCount() : int\l
+ shortcuts() : Enumeration\l
+- initIDs() : void\l
++ getItem(int) : MenuItem\l
++ insert(String, int) : void\l
++ isTearOff() : boolean\l
+ getItemImpl(int) : MenuItem\l
++ remove(MenuComponent) : void\l
+ getShortcutMenuItem(MenuShortcut) : MenuItem\l
++ paramString() : String\l
+ getAccessibleChildIndex(MenuComponent) : int\l
++ removeAll() : void\l
++ addSeparator() : void\l
+ handleShortcut(KeyEvent) : boolean\l
+ countItemsImpl() : int\l
++ add(String) : void\l
+ constructComponentName() : String\l
+ deleteShortcut(MenuShortcut) : void\l
+- writeObject(ObjectOutputStream) : void\l
++ countItems() : int\l
++ getAccessibleContext() : AccessibleContext\l
+- readObject(ObjectInputStream) : void\l
++ addNotify() : void\l
++ removeNotify() : void\l
++ insertSeparator(int) : void\l
+}",style=filled,fillcolor=green]
+MenuBar[label = "{MenuBar\n\<\<decorator\>\>| menus : Vector\<Menu\>\l
+ helpMenu : Menu\l
+- base : String\l
+- nameCounter : int\l
+- serialVersionUID : long\l
+- menuBarSerializedDataVersion : int\l
+|+ add(Menu) : Menu\l
+ constructComponentName() : String\l
++ deleteShortcut(MenuShortcut) : void\l
+- writeObject(ObjectOutputStream) : void\l
++ shortcuts() : Enumeration\l
+- initIDs() : void\l
++ countMenus() : int\l
+ getMenuImpl(int) : Menu\l
++ getAccessibleContext() : AccessibleContext\l
++ remove(MenuComponent) : void\l
+ getMenuCountImpl() : int\l
++ getShortcutMenuItem(MenuShortcut) : MenuItem\l
+- readObject(ObjectInputStream) : void\l
+ getAccessibleChildIndex(MenuComponent) : int\l
++ getHelpMenu() : Menu\l
++ addNotify() : void\l
++ getMenu(int) : Menu\l
+ handleShortcut(KeyEvent) : boolean\l
++ removeNotify() : void\l
++ getMenuCount() : int\l
++ setHelpMenu(Menu) : void\l
+}",style=filled,fillcolor=green]
+Frame[label = "{Frame\n\<\<Composite\>\>|+ DEFAULT_CURSOR : int\l
++ CROSSHAIR_CURSOR : int\l
++ TEXT_CURSOR : int\l
++ WAIT_CURSOR : int\l
++ SW_RESIZE_CURSOR : int\l
++ SE_RESIZE_CURSOR : int\l
++ NW_RESIZE_CURSOR : int\l
++ NE_RESIZE_CURSOR : int\l
++ N_RESIZE_CURSOR : int\l
++ S_RESIZE_CURSOR : int\l
++ W_RESIZE_CURSOR : int\l
++ E_RESIZE_CURSOR : int\l
++ HAND_CURSOR : int\l
++ MOVE_CURSOR : int\l
++ NORMAL : int\l
++ ICONIFIED : int\l
++ MAXIMIZED_HORIZ : int\l
++ MAXIMIZED_VERT : int\l
++ MAXIMIZED_BOTH : int\l
+ maximizedBounds : Rectangle\l
+ title : String\l
+ menuBar : MenuBar\l
+ resizable : boolean\l
+ undecorated : boolean\l
+ mbManagement : boolean\l
+- state : int\l
+ ownedWindows : Vector\<Window\>\l
+- base : String\l
+- nameCounter : int\l
+- serialVersionUID : long\l
+- frameSerializedDataVersion : int\l
+|+ getMaximizedBounds() : Rectangle\l
++ getFrames() : Frame[]\l
+ postProcessKeyEvent(KeyEvent) : void\l
++ setIconImage(Image) : void\l
+- initIDs() : void\l
++ getMenuBar() : MenuBar\l
++ setBackground(Color) : void\l
++ remove(MenuComponent) : void\l
++ setMenuBar(MenuBar) : void\l
+# paramString() : String\l
++ getTitle() : String\l
+- isFrameStateSupported(int) : boolean\l
++ getCursorType() : int\l
++ setMaximizedBounds(Rectangle) : void\l
+- init(String, GraphicsConfiguration) : void\l
+ constructComponentName() : String\l
++ setResizable(boolean) : void\l
+- writeObject(ObjectOutputStream) : void\l
++ setTitle(String) : void\l
++ isResizable() : boolean\l
++ getAccessibleContext() : AccessibleContext\l
++ setShape(Shape) : void\l
+- readObject(ObjectInputStream) : void\l
++ setExtendedState(int) : void\l
++ getExtendedState() : int\l
++ getState() : int\l
++ addNotify() : void\l
++ setUndecorated(boolean) : void\l
++ isUndecorated() : boolean\l
++ setState(int) : void\l
++ removeNotify() : void\l
++ setCursor(int) : void\l
++ getIconImage() : Image\l
++ setOpacity(float) : void\l
 }",style=filled,fillcolor=yellow]
-CompositeSprite[label = "{CompositeSprite\n\<\<Composite\>\>| children : List\<ISprite\>\l
-|+ add(ISprite) : void\l
-+ iterator() : Iterator\l
-+ move(Dimension) : void\l
-+ getChild(int) : ISprite\l
-+ remove(ISprite) : void\l
+JPopupMenu[label = "{JPopupMenu\n\<\<Leaf\>\>|- uiClassID : String\l
+- defaultLWPopupEnabledKey : Object\l
+ popupPostionFixDisabled : boolean\l
+ invoker : Component\l
+ popup : Popup\l
+ frame : Frame\l
+- desiredLocationX : int\l
+- desiredLocationY : int\l
+- label : String\l
+- paintBorder : boolean\l
+- margin : Insets\l
+- lightWeightPopup : boolean\l
+- selectionModel : SingleSelectionModel\l
+- classLock : Object\l
+- TRACE : boolean\l
+- VERBOSE : boolean\l
+- DEBUG : boolean\l
+|+ getDefaultLightWeightPopupEnabled() : boolean\l
++ setLightWeightPopupEnabled(boolean) : void\l
++ getLabel() : String\l
++ setSelected(Component) : void\l
++ getMargin() : Insets\l
+# firePopupMenuCanceled() : void\l
++ processKeyEvent(KeyEvent, MenuElement[], MenuSelectionManager) : void\l
++ setPopupSize(int, int) : void\l
++ removePopupMenuListener(PopupMenuListener) : void\l
+# paramString() : String\l
+- fireMenuKeyTyped(MenuKeyEvent) : void\l
++ getSubElements() : MenuElement[]\l
+# firePopupMenuWillBecomeVisible() : void\l
++ isBorderPainted() : boolean\l
+- showPopup() : void\l
+ canPopupOverlapTaskBar() : boolean\l
++ isLightWeightPopupEnabled() : boolean\l
++ processMouseEvent(MouseEvent, MenuElement[], MenuSelectionManager) : void\l
++ setDefaultLightWeightPopupEnabled(boolean) : void\l
+- fireMenuKeyPressed(MenuKeyEvent) : void\l
++ add(Action) : JMenuItem\l
++ setVisible(boolean) : void\l
+- isPopupMenu() : boolean\l
++ getSelectionModel() : SingleSelectionModel\l
+- writeObject(ObjectOutputStream) : void\l
++ addPopupMenuListener(PopupMenuListener) : void\l
++ isVisible() : boolean\l
++ setInvoker(Component) : void\l
++ pack() : void\l
+- readObject(ObjectInputStream) : void\l
++ getUI() : PopupMenuUI\l
++ removeMenuKeyListener(MenuKeyListener) : void\l
++ menuSelectionChanged(boolean) : void\l
++ setSelectionModel(SingleSelectionModel) : void\l
+- getCurrentGraphicsConfiguration(Point) : GraphicsConfiguration\l
++ getComponent() : Component\l
+ alwaysOnTop() : boolean\l
++ getComponentIndex(Component) : int\l
+- getFrame(Component) : Frame\l
++ updateUI() : void\l
++ show(Component, int, int) : void\l
+# processFocusEvent(FocusEvent) : void\l
++ insert(Component, int) : void\l
++ setBorderPainted(boolean) : void\l
++ getUIClassID() : String\l
+ adjustPopupLocationToFitScreen(int, int) : Point\l
++ remove(int) : void\l
++ isPopupTrigger(MouseEvent) : boolean\l
++ getPopupMenuListeners() : PopupMenuListener[]\l
+ isSubPopupMenu(JPopupMenu) : boolean\l
+# paintBorder(Graphics) : void\l
++ addSeparator() : void\l
++ setLocation(int, int) : void\l
+ getRootPopupMenu() : JPopupMenu\l
+# createActionChangeListener(JMenuItem) : PropertyChangeListener\l
+- processMenuKeyEvent(MenuKeyEvent) : void\l
++ getComponentAtIndex(int) : Component\l
+# createActionComponent(Action) : JMenuItem\l
++ getInvoker() : Component\l
++ getMenuKeyListeners() : MenuKeyListener[]\l
++ getAccessibleContext() : AccessibleContext\l
+- fireMenuKeyReleased(MenuKeyEvent) : void\l
++ addMenuKeyListener(MenuKeyListener) : void\l
+# firePopupMenuWillBecomeInvisible() : void\l
++ setUI(PopupMenuUI) : void\l
++ setLabel(String) : void\l
 }",style=filled,fillcolor=yellow]
-CompositeSpriteIterator[label = "{CompositeSpriteIterator|- stack : Stack\<ISprite\>\l
-|+ next() : Object\l
-+ hasNext() : boolean\l
-+ remove() : void\l
-}"]
-CrystalBall[label = "{CrystalBall\n\<\<Leaf\>\>||}",style=filled,fillcolor=yellow]
-ISprite[label = "{\<\<interface\>\>\nISprite||+ add(ISprite) : void\l
-+ move(Dimension) : void\l
-+ getChild(int) : ISprite\l
-+ getShape() : Shape\l
-+ remove(ISprite) : void\l
-}"]
-NullSpriteIterator[label = "{NullSpriteIterator||+ next() : Object\l
-+ hasNext() : boolean\l
-+ remove() : void\l
-}"]
-RectangleSprite[label = "{RectangleSprite\n\<\<Leaf\>\>||+ move(Dimension) : void\l
+ComponentInputMap[label = "{ComponentInputMap\n\<\<decorator\>\>|- component : JComponent\l
+|+ clear() : void\l
++ setParent(InputMap) : void\l
++ getComponent() : JComponent\l
++ put(KeyStroke, Object) : void\l
++ remove(KeyStroke) : void\l
+}",style=filled,fillcolor=green]
+JComponent[label = "{JComponent\n\<\<Component\>\>|- uiClassID : String\l
+- readObjectCallbacks : Hashtable\<ObjectInputStream,JComponent$ReadObjectCallback\>\l
+- managingFocusForwardTraversalKeys : Set\<KeyStroke\>\l
+- managingFocusBackwardTraversalKeys : Set\<KeyStroke\>\l
+- NOT_OBSCURED : int\l
+- PARTIALLY_OBSCURED : int\l
+- COMPLETELY_OBSCURED : int\l
+ DEBUG_GRAPHICS_LOADED : boolean\l
+- INPUT_VERIFIER_SOURCE_KEY : Object\l
+- isAlignmentXSet : boolean\l
+- alignmentX : float\l
+- isAlignmentYSet : boolean\l
+- alignmentY : float\l
+# ui : ComponentUI\l
+# listenerList : EventListenerList\l
+- clientProperties : ArrayTable\l
+- vetoableChangeSupport : VetoableChangeSupport\l
+- autoscrolls : boolean\l
+- border : Border\l
+- flags : int\l
+- inputVerifier : InputVerifier\l
+- verifyInputWhenFocusTarget : boolean\l
+ paintingChild : Component\l
++ WHEN_FOCUSED : int\l
++ WHEN_ANCESTOR_OF_FOCUSED_COMPONENT : int\l
++ WHEN_IN_FOCUSED_WINDOW : int\l
++ UNDEFINED_CONDITION : int\l
+- KEYBOARD_BINDINGS_KEY : String\l
+- WHEN_IN_FOCUSED_WINDOW_BINDINGS : String\l
++ TOOL_TIP_TEXT_KEY : String\l
+- NEXT_FOCUS : String\l
+- popupMenu : JPopupMenu\l
+- IS_DOUBLE_BUFFERED : int\l
+- ANCESTOR_USING_BUFFER : int\l
+- IS_PAINTING_TILE : int\l
+- IS_OPAQUE : int\l
+- KEY_EVENTS_ENABLED : int\l
+- FOCUS_INPUTMAP_CREATED : int\l
+- ANCESTOR_INPUTMAP_CREATED : int\l
+- WIF_INPUTMAP_CREATED : int\l
+- ACTIONMAP_CREATED : int\l
+- CREATED_DOUBLE_BUFFER : int\l
+- IS_PRINTING : int\l
+- IS_PRINTING_ALL : int\l
+- IS_REPAINTING : int\l
+- WRITE_OBJ_COUNTER_FIRST : int\l
+- RESERVED_1 : int\l
+- RESERVED_2 : int\l
+- RESERVED_3 : int\l
+- RESERVED_4 : int\l
+- RESERVED_5 : int\l
+- RESERVED_6 : int\l
+- WRITE_OBJ_COUNTER_LAST : int\l
+- REQUEST_FOCUS_DISABLED : int\l
+- INHERITS_POPUP_MENU : int\l
+- OPAQUE_SET : int\l
+- AUTOSCROLLS_SET : int\l
+- FOCUS_TRAVERSAL_KEYS_FORWARD_SET : int\l
+- FOCUS_TRAVERSAL_KEYS_BACKWARD_SET : int\l
+- revalidateRunnableScheduled : AtomicBoolean\l
+- tempRectangles : List\<Rectangle\>\l
+- focusInputMap : InputMap\l
+- ancestorInputMap : InputMap\l
+- windowInputMap : ComponentInputMap\l
+- actionMap : ActionMap\l
+- defaultLocale : String\l
+- componentObtainingGraphicsFrom : Component\l
+- componentObtainingGraphicsFromLock : Object\l
+- aaTextInfo : Object\l
+ focusController : RequestFocusController\l
+|# requestFocusInWindow(boolean) : boolean\l
++ getLocation(Point) : Point\l
++ getInputVerifier() : InputVerifier\l
++ isOpaque() : boolean\l
++ getRootPane() : JRootPane\l
+- isComponentObtainingGraphicsFrom(Component) : boolean\l
++ paint(Graphics) : void\l
++ setDoubleBuffered(boolean) : void\l
+ getWriteObjCounter(JComponent) : byte\l
++ getAutoscrolls() : boolean\l
++ requestDefaultFocus() : boolean\l
++ getBounds(Rectangle) : Rectangle\l
++ setPreferredSize(Dimension) : void\l
+# paramString() : String\l
++ setInputMap(int, InputMap) : void\l
++ enable() : void\l
++ getMinimumSize() : Dimension\l
++ paintImmediately(Rectangle) : void\l
++ isManagingFocus() : boolean\l
++ getAlignmentY() : float\l
+ getManagingFocusForwardTraversalKeys() : Set\l
++ setAutoscrolls(boolean) : void\l
+# printComponent(Graphics) : void\l
+# processMouseEvent(MouseEvent) : void\l
++ getAlignmentX() : float\l
+- getObscuredState(int, int, int, int, int) : int\l
++ setAlignmentY(float) : void\l
++ firePropertyChange(String, char, char) : void\l
++ isOptimizedDrawingEnabled() : boolean\l
+# paintComponent(Graphics) : void\l
+ getGraphicsInvoked(Component) : void\l
++ reshape(int, int, int, int) : void\l
+ setDropLocation(Object, boolean) : Object\l
++ setOpaque(boolean) : void\l
++ setAlignmentX(float) : void\l
+# fireVetoableChange(String, Object, Object) : void\l
+- registerWithKeyboardManager(KeyStroke) : void\l
+- readObject(ObjectInputStream) : void\l
++ setComponentPopupMenu(JPopupMenu) : void\l
++ setEnabled(boolean) : void\l
++ contains(int, int) : boolean\l
+ paintToOffscreen(Graphics, int, int, int, int, int, int) : void\l
++ unregisterKeyboardAction(KeyStroke) : void\l
+ paintForceDoubleBuffered(Graphics) : void\l
++ setTransferHandler(TransferHandler) : void\l
+# processMouseMotionEvent(MouseEvent) : void\l
+ rectangleIsObscured(int, int, int, int) : boolean\l
++ removeVetoableChangeListener(VetoableChangeListener) : void\l
++ repaint(Rectangle) : void\l
++ setMinimumSize(Dimension) : void\l
+ getInputMap(int, boolean) : InputMap\l
++ getListeners(Class) : EventListener[]\l
++ getClientProperty(Object) : Object\l
++ setRequestFocusEnabled(boolean) : void\l
++ getMaximumSize() : Dimension\l
+ getManagingFocusBackwardTraversalKeys() : Set\l
+ alwaysOnTop() : boolean\l
+ setUIProperty(String, Object) : void\l
++ getWidth() : int\l
+- deregisterNextFocusableComponent() : void\l
++ isRequestFocusEnabled() : boolean\l
++ getFontMetrics(Font) : FontMetrics\l
+ setCreatedDoubleBuffer(boolean) : void\l
++ getHeight() : int\l
+ setPaintingChild(Component) : void\l
++ setFocusTraversalKeys(int, Set) : void\l
++ getAncestorListeners() : AncestorListener[]\l
++ getBaselineResizeBehavior() : ComponentBaselineResizeBehavior\l
+ setWriteObjCounter(JComponent, byte) : void\l
++ isPaintingTile() : boolean\l
++ setDebugGraphicsOptions(int) : void\l
+# printChildren(Graphics) : void\l
++ isDoubleBuffered() : boolean\l
++ getVerifyInputWhenFocusTarget() : boolean\l
++ getInsets(Insets) : Insets\l
++ getDefaultLocale() : Locale\l
++ isValidateRoot() : boolean\l
++ hide() : void\l
++ getPreferredSize() : Dimension\l
++ addNotify() : void\l
++ disable() : void\l
++ getToolTipLocation(MouseEvent) : Point\l
++ getToolTipText(MouseEvent) : String\l
++ getConditionForKeyStroke(KeyStroke) : int\l
++ getBorder() : Border\l
++ isPaintingForPrint() : boolean\l
++ setToolTipText(String) : void\l
+# processKeyEvent(KeyEvent) : void\l
++ computeVisibleRect(Rectangle) : void\l
++ setVerifyInputWhenFocusTarget(boolean) : void\l
+# getComponentGraphics(Graphics) : Graphics\l
++ setActionMap(ActionMap) : void\l
+ superProcessMouseMotionEvent(MouseEvent) : void\l
++ setInputVerifier(InputVerifier) : void\l
++ setFont(Font) : void\l
++ getNextFocusableComponent() : Component\l
+- getFlag(int) : boolean\l
++ setInheritsPopupMenu(boolean) : void\l
++ setVisible(boolean) : void\l
+ clientPropertyChanged(Object, Object, Object) : void\l
+- setFlag(int, boolean) : void\l
++ putClientProperty(Object, Object) : void\l
+- writeObject(ObjectOutputStream) : void\l
+ componentInputMapChanged(ComponentInputMap) : void\l
+# isPaintingOrigin() : boolean\l
++ setNextFocusableComponent(Component) : void\l
+ getActionMap(boolean) : ActionMap\l
+ checkIfChildObscuredBySibling() : boolean\l
+ dropLocationForPoint(Point) : TransferHandlerDropLocation\l
++ getTopLevelAncestor() : Container\l
+ compWriteObjectNotify() : void\l
+- recycleRectangle(Rectangle) : void\l
++ revalidate() : void\l
++ createToolTip() : JToolTip\l
+- uninstallUIAndProperties() : void\l
+# paintChildren(Graphics) : void\l
++ grabFocus() : void\l
++ getActionForKeyStroke(KeyStroke) : ActionListener\l
++ setDefaultLocale(Locale) : void\l
++ getPopupLocation(MouseEvent) : Point\l
++ removeNotify() : void\l
+ shouldDebugGraphics() : int\l
++ requestFocus(boolean) : boolean\l
++ addVetoableChangeListener(VetoableChangeListener) : void\l
+ safelyGetGraphics(Component, Component) : Graphics\l
++ getRegisteredKeyStrokes() : KeyStroke[]\l
++ scrollRectToVisible(Rectangle) : void\l
+- getClientProperties() : ArrayTable\l
++ removeAncestorListener(AncestorListener) : void\l
++ getInheritsPopupMenu() : boolean\l
+- fetchRectangle() : Rectangle\l
++ updateUI() : void\l
++ update(Graphics) : void\l
++ getUIClassID() : String\l
++ setMaximumSize(Dimension) : void\l
++ resetKeyboardActions() : void\l
++ setBackground(Color) : void\l
++ printAll(Graphics) : void\l
++ getVetoableChangeListeners() : VetoableChangeListener[]\l
+# processComponentKeyEvent(KeyEvent) : void\l
+# paintBorder(Graphics) : void\l
+# processKeyBinding(KeyStroke, KeyEvent, int, boolean) : boolean\l
++ getGraphics() : Graphics\l
+- registerNextFocusableComponent(Component) : void\l
++ getVisibleRect() : Rectangle\l
+ processKeyBindingsForAllComponents(KeyEvent, Container, boolean) : boolean\l
+# printBorder(Graphics) : void\l
+- unregisterWithKeyboardManager(KeyStroke) : void\l
+ getCreatedDoubleBuffer() : boolean\l
+ isPainting() : boolean\l
++ registerKeyboardAction(ActionListener, KeyStroke, int) : void\l
++ setForeground(Color) : void\l
++ isLightweightComponent(Component) : boolean\l
++ addAncestorListener(AncestorListener) : void\l
+ processKeyBindings(KeyEvent, boolean) : boolean\l
+- adjustPaintFlags() : void\l
++ getComponentPopupMenu() : JPopupMenu\l
+# setUI(ComponentUI) : void\l
++ print(Graphics) : void\l
++ getBaseline(int, int) : int\l
++ getSize(Dimension) : Dimension\l
++ getX() : int\l
++ getY() : int\l
++ setBorder(Border) : void\l
+ dndDone() : void\l
+- getAncestorNotifier() : AncestorNotifier\l
++ getTransferHandler() : TransferHandler\l
++ getDebugGraphicsOptions() : int\l
+ _paintImmediately(int, int, int, int) : void\l
 }",style=filled,fillcolor=yellow]
-RectangleTower[label = "{RectangleTower\n\<\<Leaf\>\>||}",style=filled,fillcolor=yellow]
-SpriteFactory[label = "{SpriteFactory|+ DX : double\l
-+ DY : double\l
-+ WIDTH : double\l
-+ HEIGHT : double\l
-- random : Random\l
-- sprites : List\<ISprite\>\l
-|+ createRandomSprite(Dimension) : ISprite\l
-+ computeRandomLocation(Dimension) : Point2D\l
+CheckBoxNodeTree[label = "{CheckBoxNodeTree\n\<\<Leaf\>\>|- serialVersionUID : long\l
+|}",style=filled,fillcolor=yellow]
+Point[label = "{Point\n\<\<decorator\>\>|+ x : int\l
++ y : int\l
+- serialVersionUID : long\l
+|+ getX() : double\l
++ getLocation() : Point\l
++ move(int, int) : void\l
++ getY() : double\l
++ setLocation(double, double) : void\l
++ equals(Object) : boolean\l
++ toString() : String\l
++ translate(int, int) : void\l
+}",style=filled,fillcolor=green]
+JMenuBar[label = "{JMenuBar\n\<\<Leaf\>\>|- uiClassID : String\l
+- selectionModel : SingleSelectionModel\l
+- paintBorder : boolean\l
+- margin : Insets\l
+- TRACE : boolean\l
+- VERBOSE : boolean\l
+- DEBUG : boolean\l
+|+ setSelected(Component) : void\l
++ getComponentIndex(Component) : int\l
++ getMargin() : Insets\l
++ updateUI() : void\l
++ setBorderPainted(boolean) : void\l
++ getUIClassID() : String\l
++ processKeyEvent(KeyEvent, MenuElement[], MenuSelectionManager) : void\l
++ getSubElements() : MenuElement[]\l
+# paramString() : String\l
+# paintBorder(Graphics) : void\l
+# processKeyBinding(KeyStroke, KeyEvent, int, boolean) : boolean\l
++ getMenu(int) : JMenu\l
++ isBorderPainted() : boolean\l
++ isSelected() : boolean\l
++ getMenuCount() : int\l
++ processMouseEvent(MouseEvent, MenuElement[], MenuSelectionManager) : void\l
+ processBindingForKeyStrokeRecursive(MenuElement, KeyStroke, KeyEvent, int, boolean) : boolean\l
++ add(JMenu) : JMenu\l
++ getComponentAtIndex(int) : Component\l
++ getSelectionModel() : SingleSelectionModel\l
+- writeObject(ObjectOutputStream) : void\l
++ setMargin(Insets) : void\l
++ getAccessibleContext() : AccessibleContext\l
+- readObject(ObjectInputStream) : void\l
++ getUI() : MenuBarUI\l
++ setUI(MenuBarUI) : void\l
++ getHelpMenu() : JMenu\l
++ menuSelectionChanged(boolean) : void\l
++ setSelectionModel(SingleSelectionModel) : void\l
++ addNotify() : void\l
++ removeNotify() : void\l
++ getComponent() : Component\l
++ setHelpMenu(JMenu) : void\l
+}",style=filled,fillcolor=yellow]
+JLayeredPane[label = "{JLayeredPane\n\<\<Leaf\>\>|+ DEFAULT_LAYER : Integer\l
++ PALETTE_LAYER : Integer\l
++ MODAL_LAYER : Integer\l
++ POPUP_LAYER : Integer\l
++ DRAG_LAYER : Integer\l
++ FRAME_CONTENT_LAYER : Integer\l
++ LAYER_PROPERTY : String\l
+- componentToLayer : Hashtable\<Component,Integer\>\l
+- optimizedDrawingPossible : boolean\l
+|- insertIndexForLayer(Component, int, int) : int\l
++ moveToFront(Component) : void\l
++ setLayer(Component, int, int) : void\l
++ putLayer(JComponent, int) : void\l
++ paint(Graphics) : void\l
++ lowestLayer() : int\l
++ getComponentCountInLayer(int) : int\l
++ remove(int) : void\l
++ setPosition(Component, int) : void\l
+# paramString() : String\l
++ removeAll() : void\l
++ moveToBack(Component) : void\l
+- validateOptimizedDrawing() : void\l
+# getComponentToLayer() : Hashtable\l
++ isOptimizedDrawingEnabled() : boolean\l
+# addImpl(Component, Object, int) : void\l
++ getLayer(Component) : int\l
++ highestLayer() : int\l
++ getComponentsInLayer(int) : Component[]\l
++ getAccessibleContext() : AccessibleContext\l
++ getIndexOf(Component) : int\l
++ getPosition(Component) : int\l
++ getLayeredPaneAbove(Component) : JLayeredPane\l
+# getObjectForLayer(int) : Integer\l
+}",style=filled,fillcolor=yellow]
+SwingConstants[label = "{\<\<interface\>\>\nSwingConstants\n\<\<target\>\>|+ CENTER : int\l
++ TOP : int\l
++ LEFT : int\l
++ BOTTOM : int\l
++ RIGHT : int\l
++ NORTH : int\l
++ NORTH_EAST : int\l
++ EAST : int\l
++ SOUTH_EAST : int\l
++ SOUTH : int\l
++ SOUTH_WEST : int\l
++ WEST : int\l
++ NORTH_WEST : int\l
++ HORIZONTAL : int\l
++ VERTICAL : int\l
++ LEADING : int\l
++ TRAILING : int\l
++ NEXT : int\l
++ PREVIOUS : int\l
+|}",style=filled,fillcolor=red]
+AbstractButton[label = "{AbstractButton\n\<\<Leaf\>\>|+ MODEL_CHANGED_PROPERTY : String\l
++ TEXT_CHANGED_PROPERTY : String\l
++ MNEMONIC_CHANGED_PROPERTY : String\l
++ MARGIN_CHANGED_PROPERTY : String\l
++ VERTICAL_ALIGNMENT_CHANGED_PROPERTY : String\l
++ HORIZONTAL_ALIGNMENT_CHANGED_PROPERTY : String\l
++ VERTICAL_TEXT_POSITION_CHANGED_PROPERTY : String\l
++ HORIZONTAL_TEXT_POSITION_CHANGED_PROPERTY : String\l
++ BORDER_PAINTED_CHANGED_PROPERTY : String\l
++ FOCUS_PAINTED_CHANGED_PROPERTY : String\l
++ ROLLOVER_ENABLED_CHANGED_PROPERTY : String\l
++ CONTENT_AREA_FILLED_CHANGED_PROPERTY : String\l
++ ICON_CHANGED_PROPERTY : String\l
++ PRESSED_ICON_CHANGED_PROPERTY : String\l
++ SELECTED_ICON_CHANGED_PROPERTY : String\l
++ ROLLOVER_ICON_CHANGED_PROPERTY : String\l
++ ROLLOVER_SELECTED_ICON_CHANGED_PROPERTY : String\l
++ DISABLED_ICON_CHANGED_PROPERTY : String\l
++ DISABLED_SELECTED_ICON_CHANGED_PROPERTY : String\l
+# model : ButtonModel\l
+- text : String\l
+- margin : Insets\l
+- defaultMargin : Insets\l
+- defaultIcon : Icon\l
+- pressedIcon : Icon\l
+- disabledIcon : Icon\l
+- selectedIcon : Icon\l
+- disabledSelectedIcon : Icon\l
+- rolloverIcon : Icon\l
+- rolloverSelectedIcon : Icon\l
+- paintBorder : boolean\l
+- paintFocus : boolean\l
+- rolloverEnabled : boolean\l
+- contentAreaFilled : boolean\l
+- verticalAlignment : int\l
+- horizontalAlignment : int\l
+- verticalTextPosition : int\l
+- horizontalTextPosition : int\l
+- iconTextGap : int\l
+- mnemonic : int\l
+- mnemonicIndex : int\l
+- multiClickThreshhold : long\l
+- borderPaintedSet : boolean\l
+- rolloverEnabledSet : boolean\l
+- iconTextGapSet : boolean\l
+- contentAreaFilledSet : boolean\l
+- setLayout : boolean\l
+ defaultCapable : boolean\l
+- handler : AbstractButton$Handler\l
+# changeListener : ChangeListener\l
+# actionListener : ActionListener\l
+# itemListener : ItemListener\l
+# changeEvent : ChangeEvent\l
+- hideActionText : boolean\l
+- action : Action\l
+- actionPropertyChangeListener : PropertyChangeListener\l
+|+ getMargin() : Insets\l
++ getSelectedObjects() : Object[]\l
+- isListener(Class, ActionListener) : boolean\l
++ setLayout(LayoutManager) : void\l
+- getHandler() : AbstractButtonHandler\l
++ getMnemonic() : int\l
+# configurePropertiesFromAction(Action) : void\l
++ addChangeListener(ChangeListener) : void\l
+# paramString() : String\l
++ setRolloverSelectedIcon(Icon) : void\l
++ isBorderPainted() : boolean\l
++ isFocusPainted() : boolean\l
++ getHideActionText() : boolean\l
+- setDisplayedMnemonicIndexFromAction(Action, boolean) : void\l
++ setHorizontalTextPosition(int) : void\l
+# init(String, Icon) : void\l
++ getChangeListeners() : ChangeListener[]\l
++ getText() : String\l
+# createChangeListener() : ChangeListener\l
++ removeItemListener(ItemListener) : void\l
++ setEnabled(boolean) : void\l
++ setDisabledIcon(Icon) : void\l
+# fireItemStateChanged(ItemEvent) : void\l
++ setHorizontalAlignment(int) : void\l
++ setAction(Action) : void\l
++ setDisplayedMnemonicIndex(int) : void\l
+ setUIProperty(String, Object) : void\l
+ largeIconChanged(Action) : void\l
+- setActionCommandFromAction(Action) : void\l
++ setHideActionText(boolean) : void\l
++ getIconTextGap() : int\l
++ isSelected() : boolean\l
++ addItemListener(ItemListener) : void\l
+- updateMnemonicProperties() : void\l
++ getItemListeners() : ItemListener[]\l
+# actionPropertyChanged(Action, String) : void\l
++ setMargin(Insets) : void\l
++ getVerticalTextPosition() : int\l
++ setActionCommand(String) : void\l
++ getAction() : Action\l
+# fireActionPerformed(ActionEvent) : void\l
+# createItemListener() : ItemListener\l
++ getIcon() : Icon\l
++ getSelectedIcon() : Icon\l
++ getVerticalAlignment() : int\l
++ setFocusPainted(boolean) : void\l
++ removeChangeListener(ChangeListener) : void\l
+# checkHorizontalKey(int, String) : int\l
++ setPressedIcon(Icon) : void\l
++ setVerticalAlignment(int) : void\l
++ getActionListeners() : ActionListener[]\l
++ setIconTextGap(int) : void\l
+# createActionPropertyChangeListener(Action) : PropertyChangeListener\l
++ getLabel() : String\l
++ setSelected(boolean) : void\l
+# fireStateChanged() : void\l
++ doClick(int) : void\l
++ setRolloverEnabled(boolean) : void\l
+# createActionListener() : ActionListener\l
++ getDisplayedMnemonicIndex() : int\l
+ setIconFromAction(Action) : void\l
++ setSelectedIcon(Icon) : void\l
+ clientPropertyChanged(Object, Object, Object) : void\l
++ getModel() : ButtonModel\l
++ addActionListener(ActionListener) : void\l
++ setMnemonic(char) : void\l
++ getPressedIcon() : Icon\l
++ setContentAreaFilled(boolean) : void\l
++ setIcon(Icon) : void\l
++ setVerticalTextPosition(int) : void\l
++ getUI() : ButtonUI\l
++ setRolloverIcon(Icon) : void\l
++ isContentAreaFilled() : boolean\l
++ setModel(ButtonModel) : void\l
++ removeNotify() : void\l
++ getMultiClickThreshhold() : long\l
++ setDisabledSelectedIcon(Icon) : void\l
++ getActionCommand() : String\l
+- updateDisplayedMnemonicIndex(String, int) : void\l
+ createActionPropertyChangeListener0(Action) : PropertyChangeListener\l
++ setMultiClickThreshhold(long) : void\l
+- setMnemonicFromAction(Action) : void\l
++ updateUI() : void\l
++ setBorderPainted(boolean) : void\l
++ isRolloverEnabled() : boolean\l
+# checkVerticalKey(int, String) : int\l
++ getHorizontalTextPosition() : int\l
++ imageUpdate(Image, int, int, int, int, int) : boolean\l
++ getDisabledSelectedIcon() : Icon\l
+# paintBorder(Graphics) : void\l
++ removeActionListener(ActionListener) : void\l
+ shouldUpdateSelectedStateFromAction() : boolean\l
+# addImpl(Component, Object, int) : void\l
++ getDisabledIcon() : Icon\l
+- setSelectedFromAction(Action) : void\l
++ setUI(ButtonUI) : void\l
++ getHorizontalAlignment() : int\l
++ getRolloverIcon() : Icon\l
+ smallIconChanged(Action) : void\l
++ setLabel(String) : void\l
++ getRolloverSelectedIcon() : Icon\l
+- setTextFromAction(Action, boolean) : void\l
++ setText(String) : void\l
+}",style=filled,fillcolor=yellow]
+JButton[label = "{JButton\n\<\<decorator\>\>|- uiClassID : String\l
+|# paramString() : String\l
++ isDefaultCapable() : boolean\l
++ setDefaultCapable(boolean) : void\l
+- writeObject(ObjectOutputStream) : void\l
++ updateUI() : void\l
++ removeNotify() : void\l
++ getUIClassID() : String\l
++ getAccessibleContext() : AccessibleContext\l
++ isDefaultButton() : boolean\l
+}",style=filled,fillcolor=green]
+JRootPane[label = "{JRootPane\n\<\<Leaf\>\>|- uiClassID : String\l
+- LOG_DISABLE_TRUE_DOUBLE_BUFFERING : boolean\l
+- IGNORE_DISABLE_TRUE_DOUBLE_BUFFERING : boolean\l
++ NONE : int\l
++ FRAME : int\l
++ PLAIN_DIALOG : int\l
++ INFORMATION_DIALOG : int\l
++ ERROR_DIALOG : int\l
++ COLOR_CHOOSER_DIALOG : int\l
++ FILE_CHOOSER_DIALOG : int\l
++ QUESTION_DIALOG : int\l
++ WARNING_DIALOG : int\l
+- windowDecorationStyle : int\l
+# menuBar : JMenuBar\l
+# contentPane : Container\l
+# layeredPane : JLayeredPane\l
+# glassPane : Component\l
+# defaultButton : JButton\l
+# defaultPressAction : JRootPane$DefaultAction\l
+# defaultReleaseAction : JRootPane$DefaultAction\l
+ useTrueDoubleBuffering : boolean\l
+|+ setJMenuBar(JMenuBar) : void\l
++ updateUI() : void\l
++ setDoubleBuffered(boolean) : void\l
++ getUIClassID() : String\l
++ getMenuBar() : JMenuBar\l
+# createContentPane() : Container\l
+# createGlassPane() : Component\l
++ setMenuBar(JMenuBar) : void\l
+# paramString() : String\l
++ getJMenuBar() : JMenuBar\l
++ getLayeredPane() : JLayeredPane\l
++ setDefaultButton(JButton) : void\l
+ getUseTrueDoubleBuffering() : boolean\l
+ disableTrueDoubleBuffering() : void\l
++ isOptimizedDrawingEnabled() : boolean\l
+# addImpl(Component, Object, int) : void\l
++ getGlassPane() : Component\l
++ getContentPane() : Container\l
++ getDefaultButton() : JButton\l
+ setUseTrueDoubleBuffering(boolean) : void\l
+# createRootLayout() : LayoutManager\l
++ getAccessibleContext() : AccessibleContext\l
++ getUI() : RootPaneUI\l
++ setUI(RootPaneUI) : void\l
++ isValidateRoot() : boolean\l
++ addNotify() : void\l
++ setLayeredPane(JLayeredPane) : void\l
++ getWindowDecorationStyle() : int\l
+# createLayeredPane() : JLayeredPane\l
++ setContentPane(Container) : void\l
++ setWindowDecorationStyle(int) : void\l
++ removeNotify() : void\l
++ setGlassPane(Component) : void\l
+}",style=filled,fillcolor=yellow]
+JFrame[label = "{JFrame\n\<\<decorator\>\>|+ EXIT_ON_CLOSE : int\l
+- defaultLookAndFeelDecoratedKey : Object\l
+- defaultCloseOperation : int\l
+- transferHandler : TransferHandler\l
+# rootPane : JRootPane\l
+# rootPaneCheckingEnabled : boolean\l
+# accessibleContext : AccessibleContext\l
+|+ setJMenuBar(JMenuBar) : void\l
++ setDefaultLookAndFeelDecorated(boolean) : void\l
+# processWindowEvent(WindowEvent) : void\l
++ getRootPane() : JRootPane\l
++ setIconImage(Image) : void\l
++ update(Graphics) : void\l
++ setLayout(LayoutManager) : void\l
++ remove(Component) : void\l
+# createRootPane() : JRootPane\l
+# paramString() : String\l
++ getJMenuBar() : JMenuBar\l
+# setRootPaneCheckingEnabled(boolean) : void\l
++ getDefaultCloseOperation() : int\l
++ getLayeredPane() : JLayeredPane\l
++ setDefaultCloseOperation(int) : void\l
++ getGraphics() : Graphics\l
+# frameInit() : void\l
+# addImpl(Component, Object, int) : void\l
++ getGlassPane() : Component\l
++ isDefaultLookAndFeelDecorated() : boolean\l
++ getContentPane() : Container\l
++ getAccessibleContext() : AccessibleContext\l
+# isRootPaneCheckingEnabled() : boolean\l
+# setRootPane(JRootPane) : void\l
++ setTransferHandler(TransferHandler) : void\l
++ setLayeredPane(JLayeredPane) : void\l
++ setContentPane(Container) : void\l
++ getTransferHandler() : TransferHandler\l
++ repaint(long, int, int, int, int) : void\l
++ setGlassPane(Component) : void\l
+}",style=filled,fillcolor=green]
+LinkedHashMap[label = "{LinkedHashMap\n\<\<decorator\>\>|- serialVersionUID : long\l
+ head : LinkedHashMap$Entry\<TK,TV\>\l
+ tail : LinkedHashMap$Entry\<TK,TV\>\l
+ accessOrder : boolean\l
+| reinitialize() : void\l
+ internalWriteEntries(ObjectOutputStream) : void\l
++ getOrDefault(Object, Object) : Object\l
+ newTreeNode(int, Object, Object) : HashMapTreeNode\l
++ entrySet() : Set\l
++ forEach(BiConsumer) : void\l
++ values() : Collection\l
++ clear() : void\l
+- transferLinks() : void\l
+ afterNodeRemoval() : void\l
++ replaceAll(BiFunction) : void\l
++ containsValue(Object) : boolean\l
+ replacementNode() : HashMapNode\l
+ afterNodeAccess() : void\l
+# removeEldestEntry() : boolean\l
++ get(Object) : Object\l
+ newNode(int, Object, Object) : HashMapNode\l
+ replacementTreeNode() : HashMapTreeNode\l
+- linkNodeLast() : void\l
+ afterNodeInsertion(boolean) : void\l
++ keySet() : Set\l
+}",style=filled,fillcolor=green]
+JTextComponent[label = "{JTextComponent\n\<\<Leaf\>\>|+ FOCUS_ACCELERATOR_KEY : String\l
+- model : Document\l
+- caret : Caret\l
+- navigationFilter : NavigationFilter\l
+- highlighter : Highlighter\l
+- keymap : Keymap\l
+- caretEvent : JTextComponent$MutableCaretEvent\l
+- caretColor : Color\l
+- selectionColor : Color\l
+- selectedTextColor : Color\l
+- disabledTextColor : Color\l
+- editable : boolean\l
+- margin : Insets\l
+- focusAccelerator : char\l
+- dragEnabled : boolean\l
+- dropMode : DropMode\l
+- dropLocation : JTextComponent$DropLocation\l
+- defaultTransferHandler : JTextComponent$DefaultTransferHandler\l
+- METHOD_OVERRIDDEN : Cache\<Class<*\>\l
+- KEYMAP_TABLE : Object\l
+- inputMethodRequestsHandler : InputMethodRequests\l
+- composedTextAttribute : SimpleAttributeSet\l
+- composedTextContent : String\l
+- composedTextStart : Position\l
+- composedTextEnd : Position\l
+- latestCommittedTextStart : Position\l
+- latestCommittedTextEnd : Position\l
+- composedTextCaret : JTextComponent$ComposedTextCaret\l
+- originalCaret : Caret\l
+- checkedInputOverride : boolean\l
+- needToSendKeyTypedEvent : boolean\l
+- FOCUSED_COMPONENT : Object\l
++ DEFAULT_KEYMAP : String\l
+|+ getSelectionStart() : int\l
++ replaceSelection(String) : void\l
++ getSelectedText() : String\l
++ select(int, int) : void\l
++ setSelectionColor(Color) : void\l
++ getPrintable(MessageFormat, MessageFormat) : Printable\l
++ getMargin() : Insets\l
++ addKeymap(String, Keymap) : Keymap\l
++ setCaretColor(Color) : void\l
+- getCurrentEventModifiers() : int\l
++ getScrollableTracksViewportWidth() : boolean\l
+- mapCommittedTextToAction(String) : void\l
++ setCaret(Caret) : void\l
++ getCaretPosition() : int\l
++ getInputMethodRequests() : InputMethodRequests\l
++ loadKeymap(Keymap, Action[]) : void\l
++ getCaretColor() : Color\l
+# paramString() : String\l
+- replaceInputMethodText(InputMethodEvent) : void\l
++ viewToModel(Point) : int\l
++ setSelectionEnd(int) : void\l
++ addCaretListener(CaretListener) : void\l
++ isEditable() : boolean\l
++ getDragEnabled() : boolean\l
++ removeCaretListener(CaretListener) : void\l
++ setSelectionStart(int) : void\l
++ getDropLocation() : JTextComponentDropLocation\l
++ write(Writer) : void\l
++ getCaretListeners() : CaretListener[]\l
+# fireCaretUpdate(CaretEvent) : void\l
++ getHighlighter() : Highlighter\l
++ read(Reader, Object) : void\l
+# processInputMethodEvent(InputMethodEvent) : void\l
++ getScrollableTracksViewportHeight() : boolean\l
++ getDocument() : Document\l
++ getText() : String\l
++ getDropMode() : DropMode\l
++ getFocusAccelerator() : char\l
+ setDropLocation(Object, boolean) : Object\l
+- readObject(ObjectInputStream) : void\l
++ getUI() : TextUI\l
+ dropLocationForPoint(Point) : JTextComponentDropLocation\l
++ selectAll() : void\l
++ setKeymap(Keymap) : void\l
++ removeNotify() : void\l
+ composedTextExists() : boolean\l
++ setNavigationFilter(NavigationFilter) : void\l
++ getNavigationFilter() : NavigationFilter\l
+- getKeymapTable() : HashMap\l
++ setDragEnabled(boolean) : void\l
+- shouldSynthensizeKeyEvents() : boolean\l
++ setSelectedTextColor(Color) : void\l
++ cut() : void\l
+ getFocusedComponent() : JTextComponent\l
++ updateUI() : void\l
++ getActions() : Action[]\l
++ setFocusAccelerator(char) : void\l
++ paste() : void\l
++ getScrollableBlockIncrement(Rectangle, int, int) : int\l
++ modelToView(int) : Rectangle\l
++ getScrollableUnitIncrement(Rectangle, int, int) : int\l
+# restoreComposedText() : void\l
+- installDefaultTransferHandlerIfNecessary() : void\l
++ copy() : void\l
+- createComposedTextAttribute(int, AttributedCharacterIterator) : void\l
+- invokeAction(String, Action) : void\l
++ getSelectionColor() : Color\l
++ setComponentOrientation(ComponentOrientation) : void\l
++ getKeymap(String) : Keymap\l
++ getSelectedTextColor() : Color\l
+- exchangeCaret(Caret, Caret) : void\l
++ setMargin(Insets) : void\l
++ moveCaretPosition(int) : void\l
++ removeKeymap(String) : Keymap\l
++ getDisabledTextColor() : Color\l
++ getPreferredScrollableViewportSize() : Dimension\l
++ getAccessibleContext() : AccessibleContext\l
++ setHighlighter(Highlighter) : void\l
++ setUI(TextUI) : void\l
++ setDocument(Document) : void\l
++ print(MessageFormat, MessageFormat, boolean, PrintService, PrintRequestAttributeSet, boolean) : boolean\l
++ getCaret() : Caret\l
++ setDropMode(DropMode) : void\l
++ setEditable(boolean) : void\l
+ updateInputMap(Keymap, Keymap) : void\l
++ addInputMethodListener(InputMethodListener) : void\l
+- setInputMethodCaretPosition(InputMethodEvent) : void\l
+# saveComposedText(int) : boolean\l
++ setCaretPosition(int) : void\l
++ getSelectionEnd() : int\l
++ setDisabledTextColor(Color) : void\l
++ getToolTipText(MouseEvent) : String\l
++ setText(String) : void\l
+}",style=filled,fillcolor=yellow]
+BoundedRangeModel[label = "{\<\<interface\>\>\nBoundedRangeModel\n\<\<adaptee\>\>||+ getExtent() : int\l
++ setMaximum(int) : void\l
++ getMaximum() : int\l
++ addChangeListener(ChangeListener) : void\l
++ getValue() : int\l
++ removeChangeListener(ChangeListener) : void\l
++ setValueIsAdjusting(boolean) : void\l
++ setValue(int) : void\l
++ getMinimum() : int\l
++ setRangeProperties(int, int, int, int, boolean) : void\l
++ setExtent(int) : void\l
++ getValueIsAdjusting() : boolean\l
++ setMinimum(int) : void\l
+}",style=filled,fillcolor=red]
+JTextField[label = "{JTextField\n\<\<decorator\>\>|- action : Action\l
+- actionPropertyChangeListener : PropertyChangeListener\l
++ notifyAction : String\l
+- visibility : BoundedRangeModel\l
+- horizontalAlignment : int\l
+- columns : int\l
+- columnWidth : int\l
+- command : String\l
+- defaultActions : Action[]\l
+- uiClassID : String\l
+|+ setColumns(int) : void\l
+# createActionPropertyChangeListener(Action) : PropertyChangeListener\l
++ setAction(Action) : void\l
++ scrollRectToVisible(Rectangle) : void\l
+# getColumnWidth() : int\l
++ getUIClassID() : String\l
+- isListener(Class, ActionListener) : boolean\l
++ getActions() : Action[]\l
+- setActionCommandFromAction(Action) : void\l
+# configurePropertiesFromAction(Action) : void\l
++ getColumns() : int\l
+# paramString() : String\l
++ removeActionListener(ActionListener) : void\l
++ setScrollOffset(int) : void\l
++ setFont(Font) : void\l
++ postActionEvent() : void\l
+# actionPropertyChanged(Action, String) : void\l
+- writeObject(ObjectOutputStream) : void\l
++ addActionListener(ActionListener) : void\l
++ setActionCommand(String) : void\l
++ getAction() : Action\l
+# fireActionPerformed() : void\l
++ getAccessibleContext() : AccessibleContext\l
++ setDocument(Document) : void\l
++ isValidateRoot() : boolean\l
+ hasActionListener() : boolean\l
++ getHorizontalAlignment() : int\l
++ getPreferredSize() : Dimension\l
++ getActionListeners() : ActionListener[]\l
++ getScrollOffset() : int\l
+# createDefaultModel() : Document\l
++ setHorizontalAlignment(int) : void\l
++ getHorizontalVisibility() : BoundedRangeModel\l
+}",style=filled,fillcolor=green]
+ConfigWindow[label = "{ConfigWindow|- frame : JFrame\l
+- textField : JTextField\l
+- textField_1 : JTextField\l
+- textField_2 : JTextField\l
+- textField_3 : JTextField\l
+- textField_4 : JTextField\l
+|+ main(String[]) : void\l
+- initialize() : void\l
 }"]
-edge [arrowhead = "empty"] [style = "solid"] RectangleTower->CompositeSprite
-edge [arrowhead = "vee"] [style = "solid"] CompositeSpriteIterator->ISprite
-edge [arrowhead = "empty"] [style = "dashed"] AbstractSprite->ISprite
-edge [arrowhead = "empty"] [style = "solid"] CircleSprite->AbstractSprite
-edge [arrowhead = "vee"] [style = "dashed"] ISprite->ISprite
-edge [arrowhead = "vee"] [style = "dashed"] NullSpriteIterator->ISprite
-edge [arrowhead = "vee"] [style = "solid"] AnimationPanel->ISprite
-edge [arrowhead = "empty"] [style = "solid"] CrystalBall->CompositeSprite
-edge [arrowhead = "vee"] [style = "dashed"] AnimationPanel->AnimationPanel
-edge [arrowhead = "empty"] [style = "solid"] RectangleSprite->AbstractSprite
-edge [arrowhead = "vee"] [style = "solid"] SpriteFactory->ISprite
-edge [arrowhead = "vee"] [style = "solid"] CompositeSprite->ISprite
-edge [arrowhead = "vee"] [style = "solid"] MainWindow->AnimationPanel
-edge [arrowhead = "vee"] [style = "dashed"] MainWindow->MainWindow
-edge [arrowhead = "empty"] [style = "solid"] CompositeSprite->AbstractSprite
-edge [arrowhead = "vee"] [style = "dashed"] AbstractSprite->ISprite
+FetchClasses[label = "{FetchClasses||- isJavaClass(String) : Boolean\l
+- toArrayHelper(String, File) : ArrayList\l
++ getClasses(String, File) : String[]\l
+}"]
+ImageProxy[label = "{ImageProxy| imageIcon : ImageIcon\l
+ pathToImage : String\l
+ retrievalThread : Thread\l
+ retrieving : boolean\l
+|+ getIconWidth() : int\l
++ getIconHeight() : int\l
++ paintIcon(Component, Graphics, int, int) : void\l
+}"]
+JDialog[label = "{JDialog\n\<\<decorator\>\>|- defaultLookAndFeelDecoratedKey : Object\l
+- defaultCloseOperation : int\l
+# rootPane : JRootPane\l
+# rootPaneCheckingEnabled : boolean\l
+- transferHandler : TransferHandler\l
+# accessibleContext : AccessibleContext\l
+|+ setJMenuBar(JMenuBar) : void\l
++ setDefaultLookAndFeelDecorated(boolean) : void\l
+# processWindowEvent(WindowEvent) : void\l
++ getRootPane() : JRootPane\l
++ update(Graphics) : void\l
++ setLayout(LayoutManager) : void\l
++ remove(Component) : void\l
+# createRootPane() : JRootPane\l
+# paramString() : String\l
+# dialogInit() : void\l
++ getJMenuBar() : JMenuBar\l
+# setRootPaneCheckingEnabled(boolean) : void\l
++ getDefaultCloseOperation() : int\l
++ getLayeredPane() : JLayeredPane\l
++ setDefaultCloseOperation(int) : void\l
++ getGraphics() : Graphics\l
+# addImpl(Component, Object, int) : void\l
++ getGlassPane() : Component\l
++ isDefaultLookAndFeelDecorated() : boolean\l
++ getContentPane() : Container\l
++ getAccessibleContext() : AccessibleContext\l
+# isRootPaneCheckingEnabled() : boolean\l
+# setRootPane(JRootPane) : void\l
++ setTransferHandler(TransferHandler) : void\l
++ setLayeredPane(JLayeredPane) : void\l
++ setContentPane(Container) : void\l
++ getTransferHandler() : TransferHandler\l
++ repaint(long, int, int, int, int) : void\l
++ setGlassPane(Component) : void\l
+}",style=filled,fillcolor=green]
+JFileChooser[label = "{JFileChooser\n\<\<Composite\>\>|- uiClassID : String\l
++ OPEN_DIALOG : int\l
++ SAVE_DIALOG : int\l
++ CUSTOM_DIALOG : int\l
++ CANCEL_OPTION : int\l
++ APPROVE_OPTION : int\l
++ ERROR_OPTION : int\l
++ FILES_ONLY : int\l
++ DIRECTORIES_ONLY : int\l
++ FILES_AND_DIRECTORIES : int\l
++ CANCEL_SELECTION : String\l
++ APPROVE_SELECTION : String\l
++ APPROVE_BUTTON_TEXT_CHANGED_PROPERTY : String\l
++ APPROVE_BUTTON_TOOL_TIP_TEXT_CHANGED_PROPERTY : String\l
++ APPROVE_BUTTON_MNEMONIC_CHANGED_PROPERTY : String\l
++ CONTROL_BUTTONS_ARE_SHOWN_CHANGED_PROPERTY : String\l
++ DIRECTORY_CHANGED_PROPERTY : String\l
++ SELECTED_FILE_CHANGED_PROPERTY : String\l
++ SELECTED_FILES_CHANGED_PROPERTY : String\l
++ MULTI_SELECTION_ENABLED_CHANGED_PROPERTY : String\l
++ FILE_SYSTEM_VIEW_CHANGED_PROPERTY : String\l
++ FILE_VIEW_CHANGED_PROPERTY : String\l
++ FILE_HIDING_CHANGED_PROPERTY : String\l
++ FILE_FILTER_CHANGED_PROPERTY : String\l
++ FILE_SELECTION_MODE_CHANGED_PROPERTY : String\l
++ ACCESSORY_CHANGED_PROPERTY : String\l
++ ACCEPT_ALL_FILE_FILTER_USED_CHANGED_PROPERTY : String\l
++ DIALOG_TITLE_CHANGED_PROPERTY : String\l
++ DIALOG_TYPE_CHANGED_PROPERTY : String\l
++ CHOOSABLE_FILE_FILTER_CHANGED_PROPERTY : String\l
+- dialogTitle : String\l
+- approveButtonText : String\l
+- approveButtonToolTipText : String\l
+- approveButtonMnemonic : int\l
+- filters : Vector\<FileFilter\>\l
+- dialog : JDialog\l
+- dialogType : int\l
+- returnValue : int\l
+- accessory : JComponent\l
+- fileView : FileView\l
+- controlsShown : boolean\l
+- useFileHiding : boolean\l
+- SHOW_HIDDEN_PROP : String\l
+- showFilesListener : PropertyChangeListener\l
+- fileSelectionMode : int\l
+- multiSelectionEnabled : boolean\l
+- useAcceptAllFileFilter : boolean\l
+- dragEnabled : boolean\l
+- fileFilter : FileFilter\l
+- fileSystemView : FileSystemView\l
+- currentDirectory : File\l
+- selectedFile : File\l
+- selectedFiles : File[]\l
+# accessibleContext : AccessibleContext\l
+|+ showOpenDialog(Component) : int\l
++ getAccessory() : JComponent\l
++ getApproveButtonMnemonic() : int\l
++ getFileSystemView() : FileSystemView\l
++ getName(File) : String\l
++ getTypeDescription(File) : String\l
++ approveSelection() : void\l
++ addChoosableFileFilter(FileFilter) : void\l
++ showSaveDialog(Component) : int\l
++ isDirectorySelectionEnabled() : boolean\l
++ getApproveButtonToolTipText() : String\l
+# paramString() : String\l
++ getDragEnabled() : boolean\l
++ getDialogTitle() : String\l
++ setSelectedFile(File) : void\l
++ setFileSelectionMode(int) : void\l
++ setCurrentDirectory(File) : void\l
++ getFileSelectionMode() : int\l
+- writeObject(ObjectOutputStream) : void\l
++ addActionListener(ActionListener) : void\l
+# createDialog(Component) : JDialog\l
++ getDialogType() : int\l
++ setDialogTitle(String) : void\l
++ isFileHidingEnabled() : boolean\l
++ getSelectedFiles() : File[]\l
++ accept(File) : boolean\l
+- readObject(ObjectInputStream) : void\l
++ getCurrentDirectory() : File\l
++ setControlButtonsAreShown(boolean) : void\l
++ getUI() : FileChooserUI\l
++ setApproveButtonText(String) : void\l
++ getApproveButtonText() : String\l
++ getFileView() : FileView\l
++ isMultiSelectionEnabled() : boolean\l
++ setFileHidingEnabled(boolean) : void\l
++ setDragEnabled(boolean) : void\l
++ isTraversable(File) : boolean\l
++ rescanCurrentDirectory() : void\l
++ isAcceptAllFileFilterUsed() : boolean\l
++ updateUI() : void\l
++ getAcceptAllFileFilter() : FileFilter\l
++ getUIClassID() : String\l
++ getDescription(File) : String\l
++ resetChoosableFileFilters() : void\l
++ showDialog(Component, String) : int\l
++ removeActionListener(ActionListener) : void\l
+- installHierarchyListener() : void\l
++ removeChoosableFileFilter(FileFilter) : boolean\l
++ changeToParentDirectory() : void\l
++ getControlButtonsAreShown() : boolean\l
++ getChoosableFileFilters() : FileFilter[]\l
++ getFileFilter() : FileFilter\l
++ ensureFileIsVisible(File) : void\l
++ setAccessory(JComponent) : void\l
++ setApproveButtonMnemonic(char) : void\l
++ setFileSystemView(FileSystemView) : void\l
++ setMultiSelectionEnabled(boolean) : void\l
++ setAcceptAllFileFilterUsed(boolean) : void\l
+- installShowFilesListener() : void\l
+# fireActionPerformed(String) : void\l
++ setFileFilter(FileFilter) : void\l
++ getAccessibleContext() : AccessibleContext\l
++ getIcon(File) : Icon\l
++ setApproveButtonToolTipText(String) : void\l
++ isFileSelectionEnabled() : boolean\l
++ setDialogType(int) : void\l
++ getSelectedFile() : File\l
++ cancelSelection() : void\l
++ setSelectedFiles(File[]) : void\l
++ getActionListeners() : ActionListener[]\l
+# setup(FileSystemView) : void\l
++ setFileView(FileView) : void\l
+}",style=filled,fillcolor=yellow]
+JProgressBar[label = "{JProgressBar\n\<\<Leaf\>\>|- uiClassID : String\l
+# orientation : int\l
+# paintBorder : boolean\l
+# model : BoundedRangeModel\l
+# progressString : String\l
+# paintString : boolean\l
+- defaultMinimum : int\l
+- defaultMaximum : int\l
+- defaultOrientation : int\l
+# changeEvent : ChangeEvent\l
+# changeListener : ChangeListener\l
+- format : Format\l
+- indeterminate : boolean\l
+|# fireStateChanged() : void\l
++ setMaximum(int) : void\l
++ updateUI() : void\l
++ setBorderPainted(boolean) : void\l
++ getUIClassID() : String\l
++ setIndeterminate(boolean) : void\l
++ getMaximum() : int\l
++ isIndeterminate() : boolean\l
++ addChangeListener(ChangeListener) : void\l
+# paramString() : String\l
++ getOrientation() : int\l
+# paintBorder(Graphics) : void\l
++ setStringPainted(boolean) : void\l
++ isBorderPainted() : boolean\l
++ getMinimum() : int\l
++ setOrientation(int) : void\l
++ getChangeListeners() : ChangeListener[]\l
++ getModel() : BoundedRangeModel\l
+- writeObject(ObjectOutputStream) : void\l
++ isStringPainted() : boolean\l
+# createChangeListener() : ChangeListener\l
++ getString() : String\l
++ getAccessibleContext() : AccessibleContext\l
++ getUI() : ProgressBarUI\l
++ getValue() : int\l
++ setString(String) : void\l
++ setUI(ProgressBarUI) : void\l
++ removeChangeListener(ChangeListener) : void\l
++ setValue(int) : void\l
++ setModel(BoundedRangeModel) : void\l
++ setMinimum(int) : void\l
++ getPercentComplete() : double\l
+}",style=filled,fillcolor=yellow]
+LoadingScreen[label = "{LoadingScreen|- frame : JFrame\l
+- btnLoad : JButton\l
+- btnAnalyze : JButton\l
+- fc : JFileChooser\l
+- file : File\l
+- progressBar : JProgressBar\l
+- task : LoadingScreen$Task\l
+|+ actionPerformed(ActionEvent) : void\l
++ main(String[]) : void\l
++ propertyChange(PropertyChangeEvent) : void\l
+- initialize() : void\l
+}"]
+ParseConfig[label = "{ParseConfig|- propertyNames : String[]\l
+- file : File\l
+- props : Properties\l
+- properties : ArrayList\<String\>\l
+|+ parse() : String[]\l
+}"]
+JViewport[label = "{JViewport\n\<\<Leaf\>\>|- uiClassID : String\l
+ EnableWindowBlit : Object\l
+# isViewSizeSet : boolean\l
+# lastPaintPosition : Point\l
+# backingStore : boolean\l
+# backingStoreImage : Image\l
+# scrollUnderway : boolean\l
+- viewListener : ComponentListener\l
+- changeEvent : ChangeEvent\l
++ BLIT_SCROLL_MODE : int\l
++ BACKINGSTORE_SCROLL_MODE : int\l
++ SIMPLE_SCROLL_MODE : int\l
+- scrollMode : int\l
+- repaintAll : boolean\l
+- waitingForRepaint : boolean\l
+- repaintTimer : Timer\l
+- inBlitPaint : boolean\l
+- hasHadValidView : boolean\l
+- viewChanged : boolean\l
+|# createLayoutManager() : LayoutManager\l
+# fireStateChanged() : void\l
+# computeBlit(int, int, Point, Point, Dimension, Rectangle) : boolean\l
++ paint(Graphics) : void\l
++ addChangeListener(ChangeListener) : void\l
++ setViewSize(Dimension) : void\l
+# paramString() : String\l
+- paintViaBackingStore(Graphics, Rectangle) : void\l
++ getViewSize() : Dimension\l
++ getView() : Component\l
++ getChangeListeners() : ChangeListener[]\l
++ isOptimizedDrawingEnabled() : boolean\l
+# firePropertyChange(String, Object, Object) : void\l
+- validateView() : void\l
++ isBackingStoreEnabled() : boolean\l
+# isPaintingOrigin() : boolean\l
++ getExtentSize() : Dimension\l
++ reshape(int, int, int, int) : void\l
++ getUI() : ViewportUI\l
+- flushViewDirtyRegion(Graphics, Rectangle) : void\l
++ getScrollMode() : int\l
+- createRepaintTimer() : Timer\l
++ getViewPosition() : Point\l
++ toViewCoordinates(Point) : Point\l
++ repaint(long, int, int, int, int) : void\l
++ getViewRect() : Rectangle\l
++ setExtentSize(Dimension) : void\l
+- needsRepaintAfterBlit() : boolean\l
++ scrollRectToVisible(Rectangle) : void\l
+- positionAdjustment(int, int, int) : int\l
++ setScrollMode(int) : void\l
++ updateUI() : void\l
++ getUIClassID() : String\l
++ remove(Component) : void\l
++ setViewPosition(Point) : void\l
+- paintView(Graphics) : void\l
++ setBackingStoreEnabled(boolean) : void\l
+- windowBlitPaint(Graphics) : boolean\l
+- canUseWindowBlitter() : boolean\l
+# createViewListener() : JViewportViewListener\l
+# addImpl(Component, Object, int) : void\l
+- getBackingStoreGraphics(Graphics) : Graphics\l
+- getViewLocation() : Point\l
++ getInsets(Insets) : Insets\l
++ getAccessibleContext() : AccessibleContext\l
++ setUI(ViewportUI) : void\l
++ removeChangeListener(ChangeListener) : void\l
+- blitDoubleBuffered(JComponent, Graphics, int, int, int, int, int, int, int, int, int, int) : void\l
++ setBorder(Border) : void\l
++ setView(Component) : void\l
+- isBlitting() : boolean\l
+}",style=filled,fillcolor=yellow]
+JScrollBar[label = "{JScrollBar\n\<\<Leaf\>\>|- uiClassID : String\l
+- fwdAdjustmentEvents : ChangeListener\l
+# model : BoundedRangeModel\l
+# orientation : int\l
+# unitIncrement : int\l
+# blockIncrement : int\l
+|+ getMaximumSize() : Dimension\l
++ setMaximum(int) : void\l
++ updateUI() : void\l
++ getUIClassID() : String\l
++ getMaximum() : int\l
++ getBlockIncrement() : int\l
++ getUnitIncrement() : int\l
++ setVisibleAmount(int) : void\l
+# paramString() : String\l
++ getOrientation() : int\l
++ setUnitIncrement(int) : void\l
++ setValues(int, int, int, int) : void\l
++ removeAdjustmentListener(AdjustmentListener) : void\l
++ addAdjustmentListener(AdjustmentListener) : void\l
++ getVisibleAmount() : int\l
++ getMinimumSize() : Dimension\l
++ getMinimum() : int\l
++ getAdjustmentListeners() : AdjustmentListener[]\l
++ setBlockIncrement(int) : void\l
++ setOrientation(int) : void\l
++ getModel() : BoundedRangeModel\l
+- writeObject(ObjectOutputStream) : void\l
+- fireAdjustmentValueChanged(int, int, int, boolean) : void\l
++ getAccessibleContext() : AccessibleContext\l
++ getUI() : ScrollBarUI\l
++ getValue() : int\l
++ setEnabled(boolean) : void\l
++ setUI(ScrollBarUI) : void\l
++ setValueIsAdjusting(boolean) : void\l
++ setValue(int) : void\l
++ setModel(BoundedRangeModel) : void\l
+- checkOrientation(int) : void\l
++ getValueIsAdjusting() : boolean\l
++ setMinimum(int) : void\l
+}",style=filled,fillcolor=yellow]
+JScrollPane[label = "{JScrollPane\n\<\<Leaf\>\>|- viewportBorder : Border\l
+- uiClassID : String\l
+# verticalScrollBarPolicy : int\l
+# horizontalScrollBarPolicy : int\l
+# viewport : JViewport\l
+# verticalScrollBar : JScrollBar\l
+# horizontalScrollBar : JScrollBar\l
+# rowHeader : JViewport\l
+# columnHeader : JViewport\l
+# lowerLeft : Component\l
+# lowerRight : Component\l
+# upperLeft : Component\l
+# upperRight : Component\l
+- wheelScrollState : boolean\l
+|+ getColumnHeader() : JViewport\l
++ setVerticalScrollBarPolicy(int) : void\l
++ setColumnHeader(JViewport) : void\l
++ getHorizontalScrollBarPolicy() : int\l
++ updateUI() : void\l
++ getUIClassID() : String\l
++ setLayout(LayoutManager) : void\l
++ createHorizontalScrollBar() : JScrollBar\l
++ setViewport(JViewport) : void\l
+# paramString() : String\l
+# createViewport() : JViewport\l
++ getCorner(String) : Component\l
++ setWheelScrollingEnabled(boolean) : void\l
++ getVerticalScrollBar() : JScrollBar\l
++ getVerticalScrollBarPolicy() : int\l
++ setCorner(String, Component) : void\l
++ setRowHeaderView(Component) : void\l
++ isWheelScrollingEnabled() : boolean\l
++ getViewportBorder() : Border\l
++ setComponentOrientation(ComponentOrientation) : void\l
+- writeObject(ObjectOutputStream) : void\l
++ setColumnHeaderView(Component) : void\l
++ getHorizontalScrollBar() : JScrollBar\l
++ setHorizontalScrollBar(JScrollBar) : void\l
++ getViewportBorderBounds() : Rectangle\l
++ setVerticalScrollBar(JScrollBar) : void\l
++ getAccessibleContext() : AccessibleContext\l
++ getUI() : ScrollPaneUI\l
++ setUI(ScrollPaneUI) : void\l
++ isValidateRoot() : boolean\l
++ getViewport() : JViewport\l
++ setViewportView(Component) : void\l
++ createVerticalScrollBar() : JScrollBar\l
++ setHorizontalScrollBarPolicy(int) : void\l
++ setViewportBorder(Border) : void\l
++ getRowHeader() : JViewport\l
++ setRowHeader(JViewport) : void\l
+}",style=filled,fillcolor=yellow]
+ResultScreen[label = "{ResultScreen|- frame : JFrame\l
+- phases : String\l
+- model : IModel\l
++ outputDir : String\l
+- dotPath : String\l
+ scrollPane_1 : JScrollPane\l
+|+ main(String[]) : void\l
+- initialize() : void\l
+}"]
+ClassDeclarationVisitor[label = "{ClassDeclarationVisitor|- c : IClass\l
+- model : IModel\l
+|+ visit(int, int, String, String, String, String[]) : void\l
+}"]
+ClassFieldVisitor[label = "{ClassFieldVisitor|- c : IClass\l
+- model : IModel\l
+- primitives : Set\<String\>\l
+|+ visitField(int, String, String, String, Object) : FieldVisitor\l
++ addAccessType(int, IField) : void\l
+}"]
+ClassMethodVisitor[label = "{ClassMethodVisitor|- c : IClass\l
+- model : IModel\l
+| addArguments(String, IMethod) : void\l
+ addAccessLevel(int, IMethod) : void\l
++ visitMethod(int, String, String, String, String[]) : MethodVisitor\l
+ addReturnType(String, IMethod) : void\l
+}"]
+IVisitMethod[label = "{\<\<interface\>\>\nIVisitMethod||+ execute(ITraverser) : void\l
+}"]
+LookupKey[label = "{LookupKey|- visitType : VisitType\l
+- targetType : Class\<*\>\l
+|+ hashCode() : int\l
++ equals(Object) : boolean\l
+}"]
+VariableMethodVisitor[label = "{VariableMethodVisitor|- c : IClass\l
+- model : IModel\l
+- method : IMethod\l
+|+ visitMethodInsn(int, String, String, String, boolean) : void\l
+}"]
+Reader[label = "{Reader\n\<\<Component\>\>|# lock : Object\l
+- maxSkipBufferSize : int\l
+- skipBuffer : char[]\l
+|+ read(char[], int, int) : int\l
++ ready() : boolean\l
++ markSupported() : boolean\l
++ reset() : void\l
++ skip(long) : long\l
++ close() : void\l
++ mark(int) : void\l
+}",style=filled,fillcolor=yellow]
+BufferedReader[label = "{BufferedReader\n\<\<Composite\>\>|- in : Reader\l
+- cb : char[]\l
+- nChars : int\l
+- nextChar : int\l
+- INVALIDATED : int\l
+- UNMARKED : int\l
+- markedChar : int\l
+- readAheadLimit : int\l
+- skipLF : boolean\l
+- markedSkipLF : boolean\l
+- defaultCharBufferSize : int\l
+- defaultExpectedLineLength : int\l
+|+ read(char[], int, int) : int\l
++ markSupported() : boolean\l
++ skip(long) : long\l
+- fill() : void\l
++ readLine() : String\l
+- read1(char[], int, int) : int\l
+- ensureOpen() : void\l
++ ready() : boolean\l
++ reset() : void\l
++ lines() : Stream\l
++ close() : void\l
++ mark(int) : void\l
+}",style=filled,fillcolor=yellow]
+edge [arrowhead = "vee"] [style = "dashed"] IMethod->ArrayList
+edge [arrowhead = "vee"] [style = "solid"] VariableMethodVisitor->IMethod
+edge [arrowhead = "empty"] [style = "dashed"] Methody->IMethod
+edge [arrowhead = "empty"] [style = "solid"] HashSet->AbstractSet
+edge [arrowhead = "vee"] [style = "solid"] Window->Component [label = "\<\<decorates\>\>"] 
+edge [arrowhead = "empty"] [style = "solid"] JComponent->Container
+edge [arrowhead = "empty"] [style = "dashed"] JButton->Accessible
+edge [arrowhead = "vee"] [style = "solid"] JFrame->JRootPane
+edge [arrowhead = "vee"] [style = "dashed"] JDialog->Frame
+edge [arrowhead = "vee"] [style = "dashed"] AbstractButton->AbstractButton
+edge [arrowhead = "vee"] [style = "dashed"] IClass->IField
+edge [arrowhead = "vee"] [style = "dashed"] IClass->HashMap
+edge [arrowhead = "vee"] [style = "dashed"] JTextComponent->Reader
+edge [arrowhead = "vee"] [style = "dashed"] Menu->MenuItem
+edge [arrowhead = "vee"] [style = "dashed"] IModel->IClass
+edge [arrowhead = "vee"] [style = "dashed"] Window->Frame
+edge [arrowhead = "vee"] [style = "dashed"] Component->Window
+edge [arrowhead = "vee"] [style = "dashed"] PatternsFactory->HashMap
+edge [arrowhead = "vee"] [style = "solid"] LoadingScreen->JButton
+edge [arrowhead = "vee"] [style = "solid"] ConfigWindow->JFrame
+edge [arrowhead = "empty"] [style = "solid"] Menu->MenuItem
+edge [arrowhead = "empty"] [style = "dashed"] MenuItem->Accessible
+edge [arrowhead = "empty"] [style = "solid"] Rectangle->Rectangle2D
+edge [arrowhead = "vee"] [style = "solid"] ClassDeclarationVisitor->IModel
+edge [arrowhead = "empty"] [style = "solid"] IdentityArrayList->AbstractList
+edge [arrowhead = "vee"] [style = "solid"] ConfigWindow->JTextField
+edge [arrowhead = "vee"] [style = "dashed"] IModel->IPatternsFactory
+edge [arrowhead = "vee"] [style = "dashed"] JComponent->Container
+edge [arrowhead = "vee"] [style = "dashed"] JPopupMenu->Dimension
+edge [arrowhead = "vee"] [style = "dashed"] Point->Point
+edge [arrowhead = "vee"] [style = "dashed"] Model->HashSet
+edge [arrowhead = "vee"] [style = "solid"] DecoratorDetector->PatternsFactory
+edge [arrowhead = "vee"] [style = "dashed"] Methody->ArrayList
+edge [arrowhead = "vee"] [style = "solid"] ClassMethodVisitor->IModel
+edge [arrowhead = "vee"] [style = "solid"] Dialog->Dialog
+edge [arrowhead = "vee"] [style = "solid"] JComponent->Rectangle
+edge [arrowhead = "vee"] [style = "dashed"] JScrollPane->Rectangle
+edge [arrowhead = "empty"] [style = "solid"] LinkedHashMap->HashMap
+edge [arrowhead = "vee"] [style = "solid"] Frame->MenuBar
+edge [arrowhead = "vee"] [style = "dashed"] IModel->HashMap
+edge [arrowhead = "vee"] [style = "dashed"] AbstractButton->Component
+edge [arrowhead = "vee"] [style = "dashed"] JFileChooser->JFileChooser
+edge [arrowhead = "vee"] [style = "dashed"] Container->Accessible
+edge [arrowhead = "vee"] [style = "dashed"] Container->Dimension
+edge [arrowhead = "vee"] [style = "dashed"] ImageProxy->Component
+edge [arrowhead = "empty"] [style = "solid"] JButton->AbstractButton
+edge [arrowhead = "vee"] [style = "dashed"] JTextComponent->JTextComponent
+edge [arrowhead = "empty"] [style = "solid"] JScrollBar->JComponent
+edge [arrowhead = "vee"] [style = "solid"] Classy->IMethod
+edge [arrowhead = "vee"] [style = "solid"] MenuBar->Menu
+edge [arrowhead = "vee"] [style = "dashed"] JDialog->Component
+edge [arrowhead = "empty"] [style = "dashed"] Model->IModel
+edge [arrowhead = "vee"] [style = "solid"] CopyOfCompositeDetector->IModel
+edge [arrowhead = "vee"] [style = "dashed"] JComponent->JComponent
+edge [arrowhead = "vee"] [style = "dashed"] Window->IdentityArrayList
+edge [arrowhead = "empty"] [style = "solid"] JTextComponent->JComponent
+edge [arrowhead = "empty"] [style = "solid"] AbstractButton->JComponent
+edge [arrowhead = "empty"] [style = "solid"] JDialog->Dialog
+edge [arrowhead = "vee"] [style = "dashed"] Container->Point
+edge [arrowhead = "empty"] [style = "dashed"] JViewport->Accessible
+edge [arrowhead = "empty"] [style = "solid"] JLayeredPane->JComponent
+edge [arrowhead = "vee"] [style = "solid"] Frame->Rectangle
+edge [arrowhead = "vee"] [style = "dashed"] JViewport->Rectangle
+edge [arrowhead = "vee"] [style = "solid"] JRootPane->Container
+edge [arrowhead = "vee"] [style = "solid"] Model->IClass
+edge [arrowhead = "vee"] [style = "solid"] Component->Container
+edge [arrowhead = "vee"] [style = "dashed"] Rectangle2D->Rectangle2D
+edge [arrowhead = "vee"] [style = "solid"] Model->IPatternsFactory
+edge [arrowhead = "vee"] [style = "dashed"] JDialog->Dialog
+edge [arrowhead = "vee"] [style = "dashed"] ClassFieldVisitor->IField
+edge [arrowhead = "empty"] [style = "dashed"] JScrollBar->Accessible
+edge [arrowhead = "vee"] [style = "solid"] Window->Dialog
+edge [arrowhead = "vee"] [style = "solid"] Window->Window
+edge [arrowhead = "empty"] [style = "dashed"] JMenuBar->Accessible
+edge [arrowhead = "vee"] [style = "solid"] JComponent->JPopupMenu
+edge [arrowhead = "empty"] [style = "dashed"] JScrollPane->Accessible
+edge [arrowhead = "vee"] [style = "solid"] ClassMethodVisitor->IClass
+edge [arrowhead = "empty"] [style = "solid"] BufferedReader->Reader
+edge [arrowhead = "vee"] [style = "dashed"] ResultScreen->ResultScreen
+edge [arrowhead = "vee"] [style = "dashed"] JScrollBar->JScrollBar
+edge [arrowhead = "empty"] [style = "solid"] CheckBoxNodeTree->JComponent
+edge [arrowhead = "vee"] [style = "solid"] AdapterDetector->IModel
+edge [arrowhead = "vee"] [style = "solid"] JScrollPane->JViewport
+edge [arrowhead = "empty"] [style = "solid"] JTextField->JTextComponent
+edge [arrowhead = "vee"] [style = "dashed"] IPatternsFactory->IClass
+edge [arrowhead = "vee"] [style = "solid"] JComponent->Component [label = "\<\<decorates\>\>"] 
+edge [arrowhead = "vee"] [style = "dashed"] IPatternsFactory->HashMap
+edge [arrowhead = "vee"] [style = "dashed"] MenuBar->MenuItem
+edge [arrowhead = "vee"] [style = "dashed"] ConfigWindow->ConfigWindow
+edge [arrowhead = "vee"] [style = "solid"] Container->Component [label = "\<\<decorates\>\>"] 
+edge [arrowhead = "vee"] [style = "solid"] ComponentInputMap->JComponent
+edge [arrowhead = "vee"] [style = "dashed"] Model->HashMap
+edge [arrowhead = "vee"] [style = "solid"] JFileChooser->JDialog
+edge [arrowhead = "empty"] [style = "solid"] JScrollPane->JComponent
+edge [arrowhead = "vee"] [style = "dashed"] Component->Component
+edge [arrowhead = "vee"] [style = "dashed"] Window->Point
+edge [arrowhead = "vee"] [style = "dashed"] ParseClass->ArrayList
+edge [arrowhead = "empty"] [style = "dashed"] JTextComponent->Accessible
+edge [arrowhead = "vee"] [style = "solid"] Dialog->Window
+edge [arrowhead = "vee"] [style = "dashed"] JViewport->Dimension
+edge [arrowhead = "vee"] [style = "dashed"] JFrame->JLayeredPane
+edge [arrowhead = "vee"] [style = "dashed"] IClass->IMethod
+edge [arrowhead = "vee"] [style = "dashed"] Component->Rectangle
+edge [arrowhead = "vee"] [style = "solid"] ClassFieldVisitor->IClass
+edge [arrowhead = "vee"] [style = "dashed"] IModel->ArrayList
+edge [arrowhead = "empty"] [style = "dashed"] JTextField->SwingConstants
+edge [arrowhead = "empty"] [style = "dashed"] Menu->Accessible
+edge [arrowhead = "vee"] [style = "dashed"] JDialog->JLayeredPane
+edge [arrowhead = "empty"] [style = "solid"] JMenuBar->JComponent
+edge [arrowhead = "vee"] [style = "dashed"] IClass->ArrayList
+edge [arrowhead = "vee"] [style = "solid"] JScrollPane->Component [label = "\<\<decorates\>\>"] 
+edge [arrowhead = "empty"] [style = "dashed"] PatternsFactory->IPatternsFactory
+edge [arrowhead = "vee"] [style = "solid"] Component->Dimension
+edge [arrowhead = "empty"] [style = "dashed"] JFileChooser->Accessible
+edge [arrowhead = "vee"] [style = "dashed"] JMenuBar->Component
+edge [arrowhead = "vee"] [style = "dashed"] ArrayList->ArrayList
+edge [arrowhead = "vee"] [style = "solid"] ResultScreen->JScrollPane
+edge [arrowhead = "vee"] [style = "dashed"] Frame->Frame
+edge [arrowhead = "vee"] [style = "dashed"] JTextComponent->Dimension
+edge [arrowhead = "empty"] [style = "solid"] Vector->AbstractList
+edge [arrowhead = "vee"] [style = "solid"] LoadingScreen->JFileChooser
+edge [arrowhead = "empty"] [style = "solid"] JPopupMenu->JComponent
+edge [arrowhead = "empty"] [style = "solid"] JRootPane->JComponent
+edge [arrowhead = "vee"] [style = "dashed"] JViewport->Component
+edge [arrowhead = "vee"] [style = "dashed"] Properties->Reader
+edge [arrowhead = "vee"] [style = "dashed"] JTextComponent->HashMap
+edge [arrowhead = "vee"] [style = "solid"] ResultScreen->JFrame
+edge [arrowhead = "vee"] [style = "dashed"] JComponent->Point
+edge [arrowhead = "empty"] [style = "dashed"] AbstractButton->SwingConstants
+edge [arrowhead = "vee"] [style = "dashed"] JFrame->Component
+edge [arrowhead = "vee"] [style = "dashed"] JLayeredPane->Component
+edge [arrowhead = "empty"] [style = "dashed"] JPopupMenu->Accessible
+edge [arrowhead = "vee"] [style = "dashed"] Window->Dimension
+edge [arrowhead = "vee"] [style = "dashed"] Dimension->Dimension
+edge [arrowhead = "vee"] [style = "dashed"] JFrame->Container
+edge [arrowhead = "vee"] [style = "solid"] JDialog->JRootPane
+edge [arrowhead = "vee"] [style = "dashed"] Classy->HashMap
+edge [arrowhead = "empty"] [style = "solid"] Container->Component
+edge [arrowhead = "empty"] [style = "dashed"] JRootPane->Accessible
+edge [arrowhead = "empty"] [style = "solid"] JFrame->Frame
+edge [arrowhead = "vee"] [style = "dashed"] Dialog->Component
+edge [arrowhead = "vee"] [style = "solid"] JRootPane->Component [label = "\<\<decorates\>\>"] 
+edge [arrowhead = "vee"] [style = "dashed"] JLayeredPane->JLayeredPane
+edge [arrowhead = "vee"] [style = "dashed"] Rectangle->Rectangle
+edge [arrowhead = "vee"] [style = "dashed"] JTextField->Rectangle
+edge [arrowhead = "empty"] [style = "solid"] ArrayList->AbstractList
+edge [arrowhead = "vee"] [style = "dashed"] Dialog->Frame
+edge [arrowhead = "empty"] [style = "dashed"] JProgressBar->Accessible
+edge [arrowhead = "vee"] [style = "solid"] JRootPane->JMenuBar
+edge [arrowhead = "vee"] [style = "solid"] AdapterDetector->PatternsFactory
+edge [arrowhead = "vee"] [style = "dashed"] Window->Rectangle
+edge [arrowhead = "vee"] [style = "solid"] GraphvizParser->IModel
+edge [arrowhead = "empty"] [style = "dashed"] MenuBar->Accessible
+edge [arrowhead = "vee"] [style = "dashed"] Model->ArrayList
+edge [arrowhead = "vee"] [style = "dashed"] JViewport->JComponent
+edge [arrowhead = "vee"] [style = "dashed"] JTextComponent->Rectangle
+edge [arrowhead = "vee"] [style = "dashed"] JScrollBar->Dimension
+edge [arrowhead = "vee"] [style = "solid"] VariableMethodVisitor->IModel
+edge [arrowhead = "vee"] [style = "dashed"] SingletonDetector->IClass
+edge [arrowhead = "vee"] [style = "dashed"] Component->Point
+edge [arrowhead = "empty"] [style = "solid"] JFileChooser->JComponent
+edge [arrowhead = "vee"] [style = "dashed"] JLayeredPane->JComponent
+edge [arrowhead = "vee"] [style = "dashed"] JComponent->JRootPane
+edge [arrowhead = "vee"] [style = "solid"] JProgressBar->BoundedRangeModel [label = "\<\<adapts\>\>"] 
+edge [arrowhead = "vee"] [style = "solid"] PatternDetector->IModel
+edge [arrowhead = "vee"] [style = "dashed"] LoadingScreen->LoadingScreen
+edge [arrowhead = "vee"] [style = "solid"] JComponent->ComponentInputMap
+edge [arrowhead = "vee"] [style = "solid"] Classy->IField
+edge [arrowhead = "vee"] [style = "solid"] ClassFieldVisitor->IModel
+edge [arrowhead = "vee"] [style = "dashed"] JPopupMenu->Point
+edge [arrowhead = "vee"] [style = "dashed"] ClassMethodVisitor->IMethod
+edge [arrowhead = "vee"] [style = "dashed"] DecoratorDetector->ArrayList
+edge [arrowhead = "vee"] [style = "dashed"] IModel->HashSet
+edge [arrowhead = "empty"] [style = "dashed"] JDialog->Accessible
+edge [arrowhead = "vee"] [style = "solid"] Frame->Window
+edge [arrowhead = "vee"] [style = "dashed"] JFileChooser->Component
+edge [arrowhead = "empty"] [style = "dashed"] JLayeredPane->Accessible
+edge [arrowhead = "vee"] [style = "solid"] CopyOfCompositeDetector->PatternsFactory
+edge [arrowhead = "vee"] [style = "dashed"] CompositeDetector->ArrayList
+edge [arrowhead = "vee"] [style = "solid"] JScrollPane->JScrollBar
+edge [arrowhead = "vee"] [style = "dashed"] MenuItem->MenuItem
+edge [arrowhead = "vee"] [style = "dashed"] JDialog->Window
+edge [arrowhead = "vee"] [style = "dashed"] JViewport->JViewport
+edge [arrowhead = "vee"] [style = "dashed"] FetchClasses->ArrayList
+edge [arrowhead = "vee"] [style = "dashed"] JTextComponent->Point
+edge [arrowhead = "empty"] [style = "dashed"] JProgressBar->SwingConstants
+edge [arrowhead = "empty"] [style = "dashed"] Fieldy->IField
+edge [arrowhead = "empty"] [style = "dashed"] Window->Accessible
+edge [arrowhead = "vee"] [style = "solid"] Properties->Properties
+edge [arrowhead = "vee"] [style = "solid"] JRootPane->JLayeredPane
+edge [arrowhead = "vee"] [style = "solid"] JTextField->BoundedRangeModel
+edge [arrowhead = "vee"] [style = "solid"] BufferedReader->Reader
+edge [arrowhead = "vee"] [style = "dashed"] Window->Container
+edge [arrowhead = "empty"] [style = "dashed"] JFrame->Accessible
+edge [arrowhead = "vee"] [style = "dashed"] JTextField->Dimension
+edge [arrowhead = "empty"] [style = "solid"] Frame->Window
+edge [arrowhead = "vee"] [style = "dashed"] JPopupMenu->JPopupMenu
+edge [arrowhead = "vee"] [style = "solid"] DesignParser->IModel
+edge [arrowhead = "empty"] [style = "solid"] JViewport->JComponent
+edge [arrowhead = "vee"] [style = "solid"] JPopupMenu->Component [label = "\<\<decorates\>\>"] 
+edge [arrowhead = "vee"] [style = "solid"] SingletonDetector->IModel
+edge [arrowhead = "empty"] [style = "solid"] Dialog->Window
+edge [arrowhead = "vee"] [style = "dashed"] JComponent->Dimension
+edge [arrowhead = "vee"] [style = "solid"] SDEditor->IModel
+edge [arrowhead = "vee"] [style = "dashed"] Rectangle->Dimension
+edge [arrowhead = "empty"] [style = "solid"] Window->Container
+edge [arrowhead = "vee"] [style = "dashed"] PatternsFactory->IClass
+edge [arrowhead = "vee"] [style = "dashed"] CopyOfCompositeDetector->ArrayList
+edge [arrowhead = "vee"] [style = "solid"] CompositeDetector->IModel
+edge [arrowhead = "vee"] [style = "solid"] JRootPane->JButton
+edge [arrowhead = "empty"] [style = "solid"] JProgressBar->JComponent
+edge [arrowhead = "vee"] [style = "solid"] JPopupMenu->Frame
+edge [arrowhead = "vee"] [style = "solid"] DecoratorDetector->IModel
+edge [arrowhead = "vee"] [style = "dashed"] Rectangle->Point
+edge [arrowhead = "vee"] [style = "solid"] JScrollBar->BoundedRangeModel
+edge [arrowhead = "vee"] [style = "dashed"] JDialog->Container
+edge [arrowhead = "vee"] [style = "dashed"] Container->Container
+edge [arrowhead = "vee"] [style = "dashed"] Rectangle->Rectangle2D
+edge [arrowhead = "vee"] [style = "solid"] ResultScreen->IModel
+edge [arrowhead = "vee"] [style = "dashed"] JFrame->JMenuBar
+edge [arrowhead = "vee"] [style = "dashed"] Classy->ArrayList
+edge [arrowhead = "vee"] [style = "solid"] VariableMethodVisitor->IClass
+edge [arrowhead = "vee"] [style = "solid"] JFileChooser->JComponent
+edge [arrowhead = "vee"] [style = "solid"] CompositeDetector->PatternsFactory
+edge [arrowhead = "vee"] [style = "dashed"] JDialog->JMenuBar
+edge [arrowhead = "vee"] [style = "solid"] LoadingScreen->JProgressBar
+edge [arrowhead = "vee"] [style = "solid"] JViewport->Point
+edge [arrowhead = "empty"] [style = "dashed"] Classy->IClass
+edge [arrowhead = "vee"] [style = "solid"] LoadingScreen->JFrame
+edge [arrowhead = "vee"] [style = "solid"] ParseConfig->Properties
+edge [arrowhead = "vee"] [style = "solid"] ClassDeclarationVisitor->IClass
 }

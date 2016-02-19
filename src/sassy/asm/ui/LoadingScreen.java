@@ -144,11 +144,9 @@ public class LoadingScreen implements ActionListener, PropertyChangeListener {
 		@Override
 		public void done() {
 			Toolkit.getDefaultToolkit().beep();
-			System.out.println("DONE");
 			frame.dispose();
 			ParseConfig fileParser = new ParseConfig(file);
 			String[] args = fileParser.parse();
-			
 			ResultScreen.main(args);
 		}
 	}

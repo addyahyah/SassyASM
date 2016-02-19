@@ -10,11 +10,11 @@ import sassy.asm.pattern.CompositeCompositePattern;
 import sassy.asm.pattern.CompositeLeafPattern;
 import sassy.asm.pattern.PatternsFactory;
 
-public class CompositeDetector implements IPatternDetector {
+public class CopyOfCompositeDetector implements IPatternDetector {
 	private IModel model;
 	private PatternsFactory factory;
 
-	public CompositeDetector(IModel model) {
+	public CopyOfCompositeDetector(IModel model) {
 		this.model = model;
 
 	}
@@ -42,59 +42,69 @@ public class CompositeDetector implements IPatternDetector {
 			}
 		}
 
+		ArrayList<String> leafsAndComposites = new ArrayList<String>();
 		ArrayList<String> components = new ArrayList<String>();
 		ArrayList<String> leafs = new ArrayList<String>();
 		ArrayList<String> composites = new ArrayList<String>();
 		String component = "";
 		String componentInterface = "";
-		String subClass = "";
-		for (ArrayList<String> key : superClassCandidates) {
-			component = key.get(1);
-			components = new ArrayList<String>();
-			leafs = new ArrayList<String>();
-			composites = new ArrayList<String>();
-			for (ArrayList<String> key1 : superClassCandidates) {
-				if (key1.get(1).equals(component)) {
-					subClass = key1.get(0);
-//					 System.out.println(subClass);
-					for (ArrayList<String> key2 : interfaceCandidates) {
-						if (key2.get(0).equals(component)) {
-							componentInterface = key2.get(1);
+		for (ArrayList<String> key1 : superClassCandidates) {
+			for (ArrayList<String> key2 : superClassCandidates) {
+				if (key1.get(1).equals(key2.get(1))) {
+					if (!key1.get(0).equals(key2.get(0))) {
+						// both leafs and composites inherit from the abstract
+						// class
+						component = key1.get(1);// potential component
+						// if (!components.contains(component)) {
+						// components.add(component);
+						// }
+						// key1.get(0) and key2.get(0) are potential leafs and
+						// composites
+						if (!leafsAndComposites.contains(key1.get(0))) {
+							leafsAndComposites.add(key1.get(0));
+						}
+						if (!leafsAndComposites.contains(key2.get(0))) {
+							leafsAndComposites.add(key2.get(0));
 						}
 
-						if (!leafs.contains(subClass)) {
-							leafs.add(subClass);
-						}
-						for (ArrayList<String> key3 : assocCandidates) {
-							if (subClass.equals(key3.get(0))) {
-								if (key3.get(1).equals(component)
-										|| key3.get(1).equals(
-												componentInterface)) {
-									
-									if (!composites.contains(subClass)) {
-										composites.add(subClass);
-									}
-								}
-							} 
-
-						}
-//						 System.out.println(component);
-//						 System.out.println("COMP : " + composites);
-//						 System.out.println("LEAV: " + leafs);
-//						 System.out.println();
-						if (leafs.size() > 0 && composites.size() > 0) {
-							if (!components.contains(component)) {
-								components.add(component);
-							}
-							addToCandidate(components, leafs, composites);
-						}
 					}
-
 				}
+			}
+		}
+
+		// the component class might implement an interface
+		for (ArrayList<String> key3 : interfaceCandidates) {
+			if (key3.get(0).equals(component)) {
+				componentInterface = key3.get(1);
+				// if (!components.contains(componentInterface)) {
+				// components.add(componentInterface);
+				// }
 
 			}
 		}
 
+		for (ArrayList<String> key : assocCandidates) {
+			for (String s : leafsAndComposites) {
+				// && components.contains(key.get(1))
+				if (s.equals(key.get(0))
+						&& (key.get(1).equals(component) || key.get(1).equals(
+								componentInterface))) {
+					if (!composites.contains(s)) {
+						composites.add(s);
+					}
+					System.out.println("herhe");
+					if (!components.contains(component)) {
+						components.add(component);
+					}
+				} else {
+					if (!leafs.contains(s)) {
+						leafs.add(s);
+					}
+				}
+			}
+		}
+
+		addToCandidate(components, leafs, composites);
 	}
 
 	private void addToCandidate(ArrayList<String> components,
@@ -104,7 +114,7 @@ public class CompositeDetector implements IPatternDetector {
 			for (IClass c : this.model.getClasses()) {
 				for (String comp : components) {
 					if (comp.equals(c.getName()) && !c.isInterface()) {
-						// System.out.println(comp);
+						 System.out.println(comp);
 						this.factory.addClass(c,
 								new CompositeComponentPattern());
 						c.setDrawable(true);

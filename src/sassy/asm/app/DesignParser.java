@@ -23,18 +23,24 @@ import sassy.asm.impl.Model;
 import sassy.asm.impl.Classy;
 
 public class DesignParser {
-	 public static String[] classes = { "java/util/Collections",
-	 "java/util/Random", "java/util/List", "java/util/ListIterator",
-	 "java/util/concurrent/atomic/AtomicLong" };
-//	public static String[] classes;
+//	 public static String[] classes = { "java/util/Collections",
+//	 "java/util/Random", "java/util/List", "java/util/ListIterator",
+//	 "java/util/concurrent/atomic/AtomicLong" };
+//	, "java/awt/Container", "javax/swing/JButton", "java/awt/Component"
+//	public static String[] classes = { "javax/swing/JComponent"};
+	public static String[] classes;
 	public static List<String> classRead = new ArrayList<>();
-	 public static final String packageName = "problem";
+//	 public static final String packageName1 = "problem";
 //	public static final String packageName = "sassy";
+
+	public static final String packageName1 = "problem";
+	public static final String packageName2 = "problem";
 
 	// public static final String packageName = "";
 	public static final String className = "DesignParser";
 	public static final String methodName = "main";
 	public static int depth = 5;
+	public static String outputDir;
 
 	private static IModel model;
 
@@ -47,19 +53,20 @@ public class DesignParser {
 	 *            edu.rosehulman.csse374.ClassFieldVisitor java.lang.Math
 	 * @throws IOException
 	 */
-	 public static void main(String[] args) throws IOException {
-//	public DesignParser(String[] args) {
-//		ArrayList<String> cls = new ArrayList<String>();
-//		// args[0] is input-directory
-//		String[] classesFetched = FetchClasses.getClasses(args[0], new File(
-//				args[0]));
-//		cls.addAll(Arrays.asList(classesFetched));
-//
-//		// args[1] is input-classes
-//		String[] inputClasses = args[1].split(",");
-//		cls.addAll(Arrays.asList(inputClasses));
-//		classes = cls.toArray(new String[cls.size()]);
+//	 public static void main(String[] args) throws IOException {
+	public DesignParser(String[] args) {
+		ArrayList<String> cls = new ArrayList<String>();
+		// args[0] is input-directory
+		String[] classesFetched = FetchClasses.getClasses(args[0], new File(
+				args[0]));
+		cls.addAll(Arrays.asList(classesFetched));
 
+		// args[1] is input-classes
+		String[] inputClasses = args[1].split(",");
+		cls.addAll(Arrays.asList(inputClasses));
+		classes = cls.toArray(new String[cls.size()]);
+		 outputDir = args[2];
+//		 System.out.println(outputDir);
 		model = new Model();
 		// String classAndMethodName = args[0];
 		// depth = Integer.parseInt(args[1]);
@@ -70,20 +77,20 @@ public class DesignParser {
 
 		// String path = "./files/Lab1-3Classes.txt";
 		// String path = "./files/javaClasses.txt";
-		String path = "./files/CompositeTestLab7-2.txt";
+//		String path = "./files/CompositeTestLab7-2.txt";
 		// String path = "./files/AbstractFactoryPizzaStore.txt";
-		// String path = "./files/SassyASM.txt";
+//		 String path = "./files/SassyASM.txt";
 		// String path = "./files/AdapterTestLab5-1.txt";
 		// String path = "./files/ChocolateBoilerSingleton.txt";
 		// String path="./files/DecoratorTestLab2-1.txt";
-		 ParseClass parser = new ParseClass(path);
-		 ArrayList<String> result = null;
-		try {
-			result = parser.parse();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		 classes = result.toArray(new String[result.size()]);
+//		 ParseClass parser = new ParseClass(path);
+//		 ArrayList<String> result = null;
+//		try {
+//			result = parser.parse();
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
+//		 classes = result.toArray(new String[result.size()]);
 		for (String className : classes) {
 			className = className.replace(".", "/");
 			try {
@@ -127,14 +134,15 @@ public class DesignParser {
 		if (!classRead.contains(className)) {
 			classRead.add(className);
 		} else {
-			return;
+			return; 
 		}
-		if(className.contains("TransferHandlerHasGetTransferHandler") || className.contains("swing")){
+		// || className.contains("swing")
+		if(className.contains("TransferHandlerHasGetTransferHandler")){
 			return;
 		}
 		
 		IClass c = new Classy();
-		System.out.println(className);
+//		System.out.println(className);
 		// ASM's ClassReader does the heavy lifting of parsing the
 		// compiled
 		// Java class

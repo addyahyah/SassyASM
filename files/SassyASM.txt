@@ -26,6 +26,7 @@ sassy.asm.patterndetector.DecoratorDetector
 sassy.asm.patterndetector.IPatternDetector
 sassy.asm.patterndetector.PatternDetector
 sassy.asm.patterndetector.SingletonDetector
+sassy.asm.patterndetector.CompositeDetector
 sassy.asm.pattern.AdapteePattern
 sassy.asm.pattern.AdapterPattern
 sassy.asm.pattern.IPattern
@@ -35,3 +36,13 @@ sassy.asm.pattern.SingletonPattern
 sassy.asm.pattern.TargetPattern
 sassy.asm.pattern.ComponentPattern
 sassy.asm.pattern.DecoratorPattern
+sassy.asm.pattern.CompositeComponentPattern
+sassy.asm.pattern.CompositeCompositePattern
+sassy.asm.pattern.CompositeLeafPattern
+sassy.asm.ui.CheckBoxNodeTree
+sassy.asm.ui.ConfigWindow
+sassy.asm.ui.FetchClasses
+sassy.asm.ui.ImageProxy
+sassy.asm.ui.LoadingScreen
+sassy.asm.ui.ParseConfig
+sassy.asm.ui.ResultScreen

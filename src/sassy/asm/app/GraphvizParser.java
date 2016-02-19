@@ -22,6 +22,7 @@ import sassy.asm.pattern.DecoratorPattern;
 import sassy.asm.pattern.IPattern;
 import sassy.asm.pattern.IPatternsFactory;
 import sassy.asm.patterndetector.IPatternDetector;
+import sassy.asm.ui.ResultScreen;
 import sassy.asm.visitor.ITraverser;
 import sassy.asm.visitor.VisitType;
 import sassy.asm.visitor.Visitor;
@@ -34,8 +35,8 @@ public class GraphvizParser {
 
 	public GraphvizParser(IModel model) throws FileNotFoundException {
 		this.model = model;
-
-		this.output = new FileOutputStream("./files/text.dot");
+		String outputDir = DesignParser.outputDir;
+		this.output = new FileOutputStream(outputDir + "text.dot");
 		this.visitor = new Visitor();
 
 		this.setUpPrevisitModel();
@@ -218,14 +219,23 @@ public class GraphvizParser {
 																			break;
 																		}
 																	}
-																	
-																	
-																	if(pList.containsKey(c) && pList.get(c).getClass().equals(DecoratorPattern.class)){
-																		
-																		if(pList.containsKey(c2)&&pList.get(c2).getClass().equals(DecoratorComponentPattern.class)){
-							
+
+																	if (pList
+																			.containsKey(c)
+																			&& pList.get(
+																					c)
+																					.getClass()
+																					.equals(DecoratorPattern.class)) {
+
+																		if (pList
+																				.containsKey(c2)
+																				&& pList.get(
+																						c2)
+																						.getClass()
+																						.equals(DecoratorComponentPattern.class)) {
+
 																			String decoratorArrow = " [label = \"\\<\\<decorates\\>\\>\"] ";
-																			
+
 																			sb.append(decoratorArrow);
 																			break;
 																		}
